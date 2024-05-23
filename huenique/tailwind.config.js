@@ -5,6 +5,10 @@ module.exports = {
     extend: {
       colors : {
         headerColor : '#A47E70',
+        notReallyWhite : '#FFFDFA',
+        skinLikeColor : '#FFEED9',
+        sky: '#669FFF',
+        lightGray: '#B5B6B6'
       }
     },
   },
