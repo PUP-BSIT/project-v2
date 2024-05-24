@@ -10,6 +10,7 @@ import { DisplayComponent } from './display/display.component';
 import { PagesComponent } from './pages/pages.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ColorAnalysisComponent } from './pages/color-analysis/color-analysis.component';
+import { AboutComponent } from './pages/about/about.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ColorAnalysisComponent } from './pages/color-analysis/color-analysis.co
     DisplayComponent,
     PagesComponent,
     HomeComponent,
-    ColorAnalysisComponent
+    ColorAnalysisComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
