@@ -1,0 +1,51 @@
+:host {
+  display: block;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.header-container {
+  margin-top: -20px;
+}
+
+.custom-h1 {
+  font-size: 6rem;
+}
+
+.line-break {
+  line-height: 1;
+}
+
+.text-container {
+  padding-left:220px;
+  padding-top: 80px;
+}
+
+.rainbow {
+  margin-left: 210px;
+}
+
+.button-started {
+  margin-left: 200px;
+  margin-top: 5px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0;
+}
+
+@media (min-width: 768px) {
+    .landing-content {
+      flex-wrap: nowrap; 
+    }
+    .text-container,
+    .image-container {
+      width: 50%;
+    }
+}
+
+
