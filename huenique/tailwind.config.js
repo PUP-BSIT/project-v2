@@ -6,6 +6,7 @@ module.exports = {
       colors: {
       darkBrown: '#a47e70',
       darkGray: '#545454',
+      lightBlue: '#669FFF',
       },
 
       fontFamily: {
