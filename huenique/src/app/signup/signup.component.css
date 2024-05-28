@@ -1,0 +1,93 @@
+:host {
+    display: block;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+.custom-logo-size {
+    width: 350px; 
+    height: auto;
+    margin-right: 70px;
+    margin-bottom: 40px;
+}
+
+.rainbow-image {
+    width: 20%;
+    height: auto;
+    position: absolute; 
+    top: 0; 
+    margin-left: 1260px;
+    opacity: 0.4; 
+}
+
+.rainbow-image2 {
+    width: 20%; 
+    height: auto; 
+    position: absolute; 
+    top: 0;
+    margin-top: 473px;
+    margin-left: 0px; 
+    opacity: 0.4;
+}
+
+.image-asset {
+    width: 600px; 
+    height: auto;
+    margin-right: 40px;
+    margin-bottom: 10px;
+}
+
+.bg-peach {
+    background-color: #ffeed9; 
+}
+  
+.header-container {
+    margin-top: -20px;
+}
+  
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0;
+}
+  
+@media (min-width: 768px) {
+    .landing-content {
+      flex-wrap: nowrap;
+    }
+    .text-container,
+    .image-container {
+      width: 50%;
+    }
+}
+
+
+.h2-class {
+    margin-left: 150px;
+}
+
+.vertical-line {
+    width: 5px;
+    margin-top: 75px;  
+    height: 650px; 
+    background-color: #9d9b9b;
+    border-radius: 20px;  
+}
+
+.account-signin-text {
+    text-align: center; 
+    font-size: 16px; 
+    color: #666;
+}
+
+.signin-link {
+    color: #007BFF; 
+    text-decoration: none; 
+}
+
+.signin-link:hover {
+    text-decoration: underline; 
+}
+  
