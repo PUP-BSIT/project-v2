@@ -76,18 +76,32 @@
     border-radius: 20px;  
 }
 
-.account-signin-text {
+.account-signup-text {
     text-align: center; 
     font-size: 16px; 
     color: #666;
 }
 
-.signin-link {
+.signup-link {
     color: #007BFF; 
     text-decoration: none; 
 }
 
-.signin-link:hover {
+.signup-link:hover {
     text-decoration: underline; 
+}
+
+.input {
+    border: 2px solid #ccc; 
+    padding: 8px 15px;
+    border-radius: 5px; 
+    width: 100%; 
+    box-sizing: border-box;
+}
+
+.input:focus {
+    outline: none; 
+    border-color: #4A90E2; 
+    box-shadow: 0 0 20px rgba(74, 144, 226, 0.5);
 }
   
