@@ -76,18 +76,19 @@
     border-radius: 20px;  
 }
 
-.account-signin-text {
+.account-signup-text {
     text-align: center; 
     font-size: 16px; 
     color: #666;
 }
 
-.signin-link {
+.signup-link {
     color: #007BFF; 
     text-decoration: none; 
 }
 
-.signin-link:hover {
+.signup-link:hover {
     text-decoration: underline; 
 }
+
   
