@@ -4,9 +4,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-      darkBrown: '#a47e70',
-      darkGray: '#545454',
-      lightBlue: '#669FFF',
+        darkBrown: '#a47e70',
+        darkGray: '#545454',
+        lightBlue: '#669FFF',
       },
 
       fontFamily: {
@@ -15,5 +15,7 @@ module.exports = {
     },
   },
   plugins: [require('daisyui')],
+  daisyui: {
+    themes: ['light'],
+  },
 }
-
