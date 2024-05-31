@@ -5,7 +5,7 @@ import { SignupService } from '../../service/signup.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']  // Note the change here from styleUrl to styleUrls
+  styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
   signupForm!: FormGroup;
