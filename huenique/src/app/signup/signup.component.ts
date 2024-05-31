@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { SignupService } from '../../service/signup.service';
 
 @Component({
@@ -42,7 +42,7 @@ export class SignupComponent implements OnInit {
     }, { validator: this.passwordMatchValidator });
   }
 
-  noNumericCharactersValidator(control: AbstractControl): { [key: string]: any } | null {
+  noNumericCharactersValidator(control: AbstractControl): ValidationErrors | null {
     const isValid = /^[^\d]*$/.test(control.value);
     return isValid ? null : { noNumericCharacters: true };
   }
