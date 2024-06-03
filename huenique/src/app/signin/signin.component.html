@@ -17,9 +17,30 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <div class="p-32 flex-1 relative z-10 lg:w-1/2 ml-0 lg:ml-0">
         <h2 class="h2-class text-6xl font-extrabold mb-6">Sign In</h2>
-        <form class="form space-y-7">
-            <input type="email" placeholder="Email" class="input input-bordered w-full">
-            <input type="password" placeholder="Password" class="input input-bordered w-full">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form space-y-7">
+            <div class="relative">
+                <input formControlName="email" type="email" placeholder="Email" class="input input-bordered w-full">
+                @if (emailControl?.invalid && emailControl?.touched) {
+                    <div class="text-red-500 text-sm mt-1">
+                        @if (emailControl?.errors?.['required']) {
+                            <div>Email is required</div>
+                        }
+                        @if (emailControl?.errors?.['email']) {
+                            <div>Invalid email format</div>
+                        }
+                    </div>
+                }
+            </div>
+            <div class="relative">
+                <input formControlName="password" type="password" placeholder="Password" class="input input-bordered w-full">
+                @if (passwordControl?.invalid && passwordControl?.touched) {
+                    <div class="text-red-500 text-sm mt-1">
+                        @if (passwordControl?.errors?.['required']) {
+                            <div>password is required</div>
+                        }
+                    </div>
+                }
+            </div>
             <button type="submit" class="btn btn-primary w-full">Sign In</button>
              <p class="account-signin-text">Don't have an account? <button (click)="goToSignUp()" class="btn btn-link">Sign Up</button></p>
         </form>
