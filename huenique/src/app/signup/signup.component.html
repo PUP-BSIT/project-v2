@@ -17,58 +17,34 @@
       <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="form space-y-7">
         <div class="relative">
           <input formControlName="name" type="text" placeholder="Name" class="input input-bordered w-full">
-          @if (nameControl?.invalid && nameControl?.touched) {
-            <div class="text-red-500 text-sm mt-1">
-              @if (nameControl?.errors?.['required']) {
-                <div>Name is required</div>
-              }
-              @if (nameControl?.errors?.['noNumericCharacters']) {
-                <div>Name cannot contain numeric characters</div>
-              }
-            </div>
-          }
+          <div *ngIf="nameControl?.invalid && nameControl?.touched" class="text-red-500 text-sm mt-1">
+            <div *ngIf="nameControl?.errors?.['required']">Name is required</div>
+            <div *ngIf="nameControl?.errors?.['noNumericCharacters']">Name cannot contain numeric characters</div>
+          </div>
         </div>
 
         <div class="relative">
           <input formControlName="username" type="text" placeholder="Username" class="input input-bordered w-full">
-          @if (usernameControl?.invalid && usernameControl?.touched) {
-            <div class="text-red-500 text-sm mt-1">
-              @if (usernameControl?.errors?.['required']) {
-                <div>Password is required</div>
-              }
-              @if (usernameControl?.errors?.['minlength']) {
-                <div>Password must be at least 6 characters</div>
-              }
-            </div>
-          }
+          <div *ngIf="usernameControl?.invalid && usernameControl?.touched" class="text-red-500 text-sm mt-1">
+            <div *ngIf="usernameControl?.errors?.['required']">Username is required</div>
+            <div *ngIf="usernameControl?.errors?.['minlength']">Username must be at least 4 characters</div>
+          </div>
         </div>
 
         <div class="relative">
           <input formControlName="email" type="email" placeholder="Email" class="input input-bordered w-full">
-          @if (emailControl?.invalid && emailControl?.touched) {
-            <div class="text-red-500 text-sm mt-1">
-              @if (emailControl?.errors?.['required']) {
-                <div>Email is required</div>
-              }
-              @if (emailControl?.errors?.['email']) {
-                <div>Invalid email format</div>
-              }
-            </div>
-          }
+          <div *ngIf="emailControl?.invalid && emailControl?.touched" class="text-red-500 text-sm mt-1">
+            <div *ngIf="emailControl?.errors?.['required']">Email is required</div>
+            <div *ngIf="emailControl?.errors?.['email']">Invalid email format</div>
+          </div>
         </div>
 
         <div class="relative">
           <input formControlName="password" type="password" placeholder="Password" class="input input-bordered w-full">
-          @if (passwordControl?.invalid && passwordControl?.touched) {
-            <div class="text-red-500 text-sm mt-1">
-              @if (passwordControl?.errors?.['required']) {
-                <div>Password is required</div>
-              }
-              @if (passwordControl?.errors?.['minlength']) {
-                <div>Password must be at least 6 characters</div>
-              }
-            </div>
-          }
+          <div *ngIf="passwordControl?.invalid && passwordControl?.touched" class="text-red-500 text-sm mt-1">
+            <div *ngIf="passwordControl?.errors?.['required']">Password is required</div>
+            <div *ngIf="passwordControl?.errors?.['minlength']">Password must be at least 6 characters</div>
+          </div>
           <span class="absolute inset-y-0 right-0 pr-3 flex items-center">
             <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9m0 0H5m4 0h6m0 0h4"></path>
@@ -78,16 +54,10 @@
 
         <div class="relative">
           <input formControlName="confirmPassword" type="password" placeholder="Confirm Password" class="input input-bordered w-full">
-          @if (confirmPasswordControl?.invalid && confirmPasswordControl?.touched) {
-            <div class="text-red-500 text-sm mt-1">
-              @if (confirmPasswordControl?.errors?.['required']) {
-                <div>Confirmation password is required</div>
-              }
-              @if (signupForm?.errors?.['mismatch']) {
-                <div>Passwords must match</div>
-              }
-            </div>
-          }
+          <div *ngIf="confirmPasswordControl?.invalid && confirmPasswordControl?.touched" class="text-red-500 text-sm mt-1">
+            <div *ngIf="confirmPasswordControl?.errors?.['required']">Confirmation password is required</div>
+            <div *ngIf="signupForm?.errors?.['mismatch']">Passwords must match</div>
+          </div>
           <span class="absolute inset-y-0 right-0 pr-3 flex items-center">
             <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9m0 0H5m4 0h6m0 0h4"></path>

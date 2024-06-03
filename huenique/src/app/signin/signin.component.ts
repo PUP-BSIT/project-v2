@@ -14,8 +14,12 @@ export class SigninComponent implements OnInit {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private loginService: LoginService
+    private loginService: LoginService,
   ) {}
+
+  goToSignUp() {
+    this.router.navigate(['/sign-up']);
+  }
 
   get emailControl() {
     return this.loginForm.get('email');
