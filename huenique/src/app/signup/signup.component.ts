@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { SignupService } from '../../service/signup.service';
 
@@ -10,7 +11,15 @@ import { SignupService } from '../../service/signup.service';
 export class SignupComponent implements OnInit {
   signupForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private signupService: SignupService) {}
+  constructor(
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private signupService: SignupService
+  ) {}
+
+  goToSignIn() {
+    this.router.navigate(['/sign-in']);
+  }
 
   get nameControl() {
     return this.signupForm.get('name');
