@@ -1,25 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, EmailValidator } from '@angular/forms';
+import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../../service/login.service';
 
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
-  styleUrl: './signin.component.css'
+  styleUrls: ['./signin.component.css']
 })
-export class SigninComponent implements OnInit{
-  loginForm! : FormGroup;
+export class SigninComponent implements OnInit {
+  loginForm!: FormGroup;
 
   constructor(
+    private router: Router,
     private formBuilder: FormBuilder,
-    private loginService: LoginService
+    private loginService: LoginService,
   ) {}
 
-  get emailControl(){
+  goToSignUp() {
+    this.router.navigate(['/sign-up']);
+  }
+
+  get emailControl() {
     return this.loginForm.get('email');
   }
 
-  get passwordControl(){
+  get passwordControl() {
     return this.loginForm.get('password');
   }
 
@@ -31,16 +37,17 @@ export class SigninComponent implements OnInit{
   }
 
   onSubmit(): void {
-    if (this.loginForm.valid){
+    if (this.loginForm.valid) {
       console.log(this.loginForm.value);
       this.loginService.login(this.loginForm.value).subscribe(
         response => {
-          console.log('user logged in successfully', response);
+          console.log('User logged in successfully', response);
         },
         error => {
-          console.log('error logging in', error);
+          console.log('Error logging in', error);
+          this.router.navigate(['/sign-up']);
         }
-      )
+      );
     }
   }
 }
