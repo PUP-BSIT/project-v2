@@ -21,10 +21,10 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                 @if (emailControl?.invalid && emailControl?.touched) {
                     <div class="text-red-500 text-sm mt-1">
                         @if (emailControl?.errors?.['required']) {
-                            <div>Email is required</div>
+                            <div>Email is required.</div>
                         }
                         @if (emailControl?.errors?.['email']) {
-                            <div>Invalid email format</div>
+                            <div>Invalid email format.</div>
                         }
                     </div>
                 }
@@ -34,7 +34,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                 @if (passwordControl?.invalid && passwordControl?.touched) {
                     <div class="text-red-500 text-sm mt-1">
                         @if (passwordControl?.errors?.['required']) {
-                            <div>password is required</div>
+                            <div>Password is required.</div>
                         }
                     </div>
                 }
