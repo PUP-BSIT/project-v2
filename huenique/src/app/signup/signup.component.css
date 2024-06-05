@@ -86,4 +86,8 @@
     border-color: #4A90E2; 
     box-shadow: 0 0 20px rgba(74, 144, 226, 0.5);
 }
-  
+
+.white-divider {
+    background: url('../../assets/card.svg') no-repeat center center;
+    background-size: cover;
+}
