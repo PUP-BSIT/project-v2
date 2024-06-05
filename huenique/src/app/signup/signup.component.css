@@ -11,25 +11,6 @@
     margin-bottom: 40px;
 }
 
-.rainbow-image {
-    width: 20%;
-    height: auto;
-    position: absolute; 
-    top: 0; 
-    margin-left: 1260px;
-    opacity: 0.4; 
-}
-
-.rainbow-image2 {
-    width: 20%; 
-    height: auto; 
-    position: absolute; 
-    top: 0;
-    margin-top: 473px;
-    margin-left: 0px; 
-    opacity: 0.4;
-}
-
 .image-asset {
     width: 600px; 
     height: auto;
@@ -65,7 +46,7 @@
 
 
 .h2-class {
-    margin-left: 150px;
+    text-align: center;
 }
 
 .vertical-line {
@@ -105,4 +86,8 @@
     border-color: #4A90E2; 
     box-shadow: 0 0 20px rgba(74, 144, 226, 0.5);
 }
-  
+
+.white-divider {
+    background: url('../../assets/card.svg') no-repeat center center;
+    background-size: cover;
+}
