@@ -21,10 +21,6 @@ export class SignupComponent implements OnInit {
     this.router.navigate(['/sign-in']);
   }
 
-  get nameControl() {
-    return this.signupForm.get('name');
-  }
-
   get usernameControl(){
     return this.signupForm.get('username');
   }
@@ -43,7 +39,6 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
-      name: ['', [Validators.required, this.noNumericCharactersValidator]],
       username: ['', [Validators.required, Validators.minLength(4)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
