@@ -8,7 +8,7 @@
     width: 350px; 
     height: auto;
     padding-top: 40px;
-    margin-right: 12px;
+    margin-right: 10px;
     margin-bottom: 40px;
 }
 
@@ -108,4 +108,9 @@
     outline: none; 
     border-color: #4A90E2; 
     box-shadow: 0 0 20px rgba(74, 144, 226, 0.5);
+}
+
+.white-divider {
+    background: url('../../assets/card.svg') no-repeat center center;
+    background-size: cover;
 }
