@@ -14,26 +14,18 @@
       <h2 class="h2-class text-5xl font-extrabold mb-6">Sign up</h2>
       <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="form space-y-7">
         <div class="relative">
-          <input formControlName="name" type="text" placeholder="Name" class="input input-bordered w-full">
-          <div *ngIf="nameControl?.invalid && nameControl?.touched" class="text-red-500 text-sm mt-1">
-            <div *ngIf="nameControl?.errors?.['required']">Name is required</div>
-            <div *ngIf="nameControl?.errors?.['noNumericCharacters']">Name cannot contain numeric characters</div>
-          </div>
-        </div>
-
-        <div class="relative">
           <input formControlName="username" type="text" placeholder="Username" class="input input-bordered w-full">
           <div *ngIf="usernameControl?.invalid && usernameControl?.touched" class="text-red-500 text-sm mt-1">
-            <div *ngIf="usernameControl?.errors?.['required']">Username is required</div>
-            <div *ngIf="usernameControl?.errors?.['minlength']">Username must be at least 4 characters</div>
+            <div *ngIf="usernameControl?.errors?.['required']">Username is required.</div>
+            <div *ngIf="usernameControl?.errors?.['minlength']">Username must be at least 4 characters.</div>
           </div>
         </div>
 
         <div class="relative">
           <input formControlName="email" type="email" placeholder="Email" class="input input-bordered w-full">
           <div *ngIf="emailControl?.invalid && emailControl?.touched" class="text-red-500 text-sm mt-1">
-            <div *ngIf="emailControl?.errors?.['required']">Email is required</div>
-            <div *ngIf="emailControl?.errors?.['email']">Invalid email format</div>
+            <div *ngIf="emailControl?.errors?.['required']">Email is required.</div>
+            <div *ngIf="emailControl?.errors?.['email']">Invalid email format.</div>
           </div>
         </div>
 
