@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../../service/login.service';
+import { Login } from '../model/login';
 
 @Component({
   selector: 'app-signin',
@@ -14,7 +15,7 @@ export class SigninComponent implements OnInit {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private loginService: LoginService,
+    private loginService: LoginService
   ) {}
 
   goToSignUp() {
@@ -38,16 +39,18 @@ export class SigninComponent implements OnInit {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
-      this.loginService.login(this.loginForm.value).subscribe(
+      const loginData: Login = this.loginForm.value;
+      this.loginService.login(loginData).subscribe(
         response => {
-          console.log('User logged in successfully', response);
+          localStorage.setItem('token', response.token);
+          this.router.navigate(['/homepage']);
         },
         error => {
-          console.log('Error logging in', error);
-          this.router.navigate(['/sign-up']);
+          console.error('Login failed', error);
         }
       );
+    } else {
+      console.error('Form is invalid');
     }
   }
 }
