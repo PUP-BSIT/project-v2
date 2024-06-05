@@ -9,6 +9,10 @@ import { SigninComponent } from './signin/signin.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { HomepageComponent } from './homepage/homepage.component';
+import { HomeComponent } from './homepage/home/home.component';
+import { ColorTestComponent } from './homepage/color-test/color-test.component';
+import { AboutComponent } from './homepage/about/about.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +20,11 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     LandingComponent,
     SignupComponent,
     SigninComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    HomepageComponent,
+    HomeComponent,
+    ColorTestComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
