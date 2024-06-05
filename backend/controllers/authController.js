@@ -17,7 +17,7 @@ const signup = async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     const token = uuidv4();
-    const sql = 'INSERT INTO users (username, email, password, token, confirmed) VALUES (?, ?, ?, ?, ?)';
+    const sql = 'INSERT INTO user (username, email, password, token, confirmed) VALUES (?, ?, ?, ?, ?)';
     connection.query(sql, [username, email, hashedPassword, token, false], (err, result) => {
       if (err) {
         console.error('Error inserting user: ' + err.stack);
@@ -36,7 +36,7 @@ const signup = async (req, res) => {
 const confirmEmail = (req, res) => {
   const { token } = req.params;
 
-  const sql = 'SELECT * FROM users WHERE token = ?';
+  const sql = 'SELECT * FROM user WHERE token = ?';
   connection.query(sql, [token], (err, results) => {
     if (err) {
       console.error('Error fetching user: ' + err.stack);
@@ -48,8 +48,8 @@ const confirmEmail = (req, res) => {
     }
 
     const user = results[0];
-    const updateSql = 'UPDATE users SET confirmed = ? WHERE user_id = ?';
-    connection.query(updateSql, [true, user.id], (updateErr) => {
+    const updateSql = 'UPDATE user SET confirmed = ? WHERE user_id = ?';
+    connection.query(updateSql, [true, user.user_id], (updateErr) => {
       if (updateErr) {
         console.error('Error confirming user: ' + updateErr.stack);
         return res.status(500).json({ error: 'Failed to confirm user', details: updateErr });
