@@ -85,6 +85,7 @@
 .signup-link {
     color: #007BFF; 
     text-decoration: none; 
+    cursor: pointer;
 }
 
 .signup-link:hover {
