@@ -12,25 +12,6 @@
     margin-bottom: 40px;
 }
 
-.rainbow-image {
-    width: 20%;
-    height: auto;
-    position: absolute; 
-    top: 0; 
-    margin-left: 1260px;
-    opacity: 0.4; 
-}
-
-.rainbow-image2 {
-    width: 20%; 
-    height: auto; 
-    position: absolute; 
-    top: 0;
-    margin-top: 450px;
-    margin-left: 0px; 
-    opacity: 0.4;
-}
-
 .image-asset {
     width: 600px; 
     height: auto;
