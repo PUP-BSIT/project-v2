@@ -55,10 +55,11 @@ const confirmEmail = (req, res) => {
         return res.status(500).json({ error: 'Failed to confirm user', details: updateErr });
       }
 
-      res.status(200).json({ message: 'Email confirmed successfully. You can now log in.' });
+      res.redirect('http://localhost:4200/confirm-email'); 
     });
   });
 };
+
 
 const login = (req, res) => {
   const { email, password } = req.body;
