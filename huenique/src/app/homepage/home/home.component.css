@@ -4,8 +4,12 @@
     overflow: hidden;
 }
 
-.bg-peach {
-    background-color: #ffeed9;
+.main {
+    background-image: url('../../../assets/homepage.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
 }
 
 .font-poppins {
@@ -42,26 +46,6 @@
     margin-bottom: 1.5rem;
 }
 
-.flex {
-    display: flex;
-}
-
-.flex-col {
-    flex-direction: column;
-}
-
-.items-center {
-    align-items: center;
-}
-
-.justify-center {
-    justify-content: center;
-}
-
-.justify-between {
-    justify-content: space-between;
-}
-
 .p-8 {
     padding: 2rem;
 }
@@ -86,7 +70,7 @@
 }
 
 .season-card {
-    background-color: white;
+    background-color: #FFE3E3;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -98,6 +82,7 @@
     font-size: 24px;
     font-weight: 700;
     margin-bottom: 10px;
+    color:#874213;
 }
 
 .season-image {
@@ -108,8 +93,6 @@
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
 }
 
 .grid {
@@ -125,7 +108,7 @@
 }
 
 @media (max-width: 1024px) {
-    .lg\:mt-0 {
-        margin-top: 0;
+    .container {
+        grid-template-columns: 1fr;
     }
 }
