@@ -1,37 +1,37 @@
 .confirmation-message-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #ffe5e5; /* Light peach background color */
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #ffe5e5; 
+}
   
-  .message-box {
-    text-align: center;
-    padding: 2rem;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+.message-box {
+  text-align: center;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
   
-  .message-box h2 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.5rem;
-    color: #ff6b6b; /* Soft red color */
-  }
+.message-box h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  color: #ff6b6b; 
+}
   
-  .message-box p {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
-    color: #333;
-  }
+.message-box p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  color: #333;
+}
   
-  .message-box a {
-    color: #ff6b6b;
-    text-decoration: none;
-  }
+.message-box a {
+  color: #ff6b6b;
+  text-decoration: none;
+}
   
-  .message-box a:hover {
-    text-decoration: underline;
-  }
+.message-box a:hover {
+  text-decoration: underline;
+}
   

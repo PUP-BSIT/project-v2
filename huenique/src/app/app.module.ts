@@ -15,6 +15,7 @@ import { ColorTestComponent } from './homepage/color-test/color-test.component';
 import { AboutComponent } from './homepage/about/about.component';
 import { NavbarComponent } from './homepage/navbar/navbar.component';
 import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { EmailConfirmationComponent } from './email-confirmation/email-confirmat
     ColorTestComponent,
     AboutComponent,
     NavbarComponent,
-    EmailConfirmationComponent
+    EmailConfirmationComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,

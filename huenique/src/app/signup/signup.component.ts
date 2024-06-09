@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { SignupService } from '../../service/signup.service';
+import { ViewChild } from '@angular/core';
+import { NotificationComponent } from '../notification/notification.component';
 
 @Component({
   selector: 'app-signup',
@@ -10,6 +12,7 @@ import { SignupService } from '../../service/signup.service';
 })
 export class SignupComponent implements OnInit {
   signupForm!: FormGroup;
+  @ViewChild(NotificationComponent) notificationComponent!: NotificationComponent;
 
   constructor(
     private router: Router,
@@ -55,11 +58,17 @@ export class SignupComponent implements OnInit {
     return form.get('password')?.value === form.get('confirmPassword')?.value ? null : { mismatch: true };
   }
 
+  showNotification(message: string) {
+    this.notificationComponent.show(message);
+  }
+
   onSubmit(): void {
     if (this.signupForm.valid) {
       this.signupService.signup(this.signupForm.value).subscribe(
         response => {
           console.log('User created successfully', response);
+          this.signupForm.reset();
+          this.showNotification('User created successfully. Please check your email to confirm');
         },
         error => {
           console.log('Error creating user', error);
@@ -67,4 +76,5 @@ export class SignupComponent implements OnInit {
       );
     }
   }
+
 }
