@@ -1,0 +1,12 @@
+.font-poppins {
+    font-family: 'Poppins', sans-serif;
+  }
+  
+.active-link {
+    border-bottom: 2px solid #000;
+    font-weight: bold;
+}
+
+.nav {
+    background-color: #FFFDFA;
+}
