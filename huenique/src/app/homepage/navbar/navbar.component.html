@@ -7,7 +7,7 @@
     <div class="flex space-x-16">
       <a routerLink="/home" routerLinkActive="active-link" class="text-gray-700 hover:text-blue-500 font-normal text-2xl">Home</a>
       <a routerLink="/color-analysis" routerLinkActive="active-link" class="text-gray-700 hover:text-blue-500 font-normal text-2xl">Color Analysis</a>
-      <a routerLink="/about" routerLinkActive="active-link" class="text-gray-700 hover:text-blue-500 font-normal text-2xl ">About</a>
+      <a routerLink="/about" routerLinkActive="active-link" class="text-gray-700 hover:text-blue-500 font-normal text-2xl">About</a>
     </div>
     <div class="relative">
       <button class="flex items-center space-x-2 focus:outline-none" (click)="toggleDropdown()">
@@ -17,7 +17,7 @@
       <div [ngClass]="{ 'hidden': !isDropdownOpen, 'block': isDropdownOpen }" class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md">
         <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</a>
         <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Settings</a>
-        <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
+        <a href="#" (click)="logout()" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
       </div>
     </div>
-  </nav>
+</nav>
