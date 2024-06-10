@@ -8,11 +8,19 @@ import { SignupResponse } from '../app/model/signupResponse';
   providedIn: 'root'
 })
 export class LoginService {
-  private apiUrl = 'http://localhost:3000/api/login';
+  private apiUrl = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) {}
 
   login(user: Login): Observable<SignupResponse> {
-    return this.http.post<SignupResponse>(this.apiUrl, user);
+    return this.http.post<SignupResponse>(`${this.apiUrl}/login`, user);
+  }
+
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/forgot-password`, { email });
+  }
+
+  resetPassword(resetData: { token: string, newPassword: string, confirmNewPassword: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/reset-password`, resetData);
   }
 }

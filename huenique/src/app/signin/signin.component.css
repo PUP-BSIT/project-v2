@@ -77,6 +77,11 @@
     text-decoration: underline; 
 }
 
+.forgot-password-link:hover {   
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .input {
     border: 2px solid #ccc; 
     padding: 8px 15px;

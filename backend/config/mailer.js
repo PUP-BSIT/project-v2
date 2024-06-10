@@ -27,4 +27,20 @@ const sendConfirmationEmail = (email, token) => {
   });  
 };
 
-module.exports = { sendConfirmationEmail };
+const sendResetPasswordEmail = (email, token) => {
+  const url = `http://localhost:4200/reset-password/${token}`;
+
+  transporter.sendMail({
+    to: email,
+    subject: 'Reset Password',
+    html: `Please click this link to reset your password: <a href="${url}">${url}</a>`,
+  }, (error, info) => {
+    if (error) {
+      console.log('Error sending email:', error);
+    } else {
+      console.log('Email sent:', info.response);
+    }
+  });  
+};
+
+module.exports = { sendConfirmationEmail, sendResetPasswordEmail };
