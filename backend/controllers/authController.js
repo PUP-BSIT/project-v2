@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
 const connection = require('../config/database');
-const { sendConfirmationEmail } = require('../config/mailer');
+const { sendConfirmationEmail, sendResetPasswordEmail } = require('../config/mailer');
 
 const signup = async (req, res) => {
   const { username, email, password, confirmPassword } = req.body;
@@ -60,6 +60,68 @@ const confirmEmail = (req, res) => {
   });
 };
 
+const forgotPassword = (req, res) => {
+  const { email } = req.body;
+
+  console.log('Received email:', email);
+
+  if (!email) {
+    return res.status(400).json({ error: 'Email is required' });
+  }
+
+  const token = uuidv4();
+  const sql = 'UPDATE user SET reset_token = ? WHERE email = ?';
+  
+  console.log(`Updating reset token for email: ${email}`);
+  
+  connection.query(sql, [token, email], (err, result) => {
+    if (err) {
+      console.error('Error updating user: ' + err.stack);
+      return res.status(500).json({ error: 'Failed to update user', details: err });
+    }
+
+    if (result.affectedRows === 0) {
+      console.error('No user found with this email');
+      return res.status(400).json({ error: 'No user found with this email' });
+    }
+
+    console.log('Reset token updated, sending email');
+    sendResetPasswordEmail(email, token);
+    res.status(200).json({ message: 'Password reset email sent successfully' });
+  });
+};
+
+const resetPassword = async (req, res) => {
+  const { token, newPassword, confirmNewPassword } = req.body;
+
+  if (!token || !newPassword || !confirmNewPassword) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  if (newPassword !== confirmNewPassword) {
+    return res.status(400).json({ error: 'Passwords do not match' });
+  }
+
+  try {
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const sql = 'UPDATE user SET password = ?, reset_token = NULL WHERE reset_token = ?';
+    connection.query(sql, [hashedPassword, token], (err, result) => {
+      if (err) {
+        console.error('Error updating password: ' + err.stack);
+        return res.status(500).json({ error: 'Failed to update password', details: err });
+      }
+
+      if (result.affectedRows === 0) {
+        return res.status(400).json({ error: 'Invalid or expired token' });
+      }
+
+      res.status(200).json({ message: 'Password reset successfully' });
+    });
+  } catch (err) {
+    console.error('Error hashing password: ' + err.stack);
+    res.status(500).json({ error: 'Failed to hash password' });
+  }
+};
 
 const login = (req, res) => {
   const { email, password } = req.body;
@@ -93,5 +155,7 @@ const login = (req, res) => {
 module.exports = {
   signup,
   confirmEmail,
+  forgotPassword,
+  resetPassword,
   login,
 };

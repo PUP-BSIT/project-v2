@@ -16,6 +16,8 @@ import { AboutComponent } from './homepage/about/about.component';
 import { NavbarComponent } from './homepage/navbar/navbar.component';
 import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
 import { NotificationComponent } from './notification/notification.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { NotificationComponent } from './notification/notification.component';
     AboutComponent,
     NavbarComponent,
     EmailConfirmationComponent,
-    NotificationComponent
+    NotificationComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

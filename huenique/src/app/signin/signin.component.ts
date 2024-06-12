@@ -22,6 +22,10 @@ export class SigninComponent implements OnInit {
     this.router.navigate(['/sign-up']);
   }
 
+  goToForgotPassword() {
+    this.router.navigate(['/forgot-password']);
+  }
+
   get emailControl() {
     return this.loginForm.get('email');
   }
