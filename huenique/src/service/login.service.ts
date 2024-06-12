@@ -5,6 +5,7 @@ import { Login } from '../app/model/login';
 import { SignupResponse } from '../app/model/signupResponse';
 import { ForgotPasswordRequest } from '../app/model/forgotPasswordRequest';
 import { ResetPasswordRequest } from '../app/model/resetPasswordRequest';
+import { ForgotPasswordResponse } from '../app/model/forgotPasswordResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,8 @@ export class LoginService {
     return this.http.post<SignupResponse>(`${this.apiUrl}/login`, user);
   }
 
-  forgotPassword(email: ForgotPasswordRequest): Observable<any> {
-    return this.http.post(`${this.apiUrl}/forgot-password`, email);
+  forgotPassword(email: ForgotPasswordRequest): Observable<ForgotPasswordResponse> {
+    return this.http.post<ForgotPasswordResponse>(`${this.apiUrl}/forgot-password`, email);
   }
 
   resetPassword(resetData: ResetPasswordRequest): Observable<any> {
