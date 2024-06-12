@@ -63,6 +63,8 @@ const confirmEmail = (req, res) => {
 const forgotPassword = (req, res) => {
   const { email } = req.body;
 
+  console.log('Received email:', email);
+
   if (!email) {
     return res.status(400).json({ error: 'Email is required' });
   }

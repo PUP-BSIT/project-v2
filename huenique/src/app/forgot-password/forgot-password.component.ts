@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../../service/login.service';
+import { ForgotPasswordRequest } from '../model/forgotPasswordRequest';
 
 @Component({
   selector: 'app-forgot-password',
@@ -29,8 +30,8 @@ export class ForgotPasswordComponent implements OnInit {
 
   onSubmit(): void {
     if (this.forgotPasswordForm.valid) {
-      const email = this.forgotPasswordForm.value.email;
-      this.loginService.forgotPassword(email).subscribe(
+      const request: ForgotPasswordRequest = { email: this.forgotPasswordForm.value.email };
+      this.loginService.forgotPassword(request).subscribe(
         response => {
           console.log('Password reset email sent', response);
           this.router.navigate(['/sign-in']);
