@@ -6,6 +6,7 @@ import { SignupComponent } from './signup/signup.component';
 import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import { ColorTestComponent } from './homepage/color-test/color-test.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AuthGuard } from '../service/auth.guard';
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'sign-up', component: SignupComponent },
   { path: 'confirm-email', component: EmailConfirmationComponent },
   { path: 'homepage', component: HomepageComponent, canActivate: [AuthGuard] },
+  { path: 'homepage/color-test', component: ColorTestComponent, canActivate: [AuthGuard] },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password/:token', component: ResetPasswordComponent },
   { path: '**', component: PageNotFoundComponent }
