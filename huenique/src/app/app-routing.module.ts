@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'sign-up', component: SignupComponent },
   { path: 'confirm-email', component: EmailConfirmationComponent },
   { path: 'homepage', component: HomepageComponent, canActivate: [AuthGuard] },
-  { path: 'homepage/color-test', component: ColorTestComponent, canActivate: [AuthGuard] },
+  { path: 'homepage/color-analysis', component: ColorTestComponent, canActivate: [AuthGuard] },
   { path: 'homepage/about', component: AboutComponent, canActivate: [AuthGuard] },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password/:token', component: ResetPasswordComponent },
