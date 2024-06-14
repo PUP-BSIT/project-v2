@@ -1,12 +1,12 @@
 .font-poppins {
     font-family: 'Poppins', sans-serif;
-  }
+}
   
-  .bg-brown-600 {
+.bg-brown-600 {
     background-color: #874213; 
-  }
+}
   
-  .button {
+.button {
     background-color: #4A90E2;
     color: white;
     font-weight: 600;
@@ -15,25 +15,25 @@
     font-size: 16px;
     text-transform: uppercase;
     transition: background-color 0.3s ease;
-  }
+}
   
-  .button:hover {
+.button:hover {
     background-color: #12589f;
-  }
+}
   
-  .bg-pink-100 {
+.bg-pink-100 {
     background-color: #FFE3E3; 
-  }
+}
   
-  .input-bordered {
+.input-bordered {
     border: 1px solid #ccc; 
     padding: 0.5rem;
     border-radius: 4px;
-  }
+}
   
-  .boy-image {
+.boy-image {
     max-width: 300px; 
     margin-right: 20px; 
     align-self: flex-start; 
-  }
+}
   
