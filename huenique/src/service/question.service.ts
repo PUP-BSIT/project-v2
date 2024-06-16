@@ -10,12 +10,12 @@ import { SaveResultResponse } from '../app/model/resultResponese';
 })
 export class QuestionService {
 
-  private apiUrl = 'http://localhost:3000/api/questions';
+  private apiUrl = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) { }
 
   getQuestions(): Observable<Question[]> {
-    return this.http.get<Question[]>(this.apiUrl);
+    return this.http.get<Question[]>(`${this.apiUrl}/questions`);
   }
 
   saveResult(result: QuizResult): Observable<SaveResultResponse> {

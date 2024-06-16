@@ -12,7 +12,7 @@ app.use(cors());
 const authRoutes = require('./routes/authRoutes');
 const quizRoutes = require('./routes/quizRoutes');
 
-app.use('/api', authRoutes);
+app.use('/api/auth', authRoutes);
 app.use('/api', quizRoutes);
 
 app.listen(port, () => {

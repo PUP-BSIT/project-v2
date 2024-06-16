@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../../../service/question.service';
 import { Question } from '../../model/question';
+import { QuizResult } from '../../model/result';
 
 @Component({
   selector: 'app-color-test',
@@ -22,7 +23,7 @@ export class ColorTestComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const seasonScores: { [key: number]: number } = { 1: 0, 2: 0, 3: 0, 4: 0 }; // Scores for Winter, Summer, Autumn, Spring
+    const seasonScores: { [key: number]: number } = { 1: 0, 2: 0, 3: 0, 4: 0 };
 
     this.selectedAnswers.forEach(seasonId => {
       if (seasonId !== null) {
@@ -37,14 +38,16 @@ export class ColorTestComponent implements OnInit {
     this.result = this.getSeasonName(Number(seasonId));
     console.log('Quiz result:', this.result);
 
-    // Save the result to the database
-    const resultData = {
-      user_id: 1, // Assuming a user ID of 1 for now
+    const resultData: QuizResult = {
+      user_id: 0,
       season_id: Number(seasonId),
-      hair_id: 1, // Assuming mock hair_id
-      makeup_id: 1, // Assuming mock makeup_id
-      accessories_id: 1, // Assuming mock accessories_id
-      result_date: new Date().toISOString().split('T')[0] // Current date
+      hair_id: 1,
+      makeup_id: 1,
+      accessories_id: 1,
+      color_combination_id: 1,
+      contact_lens_id: 1,
+      avoid_color_id: 1,
+      result_date: new Date().toISOString().split('T')[0]
     };
 
     this.questionService.saveResult(resultData).subscribe(response => {
