@@ -7,8 +7,8 @@ import { Question } from '../../model/question';
   templateUrl: './color-test.component.html',
   styleUrl: './color-test.component.css'
 })
-export class ColorTestComponent {
-  
+export class ColorTestComponent implements OnInit {
+
   questions: Question[] = [];
 
   constructor(private questionService: QuestionService) { }
