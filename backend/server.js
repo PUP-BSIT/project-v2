@@ -10,8 +10,10 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const authRoutes = require('./routes/authRoutes');
+const quizRoutes = require('./routes/quizRoutes');
 
 app.use('/api', authRoutes);
+app.use('/api', quizRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
