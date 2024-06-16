@@ -1,1 +1,24 @@
 <app-navbar></app-navbar>
+<form (ngSubmit)="onSubmit()">
+  <div *ngFor="let question of questions; let i = index">
+    <p>{{ question.question_text }}</p>
+    <div *ngFor="let option of question.options">
+      <input
+        type="radio"
+        [id]="'question' + question.question_id + 'option' + option.option_id"
+        [name]="'question' + question.question_id"
+        [value]="option.season_id"
+        [(ngModel)]="selectedAnswers[i]"
+        required
+      />
+      <label [for]="'question' + question.question_id + 'option' + option.option_id">
+        {{ option.option_text }}
+      </label>
+    </div>
+  </div>
+  <button type="submit">Submit</button>
+</form>
+
+<div *ngIf="result">
+  <h3>Your season is: {{ result }}</h3>
+</div>
