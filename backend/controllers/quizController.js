@@ -40,6 +40,20 @@ const getQuestionsWithOptions = (req, res) => {
     });
 };
 
+const saveResult = (req, res) => {
+    const { user_id, season_id, hair_id, makeup_id, accessories_id, result_date } = req.body;
+
+    const sql = 'INSERT INTO test_result (user_id, season_id, hair_id, makeup_id, accessories_id, result_date) VALUES (?, ?, ?, ?, ?, ?)';
+    connection.query(sql, [user_id, season_id, hair_id, makeup_id, accessories_id, result_date], (err, result) => {
+        if (err) {
+            console.error('Error saving result: ' + err.stack);
+            return res.status(500).json({ error: 'Database error', details: err });
+        }
+        res.status(201).json({ message: 'Result saved successfully', resultId: result.insertId });
+    });
+};
+
 module.exports = {
     getQuestionsWithOptions,
+    saveResult,
 };
