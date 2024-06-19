@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Question } from '../app/model/question';
 import { QuizResult } from '../app/model/result';
@@ -15,10 +15,14 @@ export class QuestionService {
   constructor(private http: HttpClient) { }
 
   getQuestions(): Observable<Question[]> {
-    return this.http.get<Question[]>(`${this.apiUrl}/questions`);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<Question[]>(`${this.apiUrl}/questions`, { headers });
   }
 
   saveResult(result: QuizResult): Observable<SaveResultResponse> {
-    return this.http.post<SaveResultResponse>(`${this.apiUrl}/results`, result);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post<SaveResultResponse>(`${this.apiUrl}/results`, result, { headers });
   }
 }
