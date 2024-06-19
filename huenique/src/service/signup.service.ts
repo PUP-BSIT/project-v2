@@ -8,7 +8,7 @@ import { SignupResponse } from '../app/model/signupResponse';
   providedIn: 'root'
 })
 export class SignupService {
-  private apiUrl = 'http://localhost:3000/api/signup';
+  private apiUrl = 'http://localhost:3000/api/auth/signup';
 
   constructor(private http: HttpClient) {}
 

@@ -1,1 +1,39 @@
 <app-navbar></app-navbar>
+<div class="flex justify-center my-8">
+  <ul class="steps steps-horizontal w-full max-w-4xl">
+    <li class="step step-primary">Take the Test</li>
+    <li class="step">Seasonal Tone Result</li>
+    <li class="step">Email Copy Request</li>
+  </ul>
+</div>
+
+<div class="max-w-2xl mx-auto">
+  <form (ngSubmit)="onSubmit()">
+    @for (question of questions; track question.question_id) {
+      <div class="mb-8 text-center">
+        <p class="text-2xl font-semibold mb-4">{{ question.question_text }}</p>
+        @for (option of question.options; track option.option_id) {
+          <div class="flex items-center justify-center mb-2">
+            <input
+              type="radio"
+              [id]="'question' + question.question_id + 'option' + option.option_id"
+              [name]="'question' + question.question_id"
+              [value]="option.season_id"
+              [(ngModel)]="selectedAnswers[questions.indexOf(question)]"
+              class="radio radio-primary mr-2"
+              required
+            />
+            <label [for]="'question' + question.question_id + 'option' + option.option_id">
+              {{ option.option_text }}
+            </label>
+          </div>
+        } @empty {
+          <div>No options available</div>
+        }
+      </div>
+    } @empty {
+      <div>No questions available</div>
+    }
+    <button type="submit" class="btn btn-primary mx-auto">Submit</button>
+  </form>
+</div>
