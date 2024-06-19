@@ -11,7 +11,7 @@ const getQuestionsWithOptions = (req, res) => {
     FROM questions q
     JOIN options o ON q.question_id = o.question_id
   `;
-
+  
   connection.query(sql, (err, results) => {
     if (err) {
       console.error('Error fetching questions and options: ' + err.stack);
@@ -40,7 +40,6 @@ const getQuestionsWithOptions = (req, res) => {
 
 const saveResult = (req, res) => {
   const {
-    user_id,
     season_id,
     result_date,
     hair_id,
@@ -51,6 +50,8 @@ const saveResult = (req, res) => {
     avoid_color_id
   } = req.body;
 
+  const user_id = req.userId;
+  
   const sql = `
     INSERT INTO test_result (
       user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
@@ -77,4 +78,4 @@ const saveResult = (req, res) => {
 module.exports = {
   getQuestionsWithOptions,
   saveResult,
-};
+}
