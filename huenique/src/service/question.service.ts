@@ -25,4 +25,10 @@ export class QuestionService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.post<SaveResultResponse>(`${this.apiUrl}/results`, result, { headers });
   }
+  
+  getTestResult(): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<any>(`${this.apiUrl}/results`, { headers });
+  }
 }
