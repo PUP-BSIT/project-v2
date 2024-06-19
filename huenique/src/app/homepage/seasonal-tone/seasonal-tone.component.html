@@ -7,9 +7,18 @@
   </ul>
 </div>
 
-@if(result){<div>
+@if(result){
+  <div>
+    <div>
     <h2>Your Seasonal Tone</h2>
     <p>Season: {{ result.season_name }}</p>
+    <button (click)="learnMore()" class="btn btn-primary">Learn More</button>
+    @if(recommendations){ 
+      <div>
+        <h3>Recommendations</h3>
+        <p>{{ recommendations }}</p>
+      </div>
+    }
+   </div>
 </div>
 }
-  

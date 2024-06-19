@@ -108,8 +108,38 @@ const getTestResult = (req, res) => {
   });
 };
 
+const getRecommendations = (req, res) => {
+  const { season_id } = req.params;
+
+  const sql = `
+    SELECT 
+      CONCAT(
+        'Accessories: ', (SELECT accessories_details FROM accessories WHERE season_id = ?), '\n',
+        'Avoid: ', (SELECT avoid_details FROM avoid_color WHERE season_id = ?), '\n',
+        'Combinations: ', (SELECT combination_details FROM color_combination WHERE season_id = ?), '\n',
+        'Lens: ', (SELECT lens_details FROM contact_lens WHERE season_id = ?), '\n',
+        'Hair: ', (SELECT hair_details FROM hair_color WHERE season_id = ?), '\n',
+        'Makeup: ', (SELECT shade_details FROM makeup_shade WHERE season_id = ?)
+      ) AS recommendations
+  `;
+
+  connection.query(sql, [season_id, season_id, season_id, season_id, season_id, season_id], (err, results) => {
+    if (err) {
+      console.error('Error fetching recommendations: ' + err.stack);
+      return res.status(500).json({ error: 'Database error', details: err });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: 'No recommendations found' });
+    }
+
+    res.status(200).json(results[0]);
+  });
+};
+
 module.exports = {
   getQuestionsWithOptions,
   saveResult,
-  getTestResult
+  getTestResult,
+  getRecommendations
 };
