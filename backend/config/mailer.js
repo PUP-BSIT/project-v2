@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendConfirmationEmail = (email, token) => {
-  const url = `http://localhost:3000/api/confirm/${token}`;
+  const url = `http://localhost:3000/api/auth/confirm/${token}`;
 
   transporter.sendMail({
     to: email,
@@ -24,7 +24,7 @@ const sendConfirmationEmail = (email, token) => {
     } else {
       console.log('Email sent:', info.response);
     }
-  });  
+  });
 };
 
 const sendResetPasswordEmail = (email, token) => {
