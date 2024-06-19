@@ -7,13 +7,14 @@ import { AuthService } from '../../../service/auth.service';
 @Component({
   selector: 'app-color-test',
   templateUrl: './color-test.component.html',
-  styleUrl: './color-test.component.css'
+  styleUrls: ['./color-test.component.css']
 })
 export class ColorTestComponent implements OnInit {
   questions: Question[] = [];
   selectedAnswers: number[] = [];
   result: string | null = null;
   userId: number | null = null;
+  currentStep: number = 1;
 
   constructor(
     private questionService: QuestionService,
@@ -36,7 +37,6 @@ export class ColorTestComponent implements OnInit {
       }
     });
 
-    // Determine the season with the highest score
     const maxScore = Math.max(...Object.values(seasonScores));
     const seasonId = Object.keys(seasonScores).find(key => seasonScores[Number(key)] === maxScore);
 
@@ -57,6 +57,7 @@ export class ColorTestComponent implements OnInit {
 
     this.questionService.saveResult(resultData).subscribe(response => {
       console.log('Result saved:', response);
+      this.currentStep++;
     });
   }
 
