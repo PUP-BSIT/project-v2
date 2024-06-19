@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../../../service/question.service';
 import { Question } from '../../model/question';
 import { QuizResult } from '../../model/result';
+import { AuthService } from '../../../service/auth.service';
 
 @Component({
   selector: 'app-color-test',
@@ -12,14 +13,18 @@ export class ColorTestComponent implements OnInit {
   questions: Question[] = [];
   selectedAnswers: number[] = [];
   result: string | null = null;
+  userId: number | null = null;
 
-  constructor(private questionService: QuestionService) { }
+  constructor(
+    private questionService: QuestionService,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     this.questionService.getQuestions().subscribe(data => {
       this.questions = data;
       this.selectedAnswers = new Array(this.questions.length).fill(null);
     });
+    this.userId = this.authService.getUserId();
   }
 
   onSubmit(): void {
@@ -39,14 +44,14 @@ export class ColorTestComponent implements OnInit {
     console.log('Quiz result:', this.result);
 
     const resultData: QuizResult = {
-      user_id: 0,
+      user_id: this.userId!,
       season_id: Number(seasonId),
-      hair_id: 1,
-      makeup_id: 1,
-      accessories_id: 1,
-      color_combination_id: 1,
-      contact_lens_id: 1,
-      avoid_color_id: 1,
+      hair_id: Number(seasonId),
+      makeup_id: Number(seasonId),
+      accessories_id: Number(seasonId),
+      color_combination_id: Number(seasonId),
+      contact_lens_id: Number(seasonId),
+      avoid_color_id: Number(seasonId),
       result_date: new Date().toISOString().split('T')[0]
     };
 

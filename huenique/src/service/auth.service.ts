@@ -19,4 +19,14 @@ export class AuthService {
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
   }
+
+  getUserId(): number | null {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const payload = atob(token.split('.')[1]);
+      const parsedPayload = JSON.parse(payload);
+      return parsedPayload.userId;
+    }
+    return null;
+  }
 }
