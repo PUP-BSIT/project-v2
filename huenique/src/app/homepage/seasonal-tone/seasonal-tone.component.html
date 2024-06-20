@@ -1,0 +1,24 @@
+<app-navbar></app-navbar>
+<div class="flex justify-center my-8">
+  <ul class="steps steps-horizontal w-full max-w-4xl">
+    <li class="step" [ngClass]="{'step-primary': currentStep >= 1}">Take the Test</li>
+    <li class="step" [ngClass]="{'step-primary': currentStep >= 2}">Seasonal Tone Result</li>
+    <li class="step" [ngClass]="{'step-primary': currentStep >= 3}">Email Copy Request</li>
+  </ul>
+</div>
+
+@if(result){
+  <div>
+    <div>
+    <h2>Your Seasonal Tone</h2>
+    <p>Season: {{ result.season_name }}</p>
+    <button (click)="learnMore()" class="btn btn-primary">Learn More</button>
+    @if(recommendations){ 
+      <div>
+        <h3>Recommendations</h3>
+        <p>{{ recommendations }}</p>
+      </div>
+    }
+   </div>
+</div>
+}

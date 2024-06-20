@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { QuestionService } from '../../../service/question.service';
 import { Question } from '../../model/question';
 import { QuizResult } from '../../model/result';
@@ -18,7 +19,9 @@ export class ColorTestComponent implements OnInit {
 
   constructor(
     private questionService: QuestionService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private router: Router 
+  ) { }
 
   ngOnInit(): void {
     this.questionService.getQuestions().subscribe(data => {
@@ -57,7 +60,7 @@ export class ColorTestComponent implements OnInit {
 
     this.questionService.saveResult(resultData).subscribe(response => {
       console.log('Result saved:', response);
-      this.currentStep++;
+      this.router.navigate(['homepage/seasonal-tone']);
     });
   }
 

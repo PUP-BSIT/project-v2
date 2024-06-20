@@ -19,6 +19,8 @@ import { EmailConfirmationComponent } from './email-confirmation/email-confirmat
 import { NotificationComponent } from './notification/notification.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SeasonalToneComponent } from './homepage/seasonal-tone/seasonal-tone.component';
+import { QuestionService } from '../service/question.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     EmailConfirmationComponent,
     NotificationComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    SeasonalToneComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [QuestionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
