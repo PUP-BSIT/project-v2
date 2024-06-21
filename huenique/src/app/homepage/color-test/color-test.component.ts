@@ -20,7 +20,7 @@ export class ColorTestComponent implements OnInit {
   constructor(
     private questionService: QuestionService,
     private authService: AuthService,
-    private router: Router 
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -32,6 +32,12 @@ export class ColorTestComponent implements OnInit {
   }
 
   onSubmit(): void {
+    const firstUnansweredIndex = this.selectedAnswers.findIndex(answer => answer === null);
+    if (firstUnansweredIndex !== -1) {
+      document.getElementById(`question-${firstUnansweredIndex}`)?.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+
     const seasonScores: { [key: number]: number } = { 1: 0, 2: 0, 3: 0, 4: 0 };
 
     this.selectedAnswers.forEach(seasonId => {
@@ -60,7 +66,7 @@ export class ColorTestComponent implements OnInit {
 
     this.questionService.saveResult(resultData).subscribe(response => {
       console.log('Result saved:', response);
-      this.router.navigate(['homepage/seasonal-tone']);
+      this.router.navigate(['/homepage/seasonal-tone']);
     });
   }
 
@@ -72,5 +78,13 @@ export class ColorTestComponent implements OnInit {
       case 4: return 'Spring';
       default: return 'Unknown';
     }
+  }
+
+  trackByQuestionId(index: number, question: Question): number {
+    return question.question_id;
+  }
+
+  trackByOptionId(index: number, option: any): number {
+    return option.option_id;
   }
 }
