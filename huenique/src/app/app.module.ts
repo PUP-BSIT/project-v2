@@ -21,6 +21,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SeasonalToneComponent } from './homepage/seasonal-tone/seasonal-tone.component';
 import { QuestionService } from '../service/question.service';
+import { EmailRequestComponent } from './homepage/email-request/email-request.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { QuestionService } from '../service/question.service';
     NotificationComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    SeasonalToneComponent
+    SeasonalToneComponent,
+    EmailRequestComponent
   ],
   imports: [
     BrowserModule,
