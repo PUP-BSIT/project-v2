@@ -1,4 +1,15 @@
 .font-poppins {
     font-family: 'Poppins', sans-serif;
-  }
-  
+}
+
+.main {
+    overflow: hidden;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0;
+}
