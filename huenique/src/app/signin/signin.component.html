@@ -46,3 +46,11 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     </div>
   </div>
 </div>
+
+<div class="toast toast-center" *ngIf="showErrorToast">
+    <div class="alert alert-error">
+        <div>
+            <span>Invalid password or email</span>
+        </div>
+    </div>
+</div>

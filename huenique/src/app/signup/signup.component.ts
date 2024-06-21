@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { SignupService } from '../../service/signup.service';
-import { ViewChild } from '@angular/core';
-import { NotificationComponent } from '../notification/notification.component';
 
 @Component({
   selector: 'app-signup',
@@ -12,7 +10,7 @@ import { NotificationComponent } from '../notification/notification.component';
 })
 export class SignupComponent implements OnInit {
   signupForm!: FormGroup;
-  @ViewChild(NotificationComponent) notificationComponent!: NotificationComponent;
+  showSuccessToast: boolean = false;
 
   constructor(
     private router: Router,
@@ -24,42 +22,43 @@ export class SignupComponent implements OnInit {
     this.router.navigate(['/sign-in']);
   }
 
-  get usernameControl(){
+  get usernameControl() {
     return this.signupForm.get('username');
   }
 
-  get emailControl(){
+  get emailControl() {
     return this.signupForm.get('email');
   }
 
-  get passwordControl(){
+  get passwordControl() {
     return this.signupForm.get('password');
   }
 
-  get confirmPasswordControl(){
+  get confirmPasswordControl() {
     return this.signupForm.get('confirmPassword');
   }
 
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(4)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      username: ['', [Validators.required, Validators.minLength(4), this.sqlInjectionValidator]],
+      email: ['', [Validators.required, Validators.email, this.sqlInjectionValidator]],
+      password: ['', [Validators.required, Validators.minLength(6), this.sqlInjectionValidator]],
       confirmPassword: ['', Validators.required]
     }, { validator: this.passwordMatchValidator });
   }
 
-  noNumericCharactersValidator(control: AbstractControl): ValidationErrors | null {
-    const isValid = /^[^\d]*$/.test(control.value);
-    return isValid ? null : { noNumericCharacters: true };
+  sqlInjectionValidator(control: AbstractControl): ValidationErrors | null {
+    const forbiddenCharacters = /['";=<>]/;  // List of characters typically used in SQL injection
+    const sqlKeywords = /\b(SELECT|INSERT|DELETE|UPDATE|DROP|ALTER|CREATE|TRUNCATE|EXEC|UNION|--|OR|AND|WHERE|LIKE|IN|NOT|NULL|IS|VALUES)\b/i;
+    
+    if (forbiddenCharacters.test(control.value) || sqlKeywords.test(control.value)) {
+      return { sqlInjection: true };
+    }
+    return null;
   }
 
-  passwordMatchValidator(form: FormGroup) {
+  passwordMatchValidator(form: FormGroup): ValidationErrors | null {
     return form.get('password')?.value === form.get('confirmPassword')?.value ? null : { mismatch: true };
-  }
-
-  showNotification(message: string) {
-    this.notificationComponent.show(message);
   }
 
   onSubmit(): void {
@@ -68,7 +67,10 @@ export class SignupComponent implements OnInit {
         response => {
           console.log('User created successfully', response);
           this.signupForm.reset();
-          this.showNotification('User created successfully. Please check your email to confirm');
+          this.showSuccessToast = true;
+          setTimeout(() => {
+            this.showSuccessToast = false;
+          }, 5000);
         },
         error => {
           console.log('Error creating user', error);
@@ -76,5 +78,4 @@ export class SignupComponent implements OnInit {
       );
     }
   }
-
 }

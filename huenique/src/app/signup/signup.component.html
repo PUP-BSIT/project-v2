@@ -18,6 +18,7 @@
           <div *ngIf="usernameControl?.invalid && usernameControl?.touched" class="text-red-500 text-sm mt-1">
             <div *ngIf="usernameControl?.errors?.['required']">Username is required.</div>
             <div *ngIf="usernameControl?.errors?.['minlength']">Username must be at least 4 characters.</div>
+            <div *ngIf="usernameControl?.errors?.['sqlInjection']">Invalid characters.</div>
           </div>
         </div>
 
@@ -26,6 +27,7 @@
           <div *ngIf="emailControl?.invalid && emailControl?.touched" class="text-red-500 text-sm mt-1">
             <div *ngIf="emailControl?.errors?.['required']">Email is required.</div>
             <div *ngIf="emailControl?.errors?.['email']">Invalid email format.</div>
+            <div *ngIf="emailControl?.errors?.['sqlInjection']">Invalid characters.</div>
           </div>
         </div>
 
@@ -34,6 +36,7 @@
           <div *ngIf="passwordControl?.invalid && passwordControl?.touched" class="text-red-500 text-sm mt-1">
             <div *ngIf="passwordControl?.errors?.['required']">Password is required.</div>
             <div *ngIf="passwordControl?.errors?.['minlength']">Password must be at least 6 characters.</div>
+            <div *ngIf="passwordControl?.errors?.['sqlInjection']">Invalid characters.</div>
           </div>
           <span class="absolute inset-y-0 right-0 pr-3 flex items-center">
             <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -58,7 +61,14 @@
         <button type="submit" class="btn btn-primary w-full">Create Account</button>
         <p class="account-signup-text">Already have an account? <a (click)="goToSignIn()" class="signup-link">Sign In</a></p>
       </form>
-      <app-notification></app-notification>
     </div>
   </div>
+</div>
+
+<div class="toast toast-center" *ngIf="showSuccessToast">
+    <div class="alert alert-success">
+        <div>
+            <span>Verification Email has been sent! Check your email to complete the sign-up process</span>
+        </div>
+    </div>
 </div>
