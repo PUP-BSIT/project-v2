@@ -15,17 +15,29 @@ const signup = async (req, res) => {
   }
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const token = uuidv4();
-    const sql = 'INSERT INTO user (username, email, password, token, confirmed) VALUES (?, ?, ?, ?, ?)';
-    connection.query(sql, [username, email, hashedPassword, token, false], (err, result) => {
+    const emailCheckSql = 'SELECT * FROM user WHERE email = ?';
+    connection.query(emailCheckSql, [email], async (err, results) => {
       if (err) {
-        console.error('Error inserting user: ' + err.stack);
-        return res.status(500).json({ error: 'Failed to create user', details: err });
+        console.error('Error checking email: ' + err.stack);
+        return res.status(500).json({ error: 'Database error', details: err });
       }
 
-      sendConfirmationEmail(email, token);
-      res.status(201).json({ message: 'User created successfully. Please check your email to confirm your account.' });
+      if (results.length > 0) {
+        return res.status(400).json({ error: 'Email already in use' });
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const token = uuidv4();
+      const sql = 'INSERT INTO user (username, email, password, token, confirmed) VALUES (?, ?, ?, ?, ?)';
+      connection.query(sql, [username, email, hashedPassword, token, false], (err, result) => {
+        if (err) {
+          console.error('Error inserting user: ' + err.stack);
+          return res.status(500).json({ error: 'Failed to create user', details: err });
+        }
+
+        sendConfirmationEmail(email, token);
+        res.status(201).json({ message: 'User created successfully. Please check your email to confirm your account.' });
+      });
     });
   } catch (err) {
     console.error('Error hashing password: ' + err.stack);
