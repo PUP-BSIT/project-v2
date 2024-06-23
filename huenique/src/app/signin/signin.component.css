@@ -2,10 +2,10 @@
     display: block;
     height: 100vh;
     overflow: hidden;
-  }
+}
 
 .custom-logo-size {
-    width: 350px; 
+    width: 350px;
     height: auto;
     padding-top: 40px;
     margin-right: 10px;
@@ -13,7 +13,7 @@
 }
 
 .image-asset {
-    width: 600px; 
+    width: 600px;
     height: auto;
     margin-bottom: 10px;
     margin-left: 25px;
@@ -22,13 +22,13 @@
 }
 
 .bg-peach {
-    background-color: #ffeed9; 
+    background-color: #ffeed9;
 }
-  
+
 .header-container {
     margin-top: -20px;
 }
-  
+
 .footer {
     position: fixed;
     bottom: 0;
@@ -36,17 +36,17 @@
     width: 100%;
     padding: 0;
 }
-  
+
 @media (min-width: 768px) {
     .landing-content {
-      flex-wrap: nowrap;
+        flex-wrap: nowrap;
     }
+
     .text-container,
     .image-container {
-      width: 50%;
+        width: 50%;
     }
 }
-
 
 .h2-class {
     text-align: center;
@@ -55,48 +55,56 @@
 
 .vertical-line {
     width: 5px;
-    margin-top: 68px;  
-    height: 650px; 
+    margin-top: 68px;
+    height: 650px;
     background-color: #9d9b9b;
-    border-radius: 20px;  
+    border-radius: 20px;
 }
 
 .account-signin-text {
-    text-align: center; 
-    font-size: 16px; 
+    text-align: center;
+    font-size: 16px;
     color: #666;
 }
 
 .signin-link {
-    color: #007BFF; 
+    color: #007BFF;
     text-decoration: none;
     cursor: pointer;
 }
 
 .signin-link:hover {
-    text-decoration: underline; 
+    text-decoration: underline;
 }
 
-.forgot-password-link:hover {   
+.forgot-password-link:hover {
     text-decoration: underline;
     cursor: pointer;
 }
 
 .input {
-    border: 2px solid #ccc; 
+    border: 2px solid #ccc;
     padding: 8px 15px;
-    border-radius: 5px; 
-    width: 100%; 
+    border-radius: 5px;
+    width: 100%;
     box-sizing: border-box;
 }
 
 .input:focus {
-    outline: none; 
-    border-color: #4A90E2; 
+    outline: none;
+    border-color: #4A90E2;
     box-shadow: 0 0 20px rgba(74, 144, 226, 0.5);
 }
 
 .white-divider {
     background: url('../../assets/card.svg') no-repeat center center;
     background-size: cover;
+}
+
+.toast-center {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
 }

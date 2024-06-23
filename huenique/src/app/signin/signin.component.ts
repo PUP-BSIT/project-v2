@@ -11,6 +11,7 @@ import { Login } from '../model/login';
 })
 export class SigninComponent implements OnInit {
   loginForm!: FormGroup;
+  showErrorToast: boolean = false;
 
   constructor(
     private router: Router,
@@ -50,6 +51,10 @@ export class SigninComponent implements OnInit {
           this.router.navigate(['/homepage']);
         },
         error => {
+          this.showErrorToast = true;
+          setTimeout(() => {
+            this.showErrorToast = false;
+          }, 3000);
           console.error('Login failed', error);
         }
       );

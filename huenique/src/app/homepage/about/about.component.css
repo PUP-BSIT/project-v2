@@ -1,39 +1,29 @@
 .font-poppins {
     font-family: 'Poppins', sans-serif;
+  }
+  
+.main {
+    overflow: hidden;
+    height: 100vh;
 }
   
-.bg-brown-600 {
-    background-color: #874213; 
+.girl {
+    margin-left: -200px;
+    width: 20%; 
+    max-width: 400px;
 }
-  
-.button {
-    background-color: #4A90E2;
-    color: white;
-    font-weight: 600;
-    padding: 12px 24px;
-    border-radius: 40px;
-    font-size: 16px;
-    text-transform: uppercase;
-    transition: background-color 0.3s ease;
+
+.two {
+    margin-right: -200px;
+    width: 20%; 
+    max-width: 400px;
 }
-  
-.button:hover {
-    background-color: #12589f;
-}
-  
-.bg-pink-100 {
-    background-color: #FFE3E3; 
-}
-  
-.input-bordered {
-    border: 1px solid #ccc; 
-    padding: 0.5rem;
-    border-radius: 4px;
-}
-  
-.boy-image {
-    max-width: 300px; 
-    margin-right: 20px; 
-    align-self: flex-start; 
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0;
 }
   

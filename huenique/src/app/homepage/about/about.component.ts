@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrl: './about.component.css'
 })
 export class AboutComponent {
-
+  huenique = "@huenique";
+  email = "officialhuenique@gmail.com";
 }
