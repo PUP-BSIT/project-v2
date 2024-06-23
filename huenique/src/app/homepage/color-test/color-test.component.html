@@ -1,31 +1,39 @@
 <app-navbar></app-navbar>
 <div class="flex justify-center my-8">
   <ul class="steps steps-horizontal w-full max-w-4xl">
-    <li class="step" [ngClass]="{'step-primary': currentStep >= 1}">Take the Test</li>
-    <li class="step" [ngClass]="{'step-primary': currentStep >= 2}">Seasonal Tone Result</li>
-    <li class="step" [ngClass]="{'step-primary': currentStep >= 3}">Email Copy Request</li>
+    <li class="step" data-content="" [ngClass]="{'step-primary': currentStep >= 1}">Take the Test</li>
+    <li class="step" data-content="" [ngClass]="{'step-primary': currentStep >= 2}">Seasonal Tone Result</li>
+    <li class="step" data-content="" [ngClass]="{'step-primary': currentStep >= 3}">Email Copy Request</li>
   </ul>
 </div>
 
 <div class="max-w-2xl mx-auto">
   <form (ngSubmit)="onSubmit()">
-    <div *ngFor="let question of questions; let i = index; trackBy: trackByQuestionId" class="mb-8 text-center" [id]="'question-' + i">
-      <p class="text-2xl font-semibold mb-4">{{ question.question_text }}</p>
-      <div *ngFor="let option of question.options; trackBy: trackByOptionId" class="flex items-center justify-center mb-2">
-        <input
-          type="radio"
-          [id]="'question' + question.question_id + 'option' + option.option_id"
-          [name]="'question' + question.question_id"
-          [value]="option.season_id"
-          [(ngModel)]="selectedAnswers[i]"
-          class="radio radio-primary mr-2"
-          required
-        />
-        <label [for]="'question' + question.question_id + 'option' + option.option_id">
-          {{ option.option_text }}
-        </label>
+    @for (question of questions; track question.question_id) {
+      <div class="mb-8 text-center" [id]="'question-' + questions.indexOf(question)">
+        <p class="text-2xl font-semibold mb-4">{{ question.question_text }}</p>
+        @for (option of question.options; track option.option_id) {
+          <div class="flex items-center justify-center mb-2">
+            <input
+              type="radio"
+              [id]="'question' + question.question_id + 'option' + option.option_id"
+              [name]="'question' + question.question_id"
+              [value]="option.season_id"
+              [(ngModel)]="selectedAnswers[questions.indexOf(question)]"
+              class="radio radio-primary mr-2"
+              required
+            />
+            <label [for]="'question' + question.question_id + 'option' + option.option_id">
+              {{ option.option_text }}
+            </label>
+          </div>
+        } @empty {
+          <p>No options available</p>
+        }
       </div>
-    </div>
+    } @empty {
+      <p>No questions available</p>
+    }
     <button type="submit" class="btn btn-primary mx-auto">Submit</button>
   </form>
 </div>
