@@ -14,7 +14,7 @@ form {
 form p {
   font-size: 2rem;
   font-weight: bold;
-  color: #A47E70; /* Update the color of the questions */
+  color: #A47E70; 
 }
 
 form .flex.items-center {
