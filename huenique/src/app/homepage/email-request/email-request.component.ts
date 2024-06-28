@@ -12,6 +12,7 @@ export class EmailRequestComponent implements OnInit {
   email: string = '';
   results: any;
   userId: number | null = null;
+  currentStep: number = 3;
 
   constructor(
     private emailService: EmailService,

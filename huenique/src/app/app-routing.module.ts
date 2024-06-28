@@ -24,6 +24,7 @@ const routes: Routes = [
   { path: 'homepage', component: HomepageComponent, canActivate: [AuthGuard] },
   { path: 'homepage/color-analysis', component: ColorTestComponent, canActivate: [AuthGuard] },
   { path: 'homepage/seasonal-tone', component: SeasonalToneComponent, canActivate: [AuthGuard] },
+  { path: 'homepage/email-request', component: EmailRequestComponent },
   { path: 'homepage/about', component: AboutComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent },
