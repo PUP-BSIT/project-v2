@@ -7,9 +7,9 @@
   </ul>
 </div>
 
-<div class="max-w-2xl mx-auto">
+<div class="max-w-full mx-auto">
   <form (ngSubmit)="onSubmit()">
-    <div *ngFor="let question of questions; let i = index" [ngClass]="{'faded': i !== currentQuestionIndex, 'highlighted': i === currentQuestionIndex}">
+    <div *ngFor="let question of questions; let i = index" [ngClass]="{'faded': i !== currentQuestionIndex, 'highlighted': i === currentQuestionIndex}" class="border-b my-3 py-3">
       <div class="mb-8 text-center" [id]="'question-' + i">
         <p class="text-2xl font-semibold mb-4">{{ question.question_text }}</p>
         <div *ngFor="let option of question.options" class="flex items-center justify-center mb-2">
