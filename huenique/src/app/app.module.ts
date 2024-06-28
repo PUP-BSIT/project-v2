@@ -22,6 +22,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { SeasonalToneComponent } from './homepage/seasonal-tone/seasonal-tone.component';
 import { QuestionService } from '../service/question.service';
 import { EmailRequestComponent } from './homepage/email-request/email-request.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { EmailRequestComponent } from './homepage/email-request/email-request.co
     ForgotPasswordComponent,
     ResetPasswordComponent,
     SeasonalToneComponent,
-    EmailRequestComponent
+    EmailRequestComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
