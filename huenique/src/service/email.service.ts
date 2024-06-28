@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,8 +10,10 @@ export class EmailService {
 
   constructor(private http: HttpClient) { }
 
-  sendEmail(email: string, results: any): Observable<any> {
-    const body = { email, results };
-    return this.http.post(`${this.apiUrl}/send-email`, body);
+  sendEmail(email: string, results: any, userId: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const body = { email, results, userId };
+    return this.http.post(`${this.apiUrl}/send-email`, body, { headers });
   }
 }
