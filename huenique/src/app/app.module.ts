@@ -20,6 +20,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SeasonalToneComponent } from './homepage/seasonal-tone/seasonal-tone.component';
 import { EmailRequestComponent } from './homepage/email-request/email-request.component';
+import { ProfileComponent } from './profile/profile.component';
 import { EmailService } from '../service/email.service';
 import { QuestionService } from '../service/question.service';
 
@@ -40,7 +41,8 @@ import { QuestionService } from '../service/question.service';
     ForgotPasswordComponent,
     ResetPasswordComponent,
     SeasonalToneComponent,
-    EmailRequestComponent
+    EmailRequestComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

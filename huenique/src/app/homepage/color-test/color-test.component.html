@@ -9,31 +9,26 @@
 
 <div class="max-w-2xl mx-auto">
   <form (ngSubmit)="onSubmit()">
-    @for (question of questions; track question.question_id) {
-      <div class="mb-8 text-center" [id]="'question-' + questions.indexOf(question)">
+    <div *ngFor="let question of questions; let i = index" [ngClass]="{'faded': i !== currentQuestionIndex, 'highlighted': i === currentQuestionIndex}">
+      <div class="mb-8 text-center" [id]="'question-' + i">
         <p class="text-2xl font-semibold mb-4">{{ question.question_text }}</p>
-        @for (option of question.options; track option.option_id) {
-          <div class="flex items-center justify-center mb-2">
-            <input
-              type="radio"
-              [id]="'question' + question.question_id + 'option' + option.option_id"
-              [name]="'question' + question.question_id"
-              [value]="option.season_id"
-              [(ngModel)]="selectedAnswers[questions.indexOf(question)]"
-              class="radio radio-primary mr-2"
-              required
-            />
-            <label [for]="'question' + question.question_id + 'option' + option.option_id">
-              {{ option.option_text }}
-            </label>
-          </div>
-        } @empty {
-          <p>No options available</p>
-        }
+        <div *ngFor="let option of question.options" class="flex items-center justify-center mb-2">
+          <input
+            type="radio"
+            [id]="'question' + question.question_id + 'option' + option.option_id"
+            [name]="'question' + question.question_id"
+            [value]="option.season_id"
+            [(ngModel)]="selectedAnswers[i]"
+            class="radio radio-primary mr-2"
+            (change)="onAnswerChange(i)"
+            required
+          />
+          <label [for]="'question' + question.question_id + 'option' + option.option_id">
+            {{ option.option_text }}
+          </label>
+        </div>
       </div>
-    } @empty {
-      <p>No questions available</p>
-    }
-    <button type="submit" class="btn btn-primary mx-auto">Submit</button>
+    </div>
+    <button type="submit" class="btn btn-primary mx-auto" *ngIf="allQuestionsAnswered">Submit</button>
   </form>
 </div>

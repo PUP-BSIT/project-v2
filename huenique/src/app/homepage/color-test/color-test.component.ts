@@ -16,6 +16,8 @@ export class ColorTestComponent implements OnInit {
   result: string | null = null;
   userId: number | null = null;
   currentStep: number = 1;
+  currentQuestionIndex: number = 0;
+  allQuestionsAnswered: boolean = false;
 
   constructor(
     private questionService: QuestionService,
@@ -29,6 +31,21 @@ export class ColorTestComponent implements OnInit {
       this.selectedAnswers = new Array(this.questions.length).fill(null);
     });
     this.userId = this.authService.getUserId();
+  }
+
+  onAnswerChange(index: number): void {
+    if (index === this.currentQuestionIndex) {
+      this.moveToNextUnansweredQuestion();
+    }
+  }
+
+  moveToNextUnansweredQuestion(): void {
+    const nextUnansweredIndex = this.selectedAnswers.findIndex(answer => answer === null);
+    if (nextUnansweredIndex !== -1) {
+      this.currentQuestionIndex = nextUnansweredIndex;
+    } else {
+      this.allQuestionsAnswered = true;
+    }
   }
 
   onSubmit(): void {

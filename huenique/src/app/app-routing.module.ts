@@ -11,6 +11,7 @@ import { SeasonalToneComponent } from './homepage/seasonal-tone/seasonal-tone.co
 import { AboutComponent } from './homepage/about/about.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ProfileComponent } from './profile/profile.component';
 import { EmailRequestComponent } from './homepage/email-request/email-request.component';
 import { AuthGuard } from '../service/auth.guard';
 
@@ -24,7 +25,7 @@ const routes: Routes = [
   { path: 'homepage/color-analysis', component: ColorTestComponent, canActivate: [AuthGuard] },
   { path: 'homepage/seasonal-tone', component: SeasonalToneComponent, canActivate: [AuthGuard] },
   { path: 'homepage/about', component: AboutComponent, canActivate: [AuthGuard] },
-  { path: 'homepage/email-request', component: EmailRequestComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password/:token', component: ResetPasswordComponent },
   { path: '**', component: PageNotFoundComponent }
