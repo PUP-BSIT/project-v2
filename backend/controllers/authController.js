@@ -154,6 +154,10 @@ const login = (req, res) => {
     }
 
     const user = results[0];
+    if (!user.confirmed) {
+      return res.status(400).json({ error: 'Please confirm your email before logging in.' });
+    }
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(400).json({ error: 'Invalid email or password' });
