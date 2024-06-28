@@ -63,7 +63,6 @@ const saveResult = (req, res) => {
     }
 
     if (results.length > 0) {
-      // Update existing result
       const updateSql = `
         UPDATE test_result
         SET season_id = ?, result_date = ?, hair_id = ?, makeup_id = ?, accessories_id = ?, 
@@ -85,7 +84,6 @@ const saveResult = (req, res) => {
         }
       );
     } else {
-      // Insert new result
       const insertSql = `
         INSERT INTO test_result (
           user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
