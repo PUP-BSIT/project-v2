@@ -1,5 +1,12 @@
+.main{
+  background-image: url('../../../assets/homepage2.svg');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+
 .faded {
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
 .highlighted {
