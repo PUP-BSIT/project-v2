@@ -80,6 +80,10 @@
 .forgot-password-link:hover {
     text-decoration: underline;
     cursor: pointer;
+
+}.forgot-password-link {
+    color: #007BFF;
+    cursor: pointer;
 }
 
 .input {
