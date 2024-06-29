@@ -52,59 +52,13 @@ const saveResult = (req, res) => {
   } = req.body;
 
   const user_id = req.userId;
-
-  console.log('Received IDs:', {
-    accessories_id,
-    color_combination_id,
-    contact_lens_id,
-    hair_id,
-    makeup_id,
-    avoid_color_id
-  });
-
-  const checkIdsSql = `
-    SELECT 
-      (SELECT COUNT(*) FROM accessories WHERE accessories_id = ?) AS accessories_count,
-      (SELECT COUNT(*) FROM color_combination WHERE combination_id = ?) AS color_combination_count,
-      (SELECT COUNT(*) FROM contact_lens WHERE lens_id = ?) AS contact_lens_count,
-      (SELECT COUNT(*) FROM hair_color WHERE hair_id = ?) AS hair_count,
-      (SELECT COUNT(*) FROM makeup_shade WHERE makeup_id = ?) AS makeup_count,
-      (SELECT COUNT(*) FROM avoid_color WHERE avoid_id = ?) AS avoid_count
+  
+  const sql = `
+    INSERT INTO test_result (
+      user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
+      color_combination_id, contact_lens_id, avoid_color_id
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
-
-  connection.query(checkIdsSql, [accessories_id, color_combination_id, contact_lens_id, hair_id, makeup_id, avoid_color_id], (err, results) => {
-    if (err) {
-      console.error('Error validating foreign keys: ' + err.stack);
-      return res.status(500).json({ error: 'Database error', details: err });
-    }
-
-    const { accessories_count, color_combination_count, contact_lens_count, hair_count, makeup_count, avoid_count } = results[0];
-
-    if (accessories_count === 0) {
-      return res.status(400).json({ error: 'Invalid accessories_id' });
-    }
-    if (color_combination_count === 0) {
-      return res.status(400).json({ error: 'Invalid color_combination_id' });
-    }
-    if (contact_lens_count === 0) {
-      return res.status(400).json({ error: 'Invalid contact_lens_id' });
-    }
-    if (hair_count === 0) {
-      return res.status(400).json({ error: 'Invalid hair_id' });
-    }
-    if (makeup_count === 0) {
-      return res.status(400).json({ error: 'Invalid makeup_id' });
-    }
-    if (avoid_count === 0) {
-      return res.status(400).json({ error: 'Invalid avoid_color_id' });
-    }
-
-    const insertSql = `
-      INSERT INTO test_result (
-        user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
-        color_combination_id, contact_lens_id, avoid_color_id
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
 
   connection.query(
     sql,
