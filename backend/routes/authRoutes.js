@@ -8,6 +8,5 @@ router.get('/confirm/:token', authController.confirmEmail);
 router.post('/login', authController.login);
 router.post('/forgot-password', authController.forgotPassword);
 router.post('/reset-password', authController.resetPassword);
-router.get('/profile', verifyToken, authController.getUserProfile);
 
 module.exports = router;
