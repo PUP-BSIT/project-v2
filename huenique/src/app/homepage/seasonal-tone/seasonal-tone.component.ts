@@ -8,7 +8,8 @@ import { QuestionService } from '../../../service/question.service';
 })
 export class SeasonalToneComponent implements OnInit {
   result: any;
-  recommendations?: string;
+  recommendations: any;
+  recommendationCategories = ['accessories', 'avoid', 'combinations', 'lens', 'hair', 'makeup'];
   currentStep: number = 2;
 
   constructor(private questionService: QuestionService) {}
@@ -28,7 +29,8 @@ export class SeasonalToneComponent implements OnInit {
     const seasonId = this.result.season_id;
     this.questionService.getRecommendations(seasonId).subscribe(
       data => {
-        this.recommendations = data.recommendations;
+        this.recommendations = data;
+        console.log('Recommendations:', this.recommendations);
       },
       error => {
         console.error('Error fetching recommendations:', error);
