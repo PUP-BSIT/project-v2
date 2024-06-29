@@ -15,17 +15,29 @@ const signup = async (req, res) => {
   }
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const token = uuidv4();
-    const sql = 'INSERT INTO user (username, email, password, token, confirmed) VALUES (?, ?, ?, ?, ?)';
-    connection.query(sql, [username, email, hashedPassword, token, false], (err, result) => {
+    const emailCheckSql = 'SELECT * FROM user WHERE email = ?';
+    connection.query(emailCheckSql, [email], async (err, results) => {
       if (err) {
-        console.error('Error inserting user: ' + err.stack);
-        return res.status(500).json({ error: 'Failed to create user', details: err });
+        console.error('Error checking email: ' + err.stack);
+        return res.status(500).json({ error: 'Database error', details: err });
       }
 
-      sendConfirmationEmail(email, token);
-      res.status(201).json({ message: 'User created successfully. Please check your email to confirm your account.' });
+      if (results.length > 0) {
+        return res.status(400).json({ error: 'Email already in use' });
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const token = uuidv4();
+      const sql = 'INSERT INTO user (username, email, password, token, confirmed) VALUES (?, ?, ?, ?, ?)';
+      connection.query(sql, [username, email, hashedPassword, token, false], (err, result) => {
+        if (err) {
+          console.error('Error inserting user: ' + err.stack);
+          return res.status(500).json({ error: 'Failed to create user', details: err });
+        }
+
+        sendConfirmationEmail(email, token);
+        res.status(201).json({ message: 'User created successfully. Please check your email to confirm your account.' });
+      });
     });
   } catch (err) {
     console.error('Error hashing password: ' + err.stack);
@@ -142,6 +154,10 @@ const login = (req, res) => {
     }
 
     const user = results[0];
+    if (!user.confirmed) {
+      return res.status(400).json({ error: 'Please confirm your email before logging in.' });
+    }
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(400).json({ error: 'Invalid email or password' });
@@ -152,10 +168,31 @@ const login = (req, res) => {
   });
 };
 
+const getUserProfile = (req, res) => {
+  const userId = req.userId;
+
+  const sql = 'SELECT username, email FROM user WHERE user_id = ?';
+  connection.query(sql, [userId], (err, results) => {
+    if (err) {
+      console.error('Error fetching user profile: ' + err.stack);
+      return res.status(500).json({ error: 'Database error', details: err });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(200).json(results[0]);
+  });
+};
+
 module.exports = {
   signup,
   confirmEmail,
   forgotPassword,
   resetPassword,
   login,
+  getUserProfile
 };
+
+

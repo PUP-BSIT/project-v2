@@ -7,21 +7,23 @@
   </ul>
 </div>
 
-@if (result) {
-  <h2>Your Seasonal Tone</h2>
-  <p>Season: {{ result.season_name }}</p>
-  <button (click)="learnMore()" class="btn btn-primary">Learn More</button>
-
-  @if (recommendations) {
-    <h3>Recommendations</h3>
-    @for (category of recommendationCategories; track category) {
-      <h4>{{ category }}</h4>
-      @for (item of recommendations[category]; track item.hex_code) {
-        <div [style.background-color]="item.hex_code" class="color-sample"></div>
-        <p>{{ item.color_name }}: {{ item.details }} ({{ item.hex_code }})</p>
+@if(result){
+  <div>
+    <div>
+      <h2>Your Seasonal Tone</h2>
+      <p>Season: {{ result.season_name }}</p>
+      <button (click)="learnMore()" class="btn btn-primary">Learn More</button>
+      @if(recommendations){ 
+        <div>
+          <h3>Recommendations</h3>
+          <p>{{ recommendations }}</p>
+        </div>
       }
-    }
-  }
+      <div class="mt-8">
+        <button class="btn btn-primary" (click)="goToEmailRequest()">Proceed to Email Request</button>
+      </div>
+    </div>
+  </div>
 }
 
 

@@ -1,4 +1,6 @@
 const nodemailer = require('nodemailer');
+const fs = require('fs');
+const path = require('path');
 
 console.log('Email User:', process.env.EMAIL_USER);
 console.log('Email Pass:', process.env.EMAIL_PASS); 
@@ -11,13 +13,23 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendConfirmationEmail = (email, token) => {
-  const url = `http://localhost:3000/api/auth/confirm/${token}`;
+const sendEmail = (email, subject, templatePath, replacements) => {
+  const template = fs.readFileSync(templatePath, { encoding: 'utf-8' });
+  let htmlContent = template;
+
+  for (const key in replacements) {
+    htmlContent = htmlContent.replace(new RegExp(`{{${key}}}`, 'g'), replacements[key]);
+  }
 
   transporter.sendMail({
     to: email,
-    subject: 'Confirm your Email',
-    html: `Please click this link to confirm your email: <a href="${url}">${url}</a>`,
+    subject: subject,
+    html: htmlContent,
+    attachments: [{
+      filename: 'logo.png',
+      path: path.join(__dirname, '../emails/assets/logo.png'),
+      cid: 'logo@huenique'
+    }]
   }, (error, info) => {
     if (error) {
       console.log('Error sending email:', error);
@@ -27,20 +39,18 @@ const sendConfirmationEmail = (email, token) => {
   });
 };
 
+const sendConfirmationEmail = (email, token) => {
+  const url = `http://localhost:3000/api/auth/confirm/${token}`;
+  const templatePath = path.join(__dirname, '../emails/templates/confirmEmail.html');
+  
+  sendEmail(email, 'Confirm your Email', templatePath, { url });
+};
+
 const sendResetPasswordEmail = (email, token) => {
   const url = `http://localhost:4200/reset-password/${token}`;
+  const templatePath = path.join(__dirname, '../emails/templates/resetPassEmail.html');
 
-  transporter.sendMail({
-    to: email,
-    subject: 'Reset Password',
-    html: `Please click this link to reset your password: <a href="${url}">${url}</a>`,
-  }, (error, info) => {
-    if (error) {
-      console.log('Error sending email:', error);
-    } else {
-      console.log('Email sent:', info.response);
-    }
-  });  
+  sendEmail(email, 'Reset Password', templatePath, { url });
 };
 
 module.exports = { sendConfirmationEmail, sendResetPasswordEmail };
