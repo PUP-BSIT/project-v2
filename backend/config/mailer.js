@@ -28,7 +28,7 @@ const sendEmail = (email, subject, templatePath, replacements) => {
     attachments: [{
       filename: 'logo.png',
       path: path.join(__dirname, '../emails/assets/logo.png'),
-      cid: 'logo@huenique' // same cid value as in the html img src
+      cid: 'logo@huenique'
     }]
   }, (error, info) => {
     if (error) {
@@ -48,7 +48,7 @@ const sendConfirmationEmail = (email, token) => {
 
 const sendResetPasswordEmail = (email, token) => {
   const url = `http://localhost:4200/reset-password/${token}`;
-  const templatePath = path.join(__dirname, '../emails/templates/resetPassword.html');
+  const templatePath = path.join(__dirname, '../emails/templates/resetPassEmail.html');
 
   sendEmail(email, 'Reset Password', templatePath, { url });
 };
