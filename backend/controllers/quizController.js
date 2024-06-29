@@ -52,63 +52,30 @@ const saveResult = (req, res) => {
   } = req.body;
 
   const user_id = req.userId;
-
-  const checkSql = `
-    SELECT * FROM test_result WHERE user_id = ?
+  
+  const sql = `
+    INSERT INTO test_result (
+      user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
+      color_combination_id, contact_lens_id, avoid_color_id
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
-  connection.query(checkSql, [user_id], (err, results) => {
-    if (err) {
-      console.error('Error checking existing result: ' + err.stack);
-      return res.status(500).json({ error: 'Database error', details: err });
+  connection.query(
+    sql,
+    [
+      user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
+      color_combination_id, contact_lens_id, avoid_color_id
+    ],
+    (err, result) => {
+      if (err) {
+        console.error('Error saving result: ' + err.stack);
+        return res.status(500).json({ error: 'Database error', details: err });
+      }
+      res.status(201).json({ message: 'Result saved successfully', resultId: result.insertId });
     }
-
-    if (results.length > 0) {
-      const updateSql = `
-        UPDATE test_result
-        SET season_id = ?, result_date = ?, hair_id = ?, makeup_id = ?, accessories_id = ?, 
-            color_combination_id = ?, contact_lens_id = ?, avoid_color_id = ?
-        WHERE user_id = ?
-      `;
-      connection.query(
-        updateSql,
-        [
-          season_id, result_date, hair_id, makeup_id, accessories_id,
-          color_combination_id, contact_lens_id, avoid_color_id, user_id
-        ],
-        (err) => {
-          if (err) {
-            console.error('Error updating result: ' + err.stack);
-            return res.status(500).json({ error: 'Database error', details: err });
-          }
-          res.status(200).json({ message: 'Result updated successfully' });
-        }
-      );
-    } else {
-      const insertSql = `
-        INSERT INTO test_result (
-          user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
-          color_combination_id, contact_lens_id, avoid_color_id
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `;
-
-      connection.query(
-        insertSql,
-        [
-          user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
-          color_combination_id, contact_lens_id, avoid_color_id
-        ],
-        (err, result) => {
-          if (err) {
-            console.error('Error saving result: ' + err.stack);
-            return res.status(500).json({ error: 'Database error', details: err });
-          }
-          res.status(201).json({ message: 'Result saved successfully', resultId: result.insertId });
-        }
-      );
-    }
-  });
+  );
 };
+
 
 const getTestResult = (req, res) => {
   const user_id = req.userId;
@@ -147,14 +114,22 @@ const getRecommendations = (req, res) => {
 
   const sql = `
     SELECT 
-      CONCAT(
-        'Accessories: ', (SELECT accessories_details FROM accessories WHERE season_id = ?), '\n',
-        'Avoid: ', (SELECT avoid_details FROM avoid_color WHERE season_id = ?), '\n',
-        'Combinations: ', (SELECT combination_details FROM color_combination WHERE season_id = ?), '\n',
-        'Lens: ', (SELECT lens_details FROM contact_lens WHERE season_id = ?), '\n',
-        'Hair: ', (SELECT hair_details FROM hair_color WHERE season_id = ?), '\n',
-        'Makeup: ', (SELECT shade_details FROM makeup_shade WHERE season_id = ?)
-      ) AS recommendations
+      'accessories' AS category, color_name, accessories_details AS details, hex_code FROM accessories WHERE season_id = ?
+    UNION ALL
+    SELECT 
+      'avoid' AS category, color_name, avoid_details AS details, hex_code FROM avoid_color WHERE season_id = ?
+    UNION ALL
+    SELECT 
+      'combinations' AS category, color_name, combination_details AS details, hex_code FROM color_combination WHERE season_id = ?
+    UNION ALL
+    SELECT 
+      'lens' AS category, color_name, lens_details AS details, hex_code FROM contact_lens WHERE season_id = ?
+    UNION ALL
+    SELECT 
+      'hair' AS category, color_name, hair_details AS details, hex_code FROM hair_color WHERE season_id = ?
+    UNION ALL
+    SELECT 
+      'makeup' AS category, color_name, shade_details AS details, hex_code FROM makeup_shade WHERE season_id = ?
   `;
 
   connection.query(sql, [season_id, season_id, season_id, season_id, season_id, season_id], (err, results) => {
@@ -163,11 +138,19 @@ const getRecommendations = (req, res) => {
       return res.status(500).json({ error: 'Database error', details: err });
     }
 
-    if (results.length === 0) {
-      return res.status(404).json({ error: 'No recommendations found' });
-    }
+    const recommendations = results.reduce((acc, row) => {
+      if (!acc[row.category]) {
+        acc[row.category] = [];
+      }
+      acc[row.category].push({
+        color_name: row.color_name,
+        details: row.details,
+        hex_code: row.hex_code
+      });
+      return acc;
+    }, {});
 
-    res.status(200).json(results[0]);
+    res.status(200).json(recommendations);
   });
 };
 
@@ -225,3 +208,5 @@ module.exports = {
   getRecommendations,
   sendEmail
 };
+
+
