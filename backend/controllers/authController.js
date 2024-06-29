@@ -168,10 +168,31 @@ const login = (req, res) => {
   });
 };
 
+const getUserProfile = (req, res) => {
+  const userId = req.userId;
+
+  const sql = 'SELECT username, email FROM user WHERE user_id = ?';
+  connection.query(sql, [userId], (err, results) => {
+    if (err) {
+      console.error('Error fetching user profile: ' + err.stack);
+      return res.status(500).json({ error: 'Database error', details: err });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(200).json(results[0]);
+  });
+};
+
 module.exports = {
   signup,
   confirmEmail,
   forgotPassword,
   resetPassword,
   login,
+  getUserProfile
 };
+
+

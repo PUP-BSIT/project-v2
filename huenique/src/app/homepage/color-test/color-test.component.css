@@ -1,3 +1,19 @@
+.main{
+  background-image: url('../../../assets/homepage2.svg');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+
+.faded {
+  opacity: 0.4;
+}
+
+.highlighted {
+  opacity: 1;
+  font-size: 1.1rem;
+}
+
 form {
   text-align: center;
 }
@@ -5,6 +21,7 @@ form {
 form p {
   font-size: 2rem;
   font-weight: bold;
+  color: #A47E70; 
 }
 
 form .flex.items-center {

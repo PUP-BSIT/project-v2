@@ -1,4 +1,5 @@
 const connection = require('../config/database');
+const nodemailer = require('nodemailer');
 
 const getQuestionsWithOptions = (req, res) => {
   const sql = `
@@ -51,28 +52,62 @@ const saveResult = (req, res) => {
   } = req.body;
 
   const user_id = req.userId;
-  
-  const sql = `
-    INSERT INTO test_result (
-      user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
-      color_combination_id, contact_lens_id, avoid_color_id
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+
+  const checkSql = `
+    SELECT * FROM test_result WHERE user_id = ?
   `;
 
-  connection.query(
-    sql,
-    [
-      user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
-      color_combination_id, contact_lens_id, avoid_color_id
-    ],
-    (err, result) => {
-      if (err) {
-        console.error('Error saving result: ' + err.stack);
-        return res.status(500).json({ error: 'Database error', details: err });
-      }
-      res.status(201).json({ message: 'Result saved successfully', resultId: result.insertId });
+  connection.query(checkSql, [user_id], (err, results) => {
+    if (err) {
+      console.error('Error checking existing result: ' + err.stack);
+      return res.status(500).json({ error: 'Database error', details: err });
     }
-  );
+
+    if (results.length > 0) {
+      const updateSql = `
+        UPDATE test_result
+        SET season_id = ?, result_date = ?, hair_id = ?, makeup_id = ?, accessories_id = ?, 
+            color_combination_id = ?, contact_lens_id = ?, avoid_color_id = ?
+        WHERE user_id = ?
+      `;
+      connection.query(
+        updateSql,
+        [
+          season_id, result_date, hair_id, makeup_id, accessories_id,
+          color_combination_id, contact_lens_id, avoid_color_id, user_id
+        ],
+        (err) => {
+          if (err) {
+            console.error('Error updating result: ' + err.stack);
+            return res.status(500).json({ error: 'Database error', details: err });
+          }
+          res.status(200).json({ message: 'Result updated successfully' });
+        }
+      );
+    } else {
+      const insertSql = `
+        INSERT INTO test_result (
+          user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
+          color_combination_id, contact_lens_id, avoid_color_id
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+
+      connection.query(
+        insertSql,
+        [
+          user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
+          color_combination_id, contact_lens_id, avoid_color_id
+        ],
+        (err, result) => {
+          if (err) {
+            console.error('Error saving result: ' + err.stack);
+            return res.status(500).json({ error: 'Database error', details: err });
+          }
+          res.status(201).json({ message: 'Result saved successfully', resultId: result.insertId });
+        }
+      );
+    }
+  });
 };
 
 const getTestResult = (req, res) => {
@@ -92,7 +127,6 @@ const getTestResult = (req, res) => {
       tr.result_date DESC
     LIMIT 1
   `;
-
 
   connection.query(sql, [user_id], (err, results) => {
     if (err) {
@@ -137,9 +171,57 @@ const getRecommendations = (req, res) => {
   });
 };
 
+const sendEmail = (req, res) => {
+  const { email, userId } = req.body;
+
+  const sql = 'SELECT * FROM test_result WHERE user_id = ? ORDER BY result_date DESC LIMIT 1';
+  connection.query(sql, [userId], (err, results) => {
+    if (err) {
+      console.error('Error fetching results:', err);
+      return res.status(500).json({ error: 'Failed to fetch results.' });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: 'Results not found.' });
+    }
+
+    const result = results[0];
+    console.log('Retrieved result:', result);
+
+    const emailContent = `Here are your color analysis results:\n\nSeason: ${result.season}\nRecommendations: ${result.recommendations}`;
+    console.log('Email content:', emailContent); 
+
+    let transporter = nodemailer.createTransport({
+      service: 'Gmail',
+      auth: {
+        user: process.env.EMAIL_USER, 
+        pass: process.env.EMAIL_PASS
+      }
+    });
+
+    let mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Your Color Analysis Results',
+      text: emailContent
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.error('Error sending email:', err);
+        return res.status(500).json({ error: 'Failed to send email.' });
+      }
+
+      console.log('Email sent successfully:', info);
+      res.status(200).json({ message: 'Email sent successfully!' });
+    });
+  });
+};
+
 module.exports = {
   getQuestionsWithOptions,
   saveResult,
   getTestResult,
-  getRecommendations
+  getRecommendations,
+  sendEmail
 };

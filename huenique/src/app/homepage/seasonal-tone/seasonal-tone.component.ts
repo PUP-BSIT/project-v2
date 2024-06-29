@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../../../service/question.service';
+import { ResultsService } from '../../../service/result.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-seasonal-tone',
@@ -11,7 +13,11 @@ export class SeasonalToneComponent implements OnInit {
   recommendations?: string;
   currentStep: number = 2;
 
-  constructor(private questionService: QuestionService) {}
+  constructor(
+    private questionService: QuestionService,
+    private resultsService: ResultsService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.questionService.getTestResult().subscribe(
@@ -34,5 +40,10 @@ export class SeasonalToneComponent implements OnInit {
         console.error('Error fetching recommendations:', error);
       }
     );
+  }
+
+  goToEmailRequest() {
+    this.resultsService.setResults(this.result);
+    this.router.navigate(['/homepage/email-request']); 
   }
 }

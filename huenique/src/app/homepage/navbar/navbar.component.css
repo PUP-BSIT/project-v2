@@ -5,3 +5,11 @@
 .nav {
     background-color: #FFFDFA;
 }
+
+.active-link {
+    color: #4A90E2;
+}
+
+.logo {
+    height: 3.5rem;
+}
