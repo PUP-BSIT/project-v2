@@ -1,9 +1,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
 
 <div class="content-divider min-h-screen flex flex-col items-center justify-center bg-peach p-4 font-poppins">
-  <div class="white-divider bg-white rounded-lg shadow-lg flex flex-col lg:flex-row relative w-10/12">
-    <img src="assets/upRainbow.svg" alt="rainbow background" class="rainbow-image absolute inset-0 w-fit h-fit object-cover z-0">
-    <img src="assets/downRainbow.svg" alt="rainbow background" class="rainbow-image2 absolute inset-0 w-fit h-fit object-cover z-0">
+  <div class="white-divider rounded-lg shadow-lg flex flex-col lg:flex-row relative w-10/12">
 
     <div class="flex flex-col items-center justify-center p-8 relative z-10 lg:w-1/2">
       <img src="assets/logo.svg" alt="logo" class="mb-4 custom-logo-size">
@@ -16,28 +14,17 @@
       <h2 class="h2-class text-5xl font-extrabold mb-6">Sign up</h2>
       <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="form space-y-7">
         <div class="relative">
-          <input formControlName="name" type="text" placeholder="Name" class="input input-bordered w-full">
-          @if (nameControl?.invalid && nameControl?.touched) {
-            <div class="text-red-500 text-sm mt-1">
-              @if (nameControl?.errors?.['required']) {
-                <div>Name is required</div>
-              }
-              @if (nameControl?.errors?.['noNumericCharacters']) {
-                <div>Name cannot contain numeric characters</div>
-              }
-            </div>
-          }
-        </div>
-
-        <div class="relative">
           <input formControlName="username" type="text" placeholder="Username" class="input input-bordered w-full">
           @if (usernameControl?.invalid && usernameControl?.touched) {
             <div class="text-red-500 text-sm mt-1">
               @if (usernameControl?.errors?.['required']) {
-                <div>Password is required</div>
+                Username is required.
               }
               @if (usernameControl?.errors?.['minlength']) {
-                <div>Password must be at least 6 characters</div>
+                Username must be at least 4 characters.
+              }
+              @if (usernameControl?.errors?.['sqlInjection']) {
+                Invalid characters.
               }
             </div>
           }
@@ -48,10 +35,13 @@
           @if (emailControl?.invalid && emailControl?.touched) {
             <div class="text-red-500 text-sm mt-1">
               @if (emailControl?.errors?.['required']) {
-                <div>Email is required</div>
+                Email is required.
               }
               @if (emailControl?.errors?.['email']) {
-                <div>Invalid email format</div>
+                Invalid email format.
+              }
+              @if (emailControl?.errors?.['sqlInjection']) {
+                Invalid characters.
               }
             </div>
           }
@@ -62,10 +52,13 @@
           @if (passwordControl?.invalid && passwordControl?.touched) {
             <div class="text-red-500 text-sm mt-1">
               @if (passwordControl?.errors?.['required']) {
-                <div>Password is required</div>
+                Password is required.
               }
               @if (passwordControl?.errors?.['minlength']) {
-                <div>Password must be at least 6 characters</div>
+                Password must be at least 6 characters.
+              }
+              @if (passwordControl?.errors?.['sqlInjection']) {
+                Invalid characters.
               }
             </div>
           }
@@ -81,10 +74,10 @@
           @if (confirmPasswordControl?.invalid && confirmPasswordControl?.touched) {
             <div class="text-red-500 text-sm mt-1">
               @if (confirmPasswordControl?.errors?.['required']) {
-                <div>Confirmation password is required</div>
+                Confirmation password is required.
               }
-              @if (signupForm?.errors?.['mismatch']) {
-                <div>Passwords must match</div>
+              @if (signupForm.errors?.['mismatch']) {
+                Passwords must match.
               }
             </div>
           }
@@ -96,8 +89,18 @@
         </div>
         
         <button type="submit" class="btn btn-primary w-full">Create Account</button>
-        <p class="account-signup-text">Already have an account? <a href="/signup" class="signup-link">Sign In.</a></p>
+        <p class="account-signup-text">Already have an account? <a (click)="goToSignIn()" class="signup-link">Sign In</a></p>
       </form>
     </div>
   </div>
+</div>
+
+<div class="toast toast-center">
+  @if (showSuccessToast) {
+    <div class="alert alert-success">
+      <div>
+        <span>Verification Email has been sent! Check your email to complete the sign-up process</span>
+      </div>
+    </div>
+  }
 </div>
