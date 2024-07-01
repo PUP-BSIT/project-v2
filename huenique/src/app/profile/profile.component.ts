@@ -10,6 +10,7 @@ import { QuestionService } from '../../service/question.service';
 export class ProfileComponent implements OnInit {
   user: any;
   testResult: any;
+  testHistory: any[] = [];
 
   constructor(
     private authService: AuthService,
@@ -19,6 +20,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.loadUserProfile();
     this.loadTestResult();
+    this.loadTestHistory();
   }
 
   loadUserProfile(): void {
@@ -39,6 +41,17 @@ export class ProfileComponent implements OnInit {
       },
       error => {
         console.error('Error fetching test result:', error);
+      }
+    );
+  }
+
+  loadTestHistory(): void {
+    this.questionService.getTestHistory().subscribe(
+      data => {
+        this.testHistory = data;
+      },
+      error => {
+        console.error('Error fetching test history:', error);
       }
     );
   }

@@ -52,27 +52,61 @@ const saveResult = (req, res) => {
 
   const user_id = req.userId;
   
-  const sql = `
-    INSERT INTO test_result (
-      user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
-      color_combination_id, contact_lens_id, avoid_color_id
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  const checkSql = `
+    SELECT * FROM test_result WHERE user_id = ?
   `;
 
-  connection.query(
-    sql,
-    [
-      user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
-      color_combination_id, contact_lens_id, avoid_color_id
-    ],
-    (err, result) => {
-      if (err) {
-        console.error('Error saving result: ' + err.stack);
-        return res.status(500).json({ error: 'Database error', details: err });
-      }
-      res.status(201).json({ message: 'Result saved successfully', resultId: result.insertId });
+  connection.query(checkSql, [user_id], (err, results) => {
+    if (err) {
+      console.error('Error checking existing result: ' + err.stack);
+      return res.status(500).json({ error: 'Database error', details: err });
     }
-  );
+
+    if (results.length > 0) {
+      const updateSql = `
+        UPDATE test_result
+        SET season_id = ?, result_date = ?, hair_id = ?, makeup_id = ?, accessories_id = ?, 
+            color_combination_id = ?, contact_lens_id = ?, avoid_color_id = ?
+        WHERE user_id = ?
+      `;
+      connection.query(
+        updateSql,
+        [
+          season_id, result_date, hair_id, makeup_id, accessories_id,
+          color_combination_id, contact_lens_id, avoid_color_id, user_id
+        ],
+        (err) => {
+          if (err) {
+            console.error('Error updating result: ' + err.stack);
+            return res.status(500).json({ error: 'Database error', details: err });
+          }
+          res.status(200).json({ message: 'Result updated successfully' });
+        }
+      );
+    } else {
+      const insertSql = `
+        INSERT INTO test_result (
+          user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
+          color_combination_id, contact_lens_id, avoid_color_id
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+
+      connection.query(
+        insertSql,
+        [
+          user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
+          color_combination_id, contact_lens_id, avoid_color_id
+        ],
+        (err, result) => {
+          if (err) {
+            console.error('Error saving result: ' + err.stack);
+            return res.status(500).json({ error: 'Database error', details: err });
+          }
+          res.status(201).json({ message: 'Result saved successfully', resultId: result.insertId });
+        }
+      );
+    }
+  });
 };
 
 const getTestResult = (req, res) => {
@@ -152,11 +186,38 @@ const getRecommendations = (req, res) => {
   });
 };
 
+const getTestHistory = (req, res) => {
+  const user_id = req.userId;
+
+  const sql = `
+    SELECT 
+      tr.season_id,
+      s.season_name,
+      tr.result_date
+    FROM 
+      test_result tr
+    JOIN
+      season s ON tr.season_id = s.season_id
+    WHERE 
+      tr.user_id = ?
+    ORDER BY 
+      tr.result_date DESC
+  `;
+
+  connection.query(sql, [user_id], (err, results) => {
+    if (err) {
+      console.error('Error fetching test history: ' + err.stack);
+      return res.status(500).json({ error: 'Database error', details: err });
+    }
+
+    res.status(200).json(results);
+  });
+};
+
 module.exports = {
   getQuestionsWithOptions,
   saveResult,
   getTestResult,
   getRecommendations,
-};
-
-
+  getTestHistory
+};  

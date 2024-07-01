@@ -7,9 +7,25 @@
         </div>
     }
     @if(testResult){
-        <div>
+    <div>
       <p><strong>Season:</strong> {{ testResult.season_name }}</p>
     </div>
     } 
+    <div *ngIf="testHistory.length > 0">
+        <h2>Test History</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Season</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let history of testHistory">
+              <td>{{ history.result_date | date: 'medium' }}</td>
+              <td>{{ history.season_name }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 </div>
-  
