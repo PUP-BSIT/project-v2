@@ -44,6 +44,20 @@ export class SeasonalToneComponent implements OnInit {
     );
   }
 
+  getTextColor(hex: string): string {
+    const rgb = this.hexToRgb(hex);
+    const brightness = (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;
+    return brightness > 128 ? 'black' : 'white';
+  }
+
+  hexToRgb(hex: string): { r: number, g: number, b: number } {
+    const bigint = parseInt(hex.slice(1), 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return { r, g, b };
+  }
+
   goToEmailRequest() {
     this.resultsService.setResults(this.result);
     this.router.navigate(['/homepage/email-request']); 
