@@ -48,7 +48,10 @@ export class ProfileComponent implements OnInit {
   loadTestHistory(): void {
     this.questionService.getTestHistory().subscribe(
       data => {
-        this.testHistory = data;
+        this.testHistory = data.map(history => ({
+          ...history,
+          result_date: new Date(history.result_date).toISOString().split('T')[0]
+        }));
       },
       error => {
         console.error('Error fetching test history:', error);

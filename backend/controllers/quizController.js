@@ -52,66 +52,32 @@ const saveResult = (req, res) => {
 
   const user_id = req.userId;
   
-  const checkSql = `
-    SELECT * FROM test_result WHERE user_id = ?
+  const sql = `
+    INSERT INTO test_result (
+      user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
+      color_combination_id, contact_lens_id, avoid_color_id
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
-  connection.query(checkSql, [user_id], (err, results) => {
-    if (err) {
-      console.error('Error checking existing result: ' + err.stack);
-      return res.status(500).json({ error: 'Database error', details: err });
+  connection.query(
+    sql,
+    [
+      user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
+      color_combination_id, contact_lens_id, avoid_color_id
+    ],
+    (err, result) => {
+      if (err) {
+        console.error('Error saving result: ' + err.stack);
+        return res.status(500).json({ error: 'Database error', details: err });
+      }
+      res.status(201).json({ message: 'Result saved successfully', resultId: result.insertId });
     }
-
-    if (results.length > 0) {
-      const updateSql = `
-        UPDATE test_result
-        SET season_id = ?, result_date = ?, hair_id = ?, makeup_id = ?, accessories_id = ?, 
-            color_combination_id = ?, contact_lens_id = ?, avoid_color_id = ?
-        WHERE user_id = ?
-      `;
-      connection.query(
-        updateSql,
-        [
-          season_id, result_date, hair_id, makeup_id, accessories_id,
-          color_combination_id, contact_lens_id, avoid_color_id, user_id
-        ],
-        (err) => {
-          if (err) {
-            console.error('Error updating result: ' + err.stack);
-            return res.status(500).json({ error: 'Database error', details: err });
-          }
-          res.status(200).json({ message: 'Result updated successfully' });
-        }
-      );
-    } else {
-      const insertSql = `
-        INSERT INTO test_result (
-          user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
-          color_combination_id, contact_lens_id, avoid_color_id
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `;
-
-      connection.query(
-        insertSql,
-        [
-          user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
-          color_combination_id, contact_lens_id, avoid_color_id
-        ],
-        (err, result) => {
-          if (err) {
-            console.error('Error saving result: ' + err.stack);
-            return res.status(500).json({ error: 'Database error', details: err });
-          }
-          res.status(201).json({ message: 'Result saved successfully', resultId: result.insertId });
-        }
-      );
-    }
-  });
+  );
 };
 
 const getTestResult = (req, res) => {
   const user_id = req.userId;
-  
+
   const sql = `
     SELECT 
       tr.season_id,
@@ -123,11 +89,40 @@ const getTestResult = (req, res) => {
     WHERE 
       tr.user_id = ?
     ORDER BY 
-      tr.result_date DESC
+      tr.result_date DESC, tr.result_id DESC
     LIMIT 1
   `;
 
   connection.query(sql, [user_id], (err, results) => {
+    if (err) {
+      console.error('Error fetching test result: ' + err.stack);
+      return res.status(500).json({ error: 'Database error', details: err });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: 'No test result found' });
+    }
+
+    res.status(200).json(results[0]);
+  });
+};
+
+const getResultById = (req, res) => {
+  const { resultId } = req.params;
+
+  const sql = `
+    SELECT 
+      tr.season_id,
+      s.season_name
+    FROM 
+      test_result tr
+    JOIN
+      season s ON tr.season_id = s.season_id
+    WHERE 
+      tr.result_id = ?
+  `;
+
+  connection.query(sql, [resultId], (err, results) => {
     if (err) {
       console.error('Error fetching test result: ' + err.stack);
       return res.status(500).json({ error: 'Database error', details: err });
@@ -218,6 +213,7 @@ module.exports = {
   getQuestionsWithOptions,
   saveResult,
   getTestResult,
+  getResultById,
   getRecommendations,
   getTestHistory
-};  
+};
