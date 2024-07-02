@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NotificationService } from '../../service/notification.service';
 
 @Component({
   selector: 'app-notification',
@@ -6,18 +7,9 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./notification.component.css']
 })
 export class NotificationComponent implements OnInit {
-  @Input() message: string = '';
-  isVisible: boolean = false;
+  notification$ = this.notificationService.notification$;
 
-  constructor() {}
+  constructor(private notificationService: NotificationService) {}
 
   ngOnInit(): void {}
-
-  show(message: string): void {
-    this.message = message;
-    this.isVisible = true;
-    setTimeout(() => {
-      this.isVisible = false;
-    }, 5000);
-  }
 }
