@@ -77,7 +77,7 @@ const saveResult = (req, res) => {
 
 const getTestResult = (req, res) => {
   const user_id = req.userId;
-  
+
   const sql = `
     SELECT 
       tr.season_id,
@@ -89,11 +89,40 @@ const getTestResult = (req, res) => {
     WHERE 
       tr.user_id = ?
     ORDER BY 
-      tr.result_date DESC
+      tr.result_date DESC, tr.result_id DESC
     LIMIT 1
   `;
 
   connection.query(sql, [user_id], (err, results) => {
+    if (err) {
+      console.error('Error fetching test result: ' + err.stack);
+      return res.status(500).json({ error: 'Database error', details: err });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: 'No test result found' });
+    }
+
+    res.status(200).json(results[0]);
+  });
+};
+
+const getResultById = (req, res) => {
+  const { resultId } = req.params;
+
+  const sql = `
+    SELECT 
+      tr.season_id,
+      s.season_name
+    FROM 
+      test_result tr
+    JOIN
+      season s ON tr.season_id = s.season_id
+    WHERE 
+      tr.result_id = ?
+  `;
+
+  connection.query(sql, [resultId], (err, results) => {
     if (err) {
       console.error('Error fetching test result: ' + err.stack);
       return res.status(500).json({ error: 'Database error', details: err });
@@ -152,11 +181,39 @@ const getRecommendations = (req, res) => {
   });
 };
 
+const getTestHistory = (req, res) => {
+  const user_id = req.userId;
+
+  const sql = `
+    SELECT 
+      tr.season_id,
+      s.season_name,
+      tr.result_date
+    FROM 
+      test_result tr
+    JOIN
+      season s ON tr.season_id = s.season_id
+    WHERE 
+      tr.user_id = ?
+    ORDER BY 
+      tr.result_date DESC
+  `;
+
+  connection.query(sql, [user_id], (err, results) => {
+    if (err) {
+      console.error('Error fetching test history: ' + err.stack);
+      return res.status(500).json({ error: 'Database error', details: err });
+    }
+
+    res.status(200).json(results);
+  });
+};
+
 module.exports = {
   getQuestionsWithOptions,
   saveResult,
   getTestResult,
+  getResultById,
   getRecommendations,
+  getTestHistory
 };
-
-
