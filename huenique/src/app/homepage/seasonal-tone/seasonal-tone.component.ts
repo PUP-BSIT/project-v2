@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionService } from '../../../service/question.service';
 import { ResultsService } from '../../../service/result.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-seasonal-tone',
@@ -17,10 +17,33 @@ export class SeasonalToneComponent implements OnInit {
   constructor(
     private questionService: QuestionService,
     private resultsService: ResultsService,
+    private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      const resultId = params['resultId'];
+      if (resultId) {
+        this.getResultById(resultId);
+      } else {
+        this.getLatestResult();
+      }
+    });
+  }
+
+  getResultById(resultId: number): void {
+    this.questionService.getResultById(resultId).subscribe(
+      data => {
+        this.result = data;
+      },
+      error => {
+        console.error('Error fetching test result:', error);
+      }
+    );
+  }
+
+  getLatestResult(): void {
     this.questionService.getTestResult().subscribe(
       data => {
         this.result = data;

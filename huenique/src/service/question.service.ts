@@ -30,6 +30,18 @@ export class QuestionService {
     return this.http.get<any>(`${this.apiUrl}/results`, { headers });
   }
 
+  getResultById(resultId: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<any>(`${this.apiUrl}/results/${resultId}`, { headers });
+  }
+  
+  getTestHistory(): Observable<any[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<any[]>(`${this.apiUrl}/history`, { headers });
+  }
+  
   getRecommendations(seasonId: number): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);

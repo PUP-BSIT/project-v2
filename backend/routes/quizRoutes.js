@@ -6,7 +6,8 @@ const verifyToken = require('../middleware/authMiddleware');
 router.get('/questions', verifyToken, quizController.getQuestionsWithOptions);
 router.post('/results', verifyToken, quizController.saveResult);
 router.get('/results', verifyToken, quizController.getTestResult);
+router.get('/results/:resultId', verifyToken, quizController.getResultById);
 router.get('/recommendations/:season_id', verifyToken, quizController.getRecommendations);
-router.post('/send-email', verifyToken, quizController.sendEmail);
+router.get('/history', verifyToken, quizController.getTestHistory);
 
 module.exports = router;

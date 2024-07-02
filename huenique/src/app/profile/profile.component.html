@@ -1,15 +1,33 @@
 <div class="profile-container">
-    <h1>Profile</h1>
-    @if(user){
-        <div>
-            <p><strong>Username:</strong> {{ user.username }}</p>
-            <p><strong>Email:</strong> {{ user.email }}</p>
-        </div>
-    }
-    @if(testResult){
-        <div>
+  <h1>Profile</h1>
+  @if(user){
+  <div>
+      <p><strong>Username:</strong> {{ user.username }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+  </div>
+  }
+  @if(testResult){
+  <div>
       <p><strong>Season:</strong> {{ testResult.season_name }}</p>
-    </div>
-    } 
+  </div>
+  }
+  @if(testHistory.length > 0){
+    <div>
+      <h2>Test History</h2>
+      <table>
+          <thead>
+              <tr>
+                  <th>Date</th>
+                  <th>Season</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let history of testHistory">
+                  <td>{{ history.result_date | date: 'yyyy-MM-dd' }}</td>
+                  <td>{{ history.season_name }}</td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+  }
 </div>
-  

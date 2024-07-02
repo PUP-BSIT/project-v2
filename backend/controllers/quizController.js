@@ -1,5 +1,4 @@
 const connection = require('../config/database');
-const nodemailer = require('nodemailer');
 
 const getQuestionsWithOptions = (req, res) => {
   const sql = `
@@ -76,10 +75,9 @@ const saveResult = (req, res) => {
   );
 };
 
-
 const getTestResult = (req, res) => {
   const user_id = req.userId;
-  
+
   const sql = `
     SELECT 
       tr.season_id,
@@ -91,11 +89,40 @@ const getTestResult = (req, res) => {
     WHERE 
       tr.user_id = ?
     ORDER BY 
-      tr.result_date DESC
+      tr.result_date DESC, tr.result_id DESC
     LIMIT 1
   `;
 
   connection.query(sql, [user_id], (err, results) => {
+    if (err) {
+      console.error('Error fetching test result: ' + err.stack);
+      return res.status(500).json({ error: 'Database error', details: err });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: 'No test result found' });
+    }
+
+    res.status(200).json(results[0]);
+  });
+};
+
+const getResultById = (req, res) => {
+  const { resultId } = req.params;
+
+  const sql = `
+    SELECT 
+      tr.season_id,
+      s.season_name
+    FROM 
+      test_result tr
+    JOIN
+      season s ON tr.season_id = s.season_id
+    WHERE 
+      tr.result_id = ?
+  `;
+
+  connection.query(sql, [resultId], (err, results) => {
     if (err) {
       console.error('Error fetching test result: ' + err.stack);
       return res.status(500).json({ error: 'Database error', details: err });
@@ -154,50 +181,31 @@ const getRecommendations = (req, res) => {
   });
 };
 
-const sendEmail = (req, res) => {
-  const { email, userId } = req.body;
+const getTestHistory = (req, res) => {
+  const user_id = req.userId;
 
-  const sql = 'SELECT * FROM test_result WHERE user_id = ? ORDER BY result_date DESC LIMIT 1';
-  connection.query(sql, [userId], (err, results) => {
+  const sql = `
+    SELECT 
+      tr.season_id,
+      s.season_name,
+      tr.result_date
+    FROM 
+      test_result tr
+    JOIN
+      season s ON tr.season_id = s.season_id
+    WHERE 
+      tr.user_id = ?
+    ORDER BY 
+      tr.result_date DESC
+  `;
+
+  connection.query(sql, [user_id], (err, results) => {
     if (err) {
-      console.error('Error fetching results:', err);
-      return res.status(500).json({ error: 'Failed to fetch results.' });
+      console.error('Error fetching test history: ' + err.stack);
+      return res.status(500).json({ error: 'Database error', details: err });
     }
 
-    if (results.length === 0) {
-      return res.status(404).json({ error: 'Results not found.' });
-    }
-
-    const result = results[0];
-    console.log('Retrieved result:', result);
-
-    const emailContent = `Here are your color analysis results:\n\nSeason: ${result.season}\nRecommendations: ${result.recommendations}`;
-    console.log('Email content:', emailContent); 
-
-    let transporter = nodemailer.createTransport({
-      service: 'Gmail',
-      auth: {
-        user: process.env.EMAIL_USER, 
-        pass: process.env.EMAIL_PASS
-      }
-    });
-
-    let mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: 'Your Color Analysis Results',
-      text: emailContent
-    };
-
-    transporter.sendMail(mailOptions, (err, info) => {
-      if (err) {
-        console.error('Error sending email:', err);
-        return res.status(500).json({ error: 'Failed to send email.' });
-      }
-
-      console.log('Email sent successfully:', info);
-      res.status(200).json({ message: 'Email sent successfully!' });
-    });
+    res.status(200).json(results);
   });
 };
 
@@ -205,8 +213,7 @@ module.exports = {
   getQuestionsWithOptions,
   saveResult,
   getTestResult,
+  getResultById,
   getRecommendations,
-  sendEmail
+  getTestHistory
 };
-
-
