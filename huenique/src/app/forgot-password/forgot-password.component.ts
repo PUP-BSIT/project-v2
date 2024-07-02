@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NotificationService } from '../../service/notification.service';
 import { LoginService } from '../../service/login.service';
 import { ForgotPasswordRequest } from '../model/forgotPasswordRequest';
 
@@ -15,7 +16,8 @@ export class ForgotPasswordComponent implements OnInit {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private notificationService: NotificationService
   ) {}
 
   get emailControl() {
@@ -34,7 +36,10 @@ export class ForgotPasswordComponent implements OnInit {
       this.loginService.forgotPassword(request).subscribe(
         response => {
           console.log('Password reset email sent', response);
-          this.router.navigate(['/sign-in']);
+          this.notificationService.showNotification('Password Reset has been sent! Check your Email to proceed.');
+          setTimeout(() => {
+            this.router.navigate(['/sign-in']);
+          }, 3000);
         },
         error => {
           console.error('Password reset failed', error);

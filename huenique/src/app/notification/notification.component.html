@@ -1,4 +1,7 @@
-<div *ngIf="isVisible" class="notification">
-    {{ message }}
-</div>
-  
+<div *ngIf="notification$ | async as message" class="toast toast-end">
+    <div class="alert alert-info">
+      <div>
+        <span>{{ message }}</span>
+      </div>
+    </div>
+  </div>
