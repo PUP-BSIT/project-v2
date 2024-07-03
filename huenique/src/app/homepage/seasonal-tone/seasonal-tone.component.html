@@ -8,10 +8,18 @@
 </div>
 
 @if (result) {
-  <h2>Your Seasonal Tone</h2>
-  <p>Season: {{ result.season_name }}</p>
-  <button (click)="learnMore()" class="btn btn-primary">Learn More</button>
+  <div class="bg-lightOrange rounded-badge p-4 text-center max-w-sm mx-auto">
+    <h2 class="text-lg font-normal">Your Seasonal Color is</h2>
+    <p class="text-5xl font-bold mt-2 uppercase mb-2">{{ result.season_name }}</p>
+  </div>
 
+  <div class="season-description p-4 my-4">
+    <h3>{{ result.season_name }}</h3>
+    <p>{{ seasonDescription }}</p>
+  </div>
+
+  <button (click)="learnMore()" class="btn btn-primary mt-4">Learn More</button>
+  
   @if (recommendations) {
     <div class="recommendations-section">
       @for (category of recommendationCategories; track category) {
@@ -44,4 +52,3 @@
 <div class="mt-8">
   <button class="btn btn-primary" (click)="goToEmailRequest()">Proceed to Email Request</button>
 </div>
-

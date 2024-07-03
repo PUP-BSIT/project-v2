@@ -18,9 +18,9 @@
 }
 
 .color-sample {
-  width: 100px;
-  height: 100px;
-  margin: 5px;
+  width: 150px;
+  height: 150px;
+  margin: 10px;
   position: relative;
   display: flex;
   align-items: center;
@@ -33,11 +33,9 @@
 .color-name {
   font-weight: bold;
   position: absolute;
+  bottom: 10px;
   width: 100%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
+  text-align: center;
 }
 
 .recommendation-descriptions {

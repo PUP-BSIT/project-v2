@@ -9,6 +9,7 @@ module.exports = {
         lightBlue: '#669FFF',
         customPrimary: '#874213',
         customPrimary: '#123456',
+        lightOrange: '#FFEED9',
       },
 
       fontFamily: {

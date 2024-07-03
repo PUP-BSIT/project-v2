@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionService } from '../../../service/question.service';
 import { ResultsService } from '../../../service/result.service';
+import { SeasonalDescriptionsService } from '../../../service/seasonal-descriptions-service.service';
 
 @Component({
   selector: 'app-seasonal-tone',
@@ -13,12 +14,14 @@ export class SeasonalToneComponent implements OnInit {
   recommendations: any;
   recommendationCategories = ['accessories', 'avoid', 'combinations', 'lens', 'hair', 'makeup'];
   currentStep: number = 2;
+  seasonDescription: string = '';
 
   constructor(
     private questionService: QuestionService,
     private resultsService: ResultsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private seasonalDescriptionsService: SeasonalDescriptionsService
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +39,7 @@ export class SeasonalToneComponent implements OnInit {
     this.questionService.getResultById(resultId).subscribe(
       data => {
         this.result = data;
+        this.setSeasonDescription();
       },
       error => {
         console.error('Error fetching test result:', error);
@@ -47,11 +51,18 @@ export class SeasonalToneComponent implements OnInit {
     this.questionService.getTestResult().subscribe(
       data => {
         this.result = data;
+        this.setSeasonDescription();
       },
       error => {
         console.error('Error fetching test result:', error);
       }
     );
+  }
+
+  setSeasonDescription(): void {
+    if (this.result && this.result.season_name) {
+      this.seasonDescription = this.seasonalDescriptionsService.getDescription(this.result.season_name);
+    }
   }
 
   learnMore(): void {
