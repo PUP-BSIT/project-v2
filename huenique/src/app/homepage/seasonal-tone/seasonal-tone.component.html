@@ -13,12 +13,29 @@
     <p class="text-5xl font-bold mt-2 uppercase mb-2">{{ result.season_name }}</p>
   </div>
 
-  <div class="season-description p-4 my-4">
-    <h3>{{ result.season_name }}</h3>
-    <p>{{ seasonDescription }}</p>
+  <div class="season-image flex justify-center my-4">
+    @if (result.season_name === 'Spring') {
+      <img src="../../../assets/spring_result.svg" alt="Spring" class="max-w-5xl mx-auto">
+    } @else if (result.season_name === 'Summer') {
+      <img src="../../../assets/summer_result.svg" alt="Summer" class="max-w-5xl mx-auto">
+    } @else if (result.season_name === 'Autumn') {
+      <img src="../../../assets/autumn_result.svg" alt="Autumn" class="max-w-5xl mx-auto">
+    } @else if (result.season_name === 'Winter') {
+      <img src="../../../assets/winter_result.svg" alt="Winter" class="max-w-5xl mx-auto">
+    }
   </div>
 
-  <button (click)="learnMore()" class="btn btn-primary mt-4">Learn More</button>
+  <div class="season-description px-40 py-4 my-4">
+    <h3 class="text-4xl font-extrabold mb-2 font-poppins">Introduction</h3>
+    <p class="text-3xl pt-5 font-poppins">
+      {{result.season_name}} {{ seasonDescription }}
+    </p>
+  </div>
+  
+
+  <div class="flex justify-center my-4">
+    <button (click)="learnMore()" class="btn-lg flex items-center bg-lightYellow text-white rounded-badge py-8 px-12 text-2xl font-bold hover:bg-darkYellow">Learn More</button>
+  </div>
   
   @if (recommendations) {
     <div class="recommendations-section">

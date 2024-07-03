@@ -10,6 +10,8 @@ module.exports = {
         customPrimary: '#874213',
         customPrimary: '#123456',
         lightOrange: '#FFEED9',
+        lightYellow: '#FFCC5E',
+        darkYellow: '#FFC13B',
       },
 
       fontFamily: {
