@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmailService } from '../../../service/email.service';
 import { ResultsService } from '../../../service/result.service';
 import { AuthService } from '../../../service/auth.service';
+import { NotificationService } from '../../../service/notification.service';
 
 @Component({
   selector: 'app-email-request',
@@ -17,7 +18,8 @@ export class EmailRequestComponent implements OnInit {
   constructor(
     private emailService: EmailService,
     private resultsService: ResultsService,
-    private authService: AuthService 
+    private authService: AuthService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit() {
@@ -29,15 +31,15 @@ export class EmailRequestComponent implements OnInit {
     if (this.email && this.results && this.userId) {
       this.emailService.sendEmail(this.email, this.results, this.userId).subscribe(
         response => {
-          alert('Email sent successfully!');
+          this.notificationService.showNotification('Email sent successfully!', 'success');
         },
         error => {
           console.error('Error sending email:', error);
-          alert('Failed to send email.');
+          this.notificationService.showNotification('Failed to send email.', 'error');
         }
       );
     } else {
-      alert('Please enter a valid email address and complete the test.');
+      this.notificationService.showNotification('Please enter a valid email address and complete the test.', 'info');
     }
   }
 }

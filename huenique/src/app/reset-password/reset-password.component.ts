@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { LoginService } from '../../service/login.service';
+import { NotificationService } from '../../service/notification.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -16,7 +17,8 @@ export class ResetPasswordComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private notificationService: NotificationService
   ) {}
 
   get newPasswordControl() {
@@ -30,11 +32,21 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit(): void {
     this.token = this.route.snapshot.paramMap.get('token')!;
     this.resetPasswordForm = this.formBuilder.group({
-      newPassword: ['', [Validators.required]],
-      confirmNewPassword: ['', [Validators.required]]
+      newPassword: ['', [Validators.required, this.sqlInjectionValidator]],
+      confirmNewPassword: ['', [Validators.required, this.sqlInjectionValidator]]
     }, {
       validators: this.mustMatch('newPassword', 'confirmNewPassword')
     });
+  }
+
+  sqlInjectionValidator(control: AbstractControl): ValidationErrors | null {
+    const forbiddenCharacters = /['";=<>]/;
+    const sqlKeywords = /\b(SELECT|INSERT|DELETE|UPDATE|DROP|ALTER|CREATE|TRUNCATE|EXEC|UNION|--|OR|AND|WHERE|LIKE|IN|NOT|NULL|IS|VALUES)\b/i;
+
+    if (forbiddenCharacters.test(control.value) || sqlKeywords.test(control.value)) {
+      return { sqlInjection: true };
+    }
+    return null;
   }
 
   mustMatch(controlName: string, matchingControlName: string) {
@@ -64,10 +76,12 @@ export class ResetPasswordComponent implements OnInit {
       this.loginService.resetPassword(resetData).subscribe(
         response => {
           console.log('Password reset successful', response);
+          this.notificationService.showNotification('Password Successfully Changed', 'success');
           this.router.navigate(['/sign-in']);
         },
         error => {
           console.error('Password reset failed', error);
+          this.notificationService.showNotification('Password reset failed', 'error');
         }
       );
     } else {
