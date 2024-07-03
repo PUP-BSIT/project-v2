@@ -1,7 +1,44 @@
+.recommendations-section {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.grid {
+  display: grid;
+  gap: 10px;
+}
+
 .color-sample {
-  width: 20px;
-  height: 20px;
-  display: inline-block;
-  margin-right: 8px;
-  border: 1px solid #000;
+  width: 200px;
+  height: 200px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 14px;
+}
+
+.custom-grid {
+  grid-template-columns: repeat(5, 0.1fr);
+  justify-content: center;
+}
+
+.color-name {
+  font-weight: bold;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.recommendation-descriptions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.color-description {
+  width: auto;
+  text-align: start;
 }
