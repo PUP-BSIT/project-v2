@@ -1,9 +1,9 @@
 <app-navbar></app-navbar>
 <div class="flex justify-center my-8">
   <ul class="steps steps-horizontal w-full max-w-4xl">
-    <li class="step" [ngClass]="{'step-primary': currentStep >= 1}">Take the Test</li>
-    <li class="step" [ngClass]="{'step-primary': currentStep >= 2}">Seasonal Tone Result</li>
-    <li class="step" [ngClass]="{'step-primary': currentStep >= 3}">Email Copy Request</li>
+    <li class="step" data-content="" [ngClass]="{'step-primary': currentStep >= 1}">Take the Test</li>
+    <li class="step" data-content="" [ngClass]="{'step-primary': currentStep >= 2}">Seasonal Tone Result</li>
+    <li class="step" data-content="" [ngClass]="{'step-primary': currentStep >= 3}">Email Copy Request</li>
   </ul>
 </div>
 
@@ -26,46 +26,44 @@
   </div>
 
   <div class="season-description px-40 py-4 my-4">
-    <h3 class="text-4xl font-extrabold mb-2 font-poppins">Introduction</h3>
-    <p class="text-3xl pt-5 font-poppins">
-      {{result.season_name}} {{ seasonDescription }}
+    <h3 class="text-4xl font-extrabold mb-2 mt-12 font-poppins text-brown">Introduction</h3>
+    <p class="text-3xl pt-5 font-poppins text-lightBrown">
+      <span class="font-extrabold">{{result.season_name}}</span> {{ seasonDescription }}
     </p>
   </div>
   
-
-  <div class="flex justify-center my-4">
+  <div class="flex justify-center my-4 py-5">
     <button (click)="learnMore()" class="btn-lg flex items-center bg-lightYellow text-white rounded-badge py-8 px-12 text-2xl font-bold hover:bg-darkYellow">Learn More</button>
   </div>
   
   @if (recommendations) {
     <div class="recommendations-section">
       @for (category of recommendationCategories; track category) {
-        <h3>{{ category | titlecase }}</h3>
+        <h3 class="font-bold text-5xl text-center my-12">{{ category | titlecase }}</h3>
         
-        <div class="recommendation-colors">
-          <div class="color-category">
-            @for (item of recommendations[category]; track item.hex_code) {
-              <div [style.background-color]="item.hex_code" 
-                   class="color-sample" 
-                   [ngStyle]="{'color': getTextColor(item.hex_code)}">
-                <p class="color-name">{{ item.color_name }}</p>
-              </div>
-            }
-          </div>
+        <div class="recommendation-colors grid gap-1 custom-grid">
+          @for (item of recommendations[category]; track item.hex_code) {
+            <div [style.background-color]="item.hex_code" 
+                 class="color-sample text-center"
+                 [ngStyle]="{'color': getTextColor(item.hex_code)}">
+              <p class="color-name font-bold text-base">{{ item.color_name }}</p>
+            </div>
+          }
         </div>
 
-        <div class="recommendation-descriptions">
+        <div class="recommendation-descriptions pt-5">
           @for (item of recommendations[category]; track item.hex_code) {
-            <div class="description-item">
-              <p class="">{{ item.color_name }}</p>
-              <p class="color-description">{{ item.details }}</p>
+            <div class="description-item mb-3 mt-3 text-start text-3xl px-80">
+              <p class="font-bold text-brown">{{ item.color_name }}</p>
+              <p class="color-description text-2xl text-lightBrown mb-10">{{ item.details }}</p>
             </div>
           }
         </div>
       }
     </div>
+    <div class="mt-8 flex justify-center">
+      <button class="btn-lg flex items-center bg-lightYellow text-white rounded-badge py-10 px-12 text-2xl font-bold hover:bg-darkYellow" 
+      (click)="goToEmailRequest()">Proceed to Email Request</button>
+    </div>
   }
 }
-<div class="mt-8">
-  <button class="btn btn-primary" (click)="goToEmailRequest()">Proceed to Email Request</button>
-</div>
