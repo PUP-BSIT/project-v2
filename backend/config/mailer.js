@@ -41,14 +41,14 @@ const sendEmail = (email, subject, templatePath, replacements) => {
 };
 
 const sendConfirmationEmail = (email, token) => {
-  const url = `http://api.huenique.online:3000/api/auth/confirm/${token}`;
+  const url = `https://api.huenique.online:3000/api/auth/confirm/${token}`;
   const templatePath = path.join(__dirname, '../emails/templates/confirmEmail.html');
   
   sendEmail(email, 'Confirm your Email', templatePath, { url });
 };
 
 const sendResetPasswordEmail = (email, token) => {
-  const url = `http://localhost:4200/reset-password/${token}`;
+  const url = `https://localhost:4200/reset-password/${token}`;
   const templatePath = path.join(__dirname, '../emails/templates/resetPassEmail.html');
 
   sendEmail(email, 'Reset Password', templatePath, { url });
