@@ -4,28 +4,34 @@
     <div class="flex justify-center mb-4">
       <img src="assets/profile-icon.png" alt="Profile Icon" class="w-24 h-24">
     </div>
-    <div *ngIf="user" class="mb-4">
-      <p class="text-2xl text-darkGray"><strong>Username:</strong> {{ user.username }}</p>
-      <p class="text-2xl text-darkGray"><strong>Email:</strong> {{ user.email }}</p>
-    </div>
-    <div *ngIf="testResult" class="mb-6">
-      <p class="text-2xl text-darkGray"><strong>Season:</strong> {{ testResult.season_name }}</p>
-    </div>
-    <div *ngIf="testHistory.length > 0" class="mt-6">
-      <h2 class="text-3xl font-semibold mb-4 text-darkBrown">Test History</h2>
-      <table class="table-auto w-full text-left mx-auto">
-        <thead>
-          <tr>
-            <th class="px-4 py-2 bg-lightYellow text-brown">Date</th>
-            <th class="px-4 py-2 bg-lightYellow text-brown">Season</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let history of testHistory">
-            <td class="border px-4 py-2 text-darkGray">{{ history.result_date }}</td>
-            <td class="border px-4 py-2 text-darkGray">{{ history.season_name }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    @if(user){
+        <div class="mb-4">
+            <p class="text-2xl text-darkGray"><strong>Username:</strong> {{ user.username }}</p>
+            <p class="text-2xl text-darkGray"><strong>Email:</strong> {{ user.email }}</p>
+        </div>
+    }
+    @if(testResult){
+        <div class="mb-6">
+            <p class="text-2xl text-darkGray"><strong>Season:</strong> {{ testResult.season_name }}</p>
+        </div>
+    }
+    @if(testHistory.length > 0){
+        <div class="mt-6">
+            <h2 class="text-3xl font-semibold mb-4 text-darkBrown">Test History</h2>
+            <table class="table-auto w-full text-left mx-auto">
+              <thead>
+                <tr>
+                  <th class="px-4 py-2 bg-lightYellow text-brown">Date</th>
+                  <th class="px-4 py-2 bg-lightYellow text-brown">Season</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let history of testHistory">
+                  <td class="border px-4 py-2 text-darkGray">{{ history.result_date }}</td>
+                  <td class="border px-4 py-2 text-darkGray">{{ history.season_name }}</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+    }
 </div>  
