@@ -41,7 +41,7 @@ const sendEmail = (email, subject, templatePath, replacements) => {
 };
 
 const sendConfirmationEmail = (email, token) => {
-  const url = `http://localhost:3000/api/auth/confirm/${token}`;
+  const url = `http://api.huenique.online:3000/api/auth/confirm/${token}`;
   const templatePath = path.join(__dirname, '../emails/templates/confirmEmail.html');
   
   sendEmail(email, 'Confirm your Email', templatePath, { url });
