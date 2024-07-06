@@ -4,19 +4,21 @@
   
 .main {
     overflow: hidden;
-    height: 100vh;
+    height: 80vh;
 }
   
 .girl {
-    margin-left: -200px;
-    width: 20%; 
+    margin-left: -800px;
+    margin-top: -25px;
+    width: 30%; 
     max-width: 400px;
 }
 
 .two {
-    margin-right: -200px;
-    width: 20%; 
-    max-width: 400px;
+    margin-right: -800px;
+    margin-top: -500px;
+    width: 100%; 
+    max-width: 600px;
 }
 
 .footer {
