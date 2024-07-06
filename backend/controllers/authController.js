@@ -67,7 +67,7 @@ const confirmEmail = (req, res) => {
         return res.status(500).json({ error: 'Failed to confirm user', details: updateErr });
       }
 
-      res.redirect('http://localhost:4200/confirm-email'); 
+      res.redirect('https://localhost:4200/confirm-email'); 
     });
   });
 };
