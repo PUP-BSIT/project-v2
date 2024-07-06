@@ -8,7 +8,7 @@ import { SignupResponse } from '../app/model/signupResponse';
   providedIn: 'root'
 })
 export class SignupService {
-  private apiUrl = 'https://api.huenique.online:3000/api/auth/signup';
+  private apiUrl = 'http://api.huenique.online:3000/api/auth/signup';
 
   constructor(private http: HttpClient) {}
 
