@@ -56,6 +56,7 @@ export class ColorTestComponent implements OnInit {
     }
   
     const seasonScores: { [key: number]: number } = { 1: 0, 2: 0, 3: 0, 4: 0 };
+    const totalQuestions = this.selectedAnswers.length;
   
     this.selectedAnswers.forEach(seasonId => {
       if (seasonId !== null) {
@@ -63,36 +64,126 @@ export class ColorTestComponent implements OnInit {
       }
     });
   
-    const maxScore = Math.max(...Object.values(seasonScores));
-    const seasonId = Object.keys(seasonScores).find(key => seasonScores[Number(key)] === maxScore);
+    const seasonPercentages = Object.keys(seasonScores).map(seasonId => ({
+      seasonId: Number(seasonId),
+      percentage: (seasonScores[Number(seasonId)] / totalQuestions) * 100
+    }));
   
-    this.result = this.getSeasonName(Number(seasonId));
+    seasonPercentages.sort((a, b) => b.percentage - a.percentage);
+    const primarySeasonId = seasonPercentages[0].seasonId;
+  
+    const subcategory = this.determineSubcategory(seasonPercentages, primarySeasonId);
+  
+    this.result = this.getSeasonName(primarySeasonId, subcategory);
     console.log('Quiz result:', this.result);
   
     const resultData: QuizResult = {
       user_id: this.userId!,
-      season_id: Number(seasonId),
-      hair_id: Number(seasonId),
-      makeup_id: Number(seasonId),
-      accessories_id: Number(seasonId),
-      color_combination_id: Number(seasonId),
-      contact_lens_id: Number(seasonId),
-      avoid_color_id: Number(seasonId),
-      result_date: new Date().toISOString().split('T')[0]
+      season_id: primarySeasonId,
+      hair_id: primarySeasonId,
+      makeup_id: primarySeasonId,
+      accessories_id: primarySeasonId,
+      color_combination_id: primarySeasonId,
+      contact_lens_id: primarySeasonId,
+      avoid_color_id: primarySeasonId,
+      result_date: new Date().toISOString().split('T')[0],
+      subcategory_id: subcategory ? subcategory.seasonId : null
     };
-  
+    
     this.questionService.saveResult(resultData).subscribe(response => {
       console.log('Result saved:', response);
       this.router.navigate(['/homepage/seasonal-tone', { resultId: response.resultId }]);
     });
   }
   
-  getSeasonName(seasonId: number): string {
+  determineSubcategory(seasonPercentages: { seasonId: number, percentage: number }[], primarySeasonId: number): { seasonId: number, percentage: number } | null {
+    const primaryPercentage = seasonPercentages.find(sp => sp.seasonId === primarySeasonId)?.percentage || 0;
+    const otherSeasonPercentages = seasonPercentages.filter(sp => sp.seasonId !== primarySeasonId);
+
+    const subcategoryMap: { [key: number]: number[] } = {
+      1: [6, 7, 5],
+      2: [10, 9, 8],
+      3: [15, 16, 14],
+      4: [13, 12, 11]
+    };
+
+    const potentialSubcategories = subcategoryMap[primarySeasonId];
+
+    if (!potentialSubcategories) {
+      return null;
+    }
+
+    let closestSubcategory = null;
+    let smallestDifference = Number.MAX_VALUE;
+
+    for (const subcategoryId of potentialSubcategories) {
+      const subcategoryPercentage = this.getSubcategoryPercentage(subcategoryId, otherSeasonPercentages);
+      const difference = Math.abs(primaryPercentage - subcategoryPercentage);
+
+      if (difference < smallestDifference) {
+        smallestDifference = difference;
+        closestSubcategory = { seasonId: subcategoryId, percentage: subcategoryPercentage };
+      }
+    }
+
+    return closestSubcategory;
+  }
+
+  getSubcategoryPercentage(subcategoryId: number, otherSeasonPercentages: { seasonId: number, percentage: number }[]): number {
+    switch (subcategoryId) {
+      case 6:  
+        return otherSeasonPercentages.find(sp => sp.seasonId === 1)?.percentage || 0;
+      case 7:  
+        return otherSeasonPercentages.find(sp => sp.seasonId === 1)?.percentage || 0;
+      case 5:  
+        return otherSeasonPercentages.find(sp => sp.seasonId === 1)?.percentage || 0;
+      case 10:  
+        return otherSeasonPercentages.find(sp => sp.seasonId === 4)?.percentage || 0;
+      case 9:  
+        return otherSeasonPercentages.find(sp => sp.seasonId === 1)?.percentage || 0;
+      case 8:  
+        return otherSeasonPercentages.find(sp => sp.seasonId === 3)?.percentage || 0;
+      case 15:  
+        return otherSeasonPercentages.find(sp => sp.seasonId === 3)?.percentage || 0;
+      case 16:  
+        return otherSeasonPercentages.find(sp => sp.seasonId === 3)?.percentage || 0;
+      case 14:  
+        return otherSeasonPercentages.find(sp => sp.seasonId === 3)?.percentage || 0;
+      case 13:  
+        return otherSeasonPercentages.find(sp => sp.seasonId === 4)?.percentage || 0;
+      case 12:  
+        return otherSeasonPercentages.find(sp => sp.seasonId === 4)?.percentage || 0;
+      case 11:  
+        return otherSeasonPercentages.find(sp => sp.seasonId === 4)?.percentage || 0;
+      default:
+        return 0;
+    }
+  }
+
+  getSeasonName(seasonId: number, subcategory: { seasonId: number, percentage: number } | null): string {
     switch (seasonId) {
-      case 1: return 'Winter';
-      case 2: return 'Summer';
-      case 3: return 'Autumn';
-      case 4: return 'Spring';
+      case 1: return subcategory ? this.getSubcategoryName(subcategory.seasonId) : 'Winter';
+      case 2: return subcategory ? this.getSubcategoryName(subcategory.seasonId) : 'Summer';
+      case 3: return subcategory ? this.getSubcategoryName(subcategory.seasonId) : 'Autumn';
+      case 4: return subcategory ? this.getSubcategoryName(subcategory.seasonId) : 'Spring';
+      default: return 'Unknown';
+    }
+  }
+
+  getSubcategoryName(subcategoryId: number): string {
+    switch (subcategoryId) {
+      case 6: return 'Clear Winter';
+      case 7: return 'Cool Winter';
+      case 5: return 'Deep Winter';
+      case 10: return 'Light Summer';
+      case 9: return 'Cool Summer';
+      case 8: return 'Soft Summer';
+      case 15: return 'Soft Autumn';
+      case 16: return 'Warm Autumn';
+      case 14: return 'Deep Autumn';
+      case 13: return 'Clear Spring';
+      case 12: return 'Warm Spring';
+      case 11: return 'Light Spring';
       default: return 'Unknown';
     }
   }

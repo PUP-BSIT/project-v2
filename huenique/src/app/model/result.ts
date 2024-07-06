@@ -8,4 +8,5 @@ export interface QuizResult {
   color_combination_id: number;
   contact_lens_id: number;
   avoid_color_id: number;
+  subcategory_id: number | null; 
 }

@@ -47,7 +47,8 @@ const saveResult = (req, res) => {
     accessories_id,
     color_combination_id,
     contact_lens_id,
-    avoid_color_id
+    avoid_color_id,
+    subcategory_id
   } = req.body;
 
   const user_id = req.userId;
@@ -55,15 +56,15 @@ const saveResult = (req, res) => {
   const sql = `
     INSERT INTO test_result (
       user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
-      color_combination_id, contact_lens_id, avoid_color_id
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      color_combination_id, contact_lens_id, avoid_color_id, subcategory_id
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   connection.query(
     sql,
     [
       user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
-      color_combination_id, contact_lens_id, avoid_color_id
+      color_combination_id, contact_lens_id, avoid_color_id, subcategory_id
     ],
     (err, result) => {
       if (err) {
