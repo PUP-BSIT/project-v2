@@ -166,9 +166,14 @@ const getRecommendations = (req, res) => {
       'makeup' AS category, color_name, shade_details AS details, hex_code 
     FROM makeup_shade 
     WHERE season_id = ? AND (subcategory_id IS NULL OR subcategory_id = ?)
+    UNION ALL
+    SELECT 
+      'clothing' AS category, color_name, cloth_details AS details, hex_code 
+    FROM cloth 
+    WHERE season_id = ? AND (subcategory_id IS NULL OR subcategory_id = ?)
   `;
 
-  connection.query(sql, [season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id], (err, results) => {
+  connection.query(sql, [season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id], (err, results) => {
     if (err) {
       console.error('Error fetching recommendations: ' + err.stack);
       return res.status(500).json({ error: 'Database error', details: err });

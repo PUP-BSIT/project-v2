@@ -12,7 +12,7 @@ import { SeasonalDescriptionsService } from '../../../service/seasonal-descripti
 export class SeasonalToneComponent implements OnInit {
   result: any;
   recommendations: any;
-  recommendationCategories = ['accessories', 'avoid', 'lens', 'hair', 'makeup'];
+  recommendationCategories = ['clothing', 'accessories', 'lens', 'hair', 'makeup', 'avoid'];
   currentStep: number = 2;
   seasonDescription: string = '';
 
