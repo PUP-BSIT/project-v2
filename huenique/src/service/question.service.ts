@@ -42,11 +42,11 @@ export class QuestionService {
     return this.http.get<any[]>(`${this.apiUrl}/history`, { headers });
   }
   
-  getRecommendations(seasonId: number): Observable<any> {
+  getRecommendations(seasonId: number, subcategoryId: number): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<any>(`${this.apiUrl}/recommendations/${seasonId}`, { headers }).pipe(
+    return this.http.get<any>(`${this.apiUrl}/recommendations/${seasonId}/${subcategoryId}`, { headers }).pipe(
       tap(data => console.log('Fetched recommendations:', data))
     );
-  }
+  }  
 }

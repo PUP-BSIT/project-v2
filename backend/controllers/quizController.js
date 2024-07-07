@@ -45,7 +45,6 @@ const saveResult = (req, res) => {
     hair_id,
     makeup_id,
     accessories_id,
-    color_combination_id,
     contact_lens_id,
     avoid_color_id,
     subcategory_id
@@ -56,15 +55,15 @@ const saveResult = (req, res) => {
   const sql = `
     INSERT INTO test_result (
       user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
-      color_combination_id, contact_lens_id, avoid_color_id, subcategory_id
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      contact_lens_id, avoid_color_id, subcategory_id
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   connection.query(
     sql,
     [
       user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
-      color_combination_id, contact_lens_id, avoid_color_id, subcategory_id
+      contact_lens_id, avoid_color_id, subcategory_id
     ],
     (err, result) => {
       if (err) {
@@ -114,7 +113,9 @@ const getResultById = (req, res) => {
   const sql = `
     SELECT 
       tr.season_id,
-      s.season_name
+      s.season_name,
+      tr.subcategory_id,
+      (SELECT season_name FROM season WHERE season_id = tr.subcategory_id) AS subcategory_name
     FROM 
       test_result tr
     JOIN
@@ -138,29 +139,41 @@ const getResultById = (req, res) => {
 };
 
 const getRecommendations = (req, res) => {
-  const { season_id } = req.params;
+  const { season_id, subcategory_id } = req.params;
 
   const sql = `
     SELECT 
-      'accessories' AS category, color_name, accessories_details AS details, hex_code FROM accessories WHERE season_id = ?
+      'accessories' AS category, color_name, accessories_details AS details, hex_code 
+    FROM accessories 
+    WHERE season_id = ? AND (subcategory_id IS NULL OR subcategory_id = ?)
     UNION ALL
     SELECT 
-      'avoid' AS category, color_name, avoid_details AS details, hex_code FROM avoid_color WHERE season_id = ?
+      'avoid' AS category, color_name, avoid_details AS details, hex_code 
+    FROM avoid_color 
+    WHERE season_id = ? AND (subcategory_id IS NULL OR subcategory_id = ?)
     UNION ALL
     SELECT 
-      'combinations' AS category, color_name, combination_details AS details, hex_code FROM color_combination WHERE season_id = ?
+      'lens' AS category, color_name, lens_details AS details, hex_code 
+    FROM contact_lens 
+    WHERE season_id = ? AND (subcategory_id IS NULL OR subcategory_id = ?)
     UNION ALL
     SELECT 
-      'lens' AS category, color_name, lens_details AS details, hex_code FROM contact_lens WHERE season_id = ?
+      'hair' AS category, color_name, hair_details AS details, hex_code 
+    FROM hair_color 
+    WHERE season_id = ? AND (subcategory_id IS NULL OR subcategory_id = ?)
     UNION ALL
     SELECT 
-      'hair' AS category, color_name, hair_details AS details, hex_code FROM hair_color WHERE season_id = ?
+      'makeup' AS category, color_name, shade_details AS details, hex_code 
+    FROM makeup_shade 
+    WHERE season_id = ? AND (subcategory_id IS NULL OR subcategory_id = ?)
     UNION ALL
     SELECT 
-      'makeup' AS category, color_name, shade_details AS details, hex_code FROM makeup_shade WHERE season_id = ?
+      'clothing' AS category, color_name, cloth_details AS details, hex_code 
+    FROM cloth 
+    WHERE season_id = ? AND (subcategory_id IS NULL OR subcategory_id = ?)
   `;
 
-  connection.query(sql, [season_id, season_id, season_id, season_id, season_id, season_id], (err, results) => {
+  connection.query(sql, [season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id], (err, results) => {
     if (err) {
       console.error('Error fetching recommendations: ' + err.stack);
       return res.status(500).json({ error: 'Database error', details: err });
