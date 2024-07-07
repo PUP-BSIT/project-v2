@@ -5,7 +5,6 @@ export interface QuizResult {
   hair_id: number;
   makeup_id: number;
   accessories_id: number;
-  color_combination_id: number;
   contact_lens_id: number;
   avoid_color_id: number;
   subcategory_id: number | null; 

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuestionService } from '../../../service/question.service';
-import { Question } from '../../model/question';
 import { QuizResult } from '../../model/result';
 import { AuthService } from '../../../service/auth.service';
+import { Question } from '../../model/question';
 
 @Component({
   selector: 'app-color-test',
@@ -83,7 +83,6 @@ export class ColorTestComponent implements OnInit {
       hair_id: primarySeasonId,
       makeup_id: primarySeasonId,
       accessories_id: primarySeasonId,
-      color_combination_id: primarySeasonId,
       contact_lens_id: primarySeasonId,
       avoid_color_id: primarySeasonId,
       result_date: new Date().toISOString().split('T')[0],
@@ -95,7 +94,6 @@ export class ColorTestComponent implements OnInit {
       this.router.navigate(['/homepage/seasonal-tone', { resultId: response.resultId }]);
     });
   }
-  
   
   determineSubcategory(seasonPercentages: { seasonId: number, percentage: number }[], primarySeasonId: number): { seasonId: number, percentage: number } | null {
     const primaryPercentage = seasonPercentages.find(sp => sp.seasonId === primarySeasonId)?.percentage || 0;
@@ -162,7 +160,6 @@ getSubcategoryPercentage(subcategoryId: number, otherSeasonPercentages: { season
             return 0;
     }
 }
-
 
   getSeasonName(seasonId: number, subcategory: { seasonId: number, percentage: number } | null): string {
     switch (seasonId) {
