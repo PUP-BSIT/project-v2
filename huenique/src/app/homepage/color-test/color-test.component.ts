@@ -101,64 +101,67 @@ export class ColorTestComponent implements OnInit {
     const otherSeasonPercentages = seasonPercentages.filter(sp => sp.seasonId !== primarySeasonId);
 
     const subcategoryMap: { [key: number]: number[] } = {
-      1: [6, 7, 5],
-      2: [10, 9, 8],
-      3: [15, 16, 14],
-      4: [13, 12, 11]
+        1: [5, 6, 7],  // Example: Winter subcategories
+        2: [8, 9, 10], // Example: Summer subcategories
+        3: [14, 15, 16], // Example: Autumn subcategories
+        4: [11, 12, 13]  // Example: Spring subcategories
     };
 
     const potentialSubcategories = subcategoryMap[primarySeasonId];
 
     if (!potentialSubcategories) {
-      return null;
+        return null;
     }
 
-    let closestSubcategory = null;
+    let closestSubcategories: { seasonId: number, percentage: number, difference: number }[] = [];
     let smallestDifference = Number.MAX_VALUE;
 
     for (const subcategoryId of potentialSubcategories) {
-      const subcategoryPercentage = this.getSubcategoryPercentage(subcategoryId, otherSeasonPercentages);
-      const difference = Math.abs(primaryPercentage - subcategoryPercentage);
+        const subcategoryPercentage = this.getSubcategoryPercentage(subcategoryId, otherSeasonPercentages);
+        const difference = Math.abs(primaryPercentage - subcategoryPercentage);
 
-      if (difference < smallestDifference) {
-        smallestDifference = difference;
-        closestSubcategory = { seasonId: subcategoryId, percentage: subcategoryPercentage };
-      }
+        if (difference < smallestDifference) {
+            closestSubcategories = [{ seasonId: subcategoryId, percentage: subcategoryPercentage, difference }];
+            smallestDifference = difference;
+        } else if (difference === smallestDifference) {
+            closestSubcategories.push({ seasonId: subcategoryId, percentage: subcategoryPercentage, difference });
+        }
     }
 
-    return closestSubcategory;
-  }
+    if (closestSubcategories.length > 1) {
+        closestSubcategories.sort((a, b) => b.percentage - a.percentage);
+    }
 
-  getSubcategoryPercentage(subcategoryId: number, otherSeasonPercentages: { seasonId: number, percentage: number }[]): number {
+    return closestSubcategories[0];
+}
+
+getSubcategoryPercentage(subcategoryId: number, otherSeasonPercentages: { seasonId: number, percentage: number }[]): number {
     switch (subcategoryId) {
-      case 6:  
-        return otherSeasonPercentages.find(sp => sp.seasonId === 1)?.percentage || 0;
-      case 7:  
-        return otherSeasonPercentages.find(sp => sp.seasonId === 1)?.percentage || 0;
-      case 5:  
-        return otherSeasonPercentages.find(sp => sp.seasonId === 1)?.percentage || 0;
-      case 10:  
-        return otherSeasonPercentages.find(sp => sp.seasonId === 4)?.percentage || 0;
-      case 9:  
-        return otherSeasonPercentages.find(sp => sp.seasonId === 1)?.percentage || 0;
-      case 8:  
-        return otherSeasonPercentages.find(sp => sp.seasonId === 3)?.percentage || 0;
-      case 15:  
-        return otherSeasonPercentages.find(sp => sp.seasonId === 3)?.percentage || 0;
-      case 16:  
-        return otherSeasonPercentages.find(sp => sp.seasonId === 3)?.percentage || 0;
-      case 14:  
-        return otherSeasonPercentages.find(sp => sp.seasonId === 3)?.percentage || 0;
-      case 13:  
-        return otherSeasonPercentages.find(sp => sp.seasonId === 4)?.percentage || 0;
-      case 12:  
-        return otherSeasonPercentages.find(sp => sp.seasonId === 4)?.percentage || 0;
-      case 11:  
-        return otherSeasonPercentages.find(sp => sp.seasonId === 4)?.percentage || 0;
-      default:
-        return 0;
+        case 5:  
+        case 6:  
+            return otherSeasonPercentages.find(sp => sp.seasonId === 2)?.percentage || 0;
+        case 7:  
+            return otherSeasonPercentages.find(sp => sp.seasonId === 1)?.percentage || 0;
+        case 8:  
+        case 9:  
+            return otherSeasonPercentages.find(sp => sp.seasonId === 2)?.percentage || 0;
+        case 10: 
+            return otherSeasonPercentages.find(sp => sp.seasonId === 3)?.percentage || 0;
+        case 14: 
+        case 15: 
+            return otherSeasonPercentages.find(sp => sp.seasonId === 3)?.percentage || 0;
+        case 16: 
+            return otherSeasonPercentages.find(sp => sp.seasonId === 2)?.percentage || 0;
+        case 11: 
+        case 12: 
+            return otherSeasonPercentages.find(sp => sp.seasonId === 4)?.percentage || 0;
+        case 13: 
+            return otherSeasonPercentages.find(sp => sp.seasonId === 1)?.percentage || 0;
+        default:
+            return 0;
     }
-  }
+}
+
 
   getSeasonName(seasonId: number, subcategory: { seasonId: number, percentage: number } | null): string {
     switch (seasonId) {
