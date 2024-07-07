@@ -141,29 +141,41 @@ const getResultById = (req, res) => {
 
 
 const getRecommendations = (req, res) => {
-  const { season_id } = req.params;
+  const { season_id, subcategory_id } = req.params;
 
   const sql = `
     SELECT 
-      'accessories' AS category, color_name, accessories_details AS details, hex_code FROM accessories WHERE season_id = ?
+      'accessories' AS category, color_name, accessories_details AS details, hex_code 
+    FROM accessories 
+    WHERE season_id = ? AND (subcategory_id IS NULL OR subcategory_id = ?)
     UNION ALL
     SELECT 
-      'avoid' AS category, color_name, avoid_details AS details, hex_code FROM avoid_color WHERE season_id = ?
+      'avoid' AS category, color_name, avoid_details AS details, hex_code 
+    FROM avoid_color 
+    WHERE season_id = ? AND (subcategory_id IS NULL OR subcategory_id = ?)
     UNION ALL
     SELECT 
-      'combinations' AS category, color_name, combination_details AS details, hex_code FROM color_combination WHERE season_id = ?
+      'combinations' AS category, color_name, combination_details AS details, hex_code 
+    FROM color_combination 
+    WHERE season_id = ? AND (subcategory_id IS NULL OR subcategory_id = ?)
     UNION ALL
     SELECT 
-      'lens' AS category, color_name, lens_details AS details, hex_code FROM contact_lens WHERE season_id = ?
+      'lens' AS category, color_name, lens_details AS details, hex_code 
+    FROM contact_lens 
+    WHERE season_id = ? AND (subcategory_id IS NULL OR subcategory_id = ?)
     UNION ALL
     SELECT 
-      'hair' AS category, color_name, hair_details AS details, hex_code FROM hair_color WHERE season_id = ?
+      'hair' AS category, color_name, hair_details AS details, hex_code 
+    FROM hair_color 
+    WHERE season_id = ? AND (subcategory_id IS NULL OR subcategory_id = ?)
     UNION ALL
     SELECT 
-      'makeup' AS category, color_name, shade_details AS details, hex_code FROM makeup_shade WHERE season_id = ?
+      'makeup' AS category, color_name, shade_details AS details, hex_code 
+    FROM makeup_shade 
+    WHERE season_id = ? AND (subcategory_id IS NULL OR subcategory_id = ?)
   `;
 
-  connection.query(sql, [season_id, season_id, season_id, season_id, season_id, season_id], (err, results) => {
+  connection.query(sql, [season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id], (err, results) => {
     if (err) {
       console.error('Error fetching recommendations: ' + err.stack);
       return res.status(500).json({ error: 'Database error', details: err });
@@ -184,6 +196,7 @@ const getRecommendations = (req, res) => {
     res.status(200).json(recommendations);
   });
 };
+
 
 const getTestHistory = (req, res) => {
   const user_id = req.userId;

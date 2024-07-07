@@ -68,7 +68,8 @@ export class SeasonalToneComponent implements OnInit {
 
   learnMore(): void {
     const seasonId = this.result.season_id;
-    this.questionService.getRecommendations(seasonId).subscribe(
+    const subcategoryId = this.result.subcategory_id;
+    this.questionService.getRecommendations(seasonId, subcategoryId).subscribe(
       data => {
         this.recommendations = data;
         console.log('Recommendations:', this.recommendations);
