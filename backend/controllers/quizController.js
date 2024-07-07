@@ -45,7 +45,6 @@ const saveResult = (req, res) => {
     hair_id,
     makeup_id,
     accessories_id,
-    color_combination_id,
     contact_lens_id,
     avoid_color_id,
     subcategory_id
@@ -56,15 +55,15 @@ const saveResult = (req, res) => {
   const sql = `
     INSERT INTO test_result (
       user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
-      color_combination_id, contact_lens_id, avoid_color_id, subcategory_id
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      contact_lens_id, avoid_color_id, subcategory_id
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   connection.query(
     sql,
     [
       user_id, season_id, result_date, hair_id, makeup_id, accessories_id,
-      color_combination_id, contact_lens_id, avoid_color_id, subcategory_id
+      contact_lens_id, avoid_color_id, subcategory_id
     ],
     (err, result) => {
       if (err) {
@@ -139,7 +138,6 @@ const getResultById = (req, res) => {
   });
 };
 
-
 const getRecommendations = (req, res) => {
   const { season_id, subcategory_id } = req.params;
 
@@ -152,11 +150,6 @@ const getRecommendations = (req, res) => {
     SELECT 
       'avoid' AS category, color_name, avoid_details AS details, hex_code 
     FROM avoid_color 
-    WHERE season_id = ? AND (subcategory_id IS NULL OR subcategory_id = ?)
-    UNION ALL
-    SELECT 
-      'combinations' AS category, color_name, combination_details AS details, hex_code 
-    FROM color_combination 
     WHERE season_id = ? AND (subcategory_id IS NULL OR subcategory_id = ?)
     UNION ALL
     SELECT 
@@ -175,7 +168,7 @@ const getRecommendations = (req, res) => {
     WHERE season_id = ? AND (subcategory_id IS NULL OR subcategory_id = ?)
   `;
 
-  connection.query(sql, [season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id], (err, results) => {
+  connection.query(sql, [season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id, season_id, subcategory_id], (err, results) => {
     if (err) {
       console.error('Error fetching recommendations: ' + err.stack);
       return res.status(500).json({ error: 'Database error', details: err });
@@ -196,7 +189,6 @@ const getRecommendations = (req, res) => {
     res.status(200).json(recommendations);
   });
 };
-
 
 const getTestHistory = (req, res) => {
   const user_id = req.userId;
