@@ -114,7 +114,9 @@ const getResultById = (req, res) => {
   const sql = `
     SELECT 
       tr.season_id,
-      s.season_name
+      s.season_name,
+      tr.subcategory_id,
+      (SELECT season_name FROM season WHERE season_id = tr.subcategory_id) AS subcategory_name
     FROM 
       test_result tr
     JOIN
@@ -136,6 +138,7 @@ const getResultById = (req, res) => {
     res.status(200).json(results[0]);
   });
 };
+
 
 const getRecommendations = (req, res) => {
   const { season_id } = req.params;

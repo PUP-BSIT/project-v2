@@ -96,6 +96,7 @@ export class ColorTestComponent implements OnInit {
     });
   }
   
+  
   determineSubcategory(seasonPercentages: { seasonId: number, percentage: number }[], primarySeasonId: number): { seasonId: number, percentage: number } | null {
     const primaryPercentage = seasonPercentages.find(sp => sp.seasonId === primarySeasonId)?.percentage || 0;
     const otherSeasonPercentages = seasonPercentages.filter(sp => sp.seasonId !== primarySeasonId);

@@ -10,7 +10,9 @@
 @if (result) {
   <div class="bg-lightOrange rounded-badge p-4 text-center max-w-sm mx-auto">
     <h2 class="text-lg font-normal">Your Seasonal Color is</h2>
-    <p class="text-5xl font-bold mt-2 uppercase mb-2">{{ result.season_name }}</p>
+    @if (result.subcategory_name) {
+      <p class="text-5xl font-bold mt-2 uppercase mb-2"> {{ result.subcategory_name}}</p>
+    }
   </div>
 
   <div class="season-image flex justify-center my-4">
