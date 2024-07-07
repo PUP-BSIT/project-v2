@@ -61,28 +61,8 @@ export class SeasonalToneComponent implements OnInit {
 
   setSeasonDescription(): void {
     if (this.result && this.result.season_name) {
-      this.seasonDescription = this.seasonalDescriptionsService.getDescription(this.result.season_name);
-      if (this.result.subcategory_id) {
-        this.result.subcategory_name = this.getSubcategoryName(this.result.subcategory_id);
-      }
-    }
-  }
-
-  getSubcategoryName(subcategoryId: number): string {
-    switch (subcategoryId) {
-      case 6: return 'Clear Winter';
-      case 7: return 'Cool Winter';
-      case 5: return 'Deep Winter';
-      case 10: return 'Light Summer';
-      case 9: return 'Cool Summer';
-      case 8: return 'Soft Summer';
-      case 15: return 'Soft Autumn';
-      case 16: return 'Warm Autumn';
-      case 14: return 'Deep Autumn';
-      case 13: return 'Clear Spring';
-      case 12: return 'Warm Spring';
-      case 11: return 'Light Spring';
-      default: return 'Unknown';
+      const seasonKey = this.result.subcategory_name ? this.result.subcategory_name.toLowerCase().replace(' ', '_') : this.result.season_name.toLowerCase();
+      this.seasonDescription = this.seasonalDescriptionsService.getDescription(seasonKey);
     }
   }
 
