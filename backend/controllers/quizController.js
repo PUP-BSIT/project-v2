@@ -214,7 +214,7 @@ const getTestHistory = (req, res) => {
     WHERE 
       tr.user_id = ?
     ORDER BY 
-      tr.result_date DESC
+      tr.result_date DESC, tr.result_id DESC
   `;
 
   connection.query(sql, [user_id], (err, results) => {
