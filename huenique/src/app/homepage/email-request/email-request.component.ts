@@ -25,6 +25,18 @@ export class EmailRequestComponent implements OnInit {
   ngOnInit() {
     this.results = this.resultsService.getResults();
     this.userId = this.authService.getUserId();
+    this.loadUserProfile();
+  }
+
+  loadUserProfile() {
+    this.authService.getUserProfile().subscribe(
+      profile => {
+        this.email = profile.email;
+      },
+      error => {
+        console.error('Error fetching user profile:', error);
+      }
+    );
   }
 
   sendEmail() {
