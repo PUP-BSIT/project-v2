@@ -88,16 +88,11 @@ export class ColorTestComponent implements OnInit {
       result_date: new Date().toISOString().split('T')[0],
       subcategory_id: subcategory ? subcategory.seasonId : null
     };
-    
-    this.questionService.saveResult(resultData).subscribe(
-      response => {
-        console.log('Result saved:', response);
-        this.router.navigate(['/homepage/seasonal-tone', { resultId: response.resultId }]);
-      },
-      error => {
-        console.error('Error saving result:', error);
-      }
-    );
+
+    this.questionService.saveResult(resultData).subscribe(response => {
+      console.log('Result saved:', response);
+      this.router.navigate(['/homepage/seasonal-tone', { resultId: response.resultId }]);
+    });
   }
 
   determineSubcategory(seasonPercentages: { seasonId: number, percentage: number }[], primarySeasonId: number): { seasonId: number, percentage: number } | null {
@@ -105,10 +100,10 @@ export class ColorTestComponent implements OnInit {
     const otherSeasonPercentages = seasonPercentages.filter(sp => sp.seasonId !== primarySeasonId);
 
     const subcategoryMap: { [key: number]: number[] } = {
-        1: [5, 6, 7],  // Winter subcategories
-        2: [8, 9, 10], // Summer subcategories
-        3: [14, 15, 16], // Autumn subcategories
-        4: [11, 12, 13]  // Spring subcategories
+        1: [7, 6, 5],
+        2: [10, 9, 8],
+        3: [16, 15, 14],
+        4: [13, 12, 11]
     };
 
     const potentialSubcategories = subcategoryMap[primarySeasonId];
@@ -148,19 +143,22 @@ export class ColorTestComponent implements OnInit {
             return otherSeasonPercentages.find(sp => sp.seasonId === 1)?.percentage || 0;
         case 8:  
         case 9:  
-            return otherSeasonPercentages.find(sp => sp.seasonId === 2)?.percentage || 0;
         case 10: 
             return otherSeasonPercentages.find(sp => sp.seasonId === 2)?.percentage || 0;
+        case 10: 
+            return otherSeasonPercentages.find(sp => sp.seasonId === 3)?.percentage || 0;
         case 14: 
         case 15: 
-            return otherSeasonPercentages.find(sp => sp.seasonId === 3)?.percentage || 0;
         case 16: 
             return otherSeasonPercentages.find(sp => sp.seasonId === 3)?.percentage || 0;
+        case 16: 
+            return otherSeasonPercentages.find(sp => sp.seasonId === 2)?.percentage || 0;
         case 11: 
         case 12: 
-            return otherSeasonPercentages.find(sp => sp.seasonId === 4)?.percentage || 0;
         case 13: 
             return otherSeasonPercentages.find(sp => sp.seasonId === 4)?.percentage || 0;
+        case 13: 
+            return otherSeasonPercentages.find(sp => sp.seasonId === 1)?.percentage || 0;
         default:
             return 0;
     }
@@ -178,18 +176,18 @@ export class ColorTestComponent implements OnInit {
 
   getSubcategoryName(subcategoryId: number): string {
     switch (subcategoryId) {
-      case 6: return 'Clear Winter';
-      case 7: return 'Cool Winter';
-      case 5: return 'Deep Winter';
-      case 10: return 'Light Summer';
-      case 9: return 'Cool Summer';
+      case 5: return 'Clear Winter';
+      case 6: return 'Cool Winter';
+      case 7: return 'Deep Winter';
       case 8: return 'Soft Summer';
-      case 15: return 'Soft Autumn';
-      case 16: return 'Warm Autumn';
-      case 14: return 'Deep Autumn';
-      case 13: return 'Clear Spring';
+      case 9: return 'Cool Summer';
+      case 10: return 'Light Summer';
+      case 11: return 'Clear Spring';
       case 12: return 'Warm Spring';
-      case 11: return 'Light Spring';
+      case 13: return 'Light Spring';
+      case 14: return 'Soft Autumn';
+      case 15: return 'Warm Autumn';
+      case 16: return 'Deep Autumn';
       default: return 'Unknown';
     }
   }
