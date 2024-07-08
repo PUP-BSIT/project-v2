@@ -14,6 +14,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { ProfileComponent } from './profile/profile.component';
 import { EmailRequestComponent } from './homepage/email-request/email-request.component';
 import { ColorsComponent } from './homepage/colors/colors.component';
+import { ColorDetailComponent } from './homepage/color-detail/color-detail.component';
 import { AuthGuard } from '../service/auth.guard';
 
 const routes: Routes = [
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password/:token', component: ResetPasswordComponent },
   { path: 'homepage/colors', component: ColorsComponent, canActivate: [AuthGuard] },
+  { path: 'homepage/colors/:season/:color', component: ColorDetailComponent, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent }
 ];
 
