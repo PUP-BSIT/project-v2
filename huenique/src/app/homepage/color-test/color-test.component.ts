@@ -103,7 +103,7 @@ export class ColorTestComponent implements OnInit {
         1: [7, 6, 5],
         2: [10, 9, 8],
         3: [16, 15, 14],
-        4: [13, 12, 11]
+        4: [11, 12, 13]
     };
 
     const potentialSubcategories = subcategoryMap[primarySeasonId];
