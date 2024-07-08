@@ -12,7 +12,7 @@ import { SeasonalDescriptionsService } from '../../../service/seasonal-descripti
 export class SeasonalToneComponent implements OnInit {
   result: any;
   recommendations: any;
-  recommendationCategories = ['accessories', 'avoid', 'combinations', 'lens', 'hair', 'makeup'];
+  recommendationCategories = ['clothing', 'accessories', 'lens', 'hair', 'makeup', 'avoid'];
   currentStep: number = 2;
   seasonDescription: string = '';
 
@@ -61,13 +61,15 @@ export class SeasonalToneComponent implements OnInit {
 
   setSeasonDescription(): void {
     if (this.result && this.result.season_name) {
-      this.seasonDescription = this.seasonalDescriptionsService.getDescription(this.result.season_name);
+      const seasonKey = this.result.subcategory_name ? this.result.subcategory_name.toLowerCase().replace(' ', '_') : this.result.season_name.toLowerCase();
+      this.seasonDescription = this.seasonalDescriptionsService.getDescription(seasonKey);
     }
   }
 
   learnMore(): void {
     const seasonId = this.result.season_id;
-    this.questionService.getRecommendations(seasonId).subscribe(
+    const subcategoryId = this.result.subcategory_id;
+    this.questionService.getRecommendations(seasonId, subcategoryId).subscribe(
       data => {
         this.recommendations = data;
         console.log('Recommendations:', this.recommendations);
