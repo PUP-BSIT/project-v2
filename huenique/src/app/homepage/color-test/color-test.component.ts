@@ -145,14 +145,20 @@ export class ColorTestComponent implements OnInit {
         case 9:  
         case 10: 
             return otherSeasonPercentages.find(sp => sp.seasonId === 2)?.percentage || 0;
+        case 10: 
+            return otherSeasonPercentages.find(sp => sp.seasonId === 3)?.percentage || 0;
         case 14: 
         case 15: 
         case 16: 
             return otherSeasonPercentages.find(sp => sp.seasonId === 3)?.percentage || 0;
+        case 16: 
+            return otherSeasonPercentages.find(sp => sp.seasonId === 2)?.percentage || 0;
         case 11: 
         case 12: 
         case 13: 
             return otherSeasonPercentages.find(sp => sp.seasonId === 4)?.percentage || 0;
+        case 13: 
+            return otherSeasonPercentages.find(sp => sp.seasonId === 1)?.percentage || 0;
         default:
             return 0;
     }
