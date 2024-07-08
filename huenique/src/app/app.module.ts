@@ -24,6 +24,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { EmailService } from '../service/email.service';
 import { QuestionService } from '../service/question.service';
 import { ColorsComponent } from './homepage/colors/colors.component';
+import { ColorDetailComponent } from './homepage/color-detail/color-detail.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ColorsComponent } from './homepage/colors/colors.component';
     SeasonalToneComponent,
     EmailRequestComponent,
     ProfileComponent,
-    ColorsComponent
+    ColorsComponent,
+    ColorDetailComponent
   ],
   imports: [
     BrowserModule,
