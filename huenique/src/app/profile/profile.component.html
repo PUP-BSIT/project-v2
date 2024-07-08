@@ -21,11 +21,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let history of testHistory">
+                <tr *ngFor="let history of paginatedTestHistory">
                     <td class="border px-4 py-2 text-darkGray text-2xl">{{ history.result_date }}</td>
                     <td class="border px-4 py-2 text-darkGray text-2xl">{{ history.season_name }}<span *ngIf="history.subcategory_name"> - {{ history.subcategory_name }}</span></td>
                 </tr>
             </tbody>
         </table>
+        <div class="flex justify-center mt-4">
+            <button (click)="prevPage()" [disabled]="currentPage === 1" class="px-4 py-2 mx-2 bg-lightYellow text-darkBrown rounded">Previous</button>
+            <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="px-4 py-2 mx-2 bg-lightYellow text-darkBrown rounded">Next</button>
+        </div>
     </div>
 </div>
