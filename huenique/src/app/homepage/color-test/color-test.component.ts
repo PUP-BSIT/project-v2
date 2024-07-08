@@ -100,10 +100,10 @@ export class ColorTestComponent implements OnInit {
     const otherSeasonPercentages = seasonPercentages.filter(sp => sp.seasonId !== primarySeasonId);
 
     const subcategoryMap: { [key: number]: number[] } = {
-        1: [7, 6, 5],  // Winter subcategories
-        2: [10, 9, 8], // Summer subcategories
-        3: [16, 15, 14], // Autumn subcategories
-        4: [13, 12, 11]  // Spring subcategories (Reordered to match database)
+        1: [7, 6, 5],
+        2: [10, 9, 8],
+        3: [16, 15, 14],
+        4: [13, 12, 11]
     };
 
     const potentialSubcategories = subcategoryMap[primarySeasonId];
@@ -176,9 +176,9 @@ export class ColorTestComponent implements OnInit {
       case 8: return 'Soft Summer';
       case 9: return 'Cool Summer';
       case 10: return 'Light Summer';
-      case 11: return 'Clear Spring'; // Matches your database
-      case 12: return 'Warm Spring';  // Matches your database
-      case 13: return 'Light Spring'; // Matches your database
+      case 11: return 'Clear Spring';
+      case 12: return 'Warm Spring';
+      case 13: return 'Light Spring';
       case 14: return 'Soft Autumn';
       case 15: return 'Warm Autumn';
       case 16: return 'Deep Autumn';
