@@ -23,6 +23,7 @@ import { EmailRequestComponent } from './homepage/email-request/email-request.co
 import { ProfileComponent } from './profile/profile.component';
 import { EmailService } from '../service/email.service';
 import { QuestionService } from '../service/question.service';
+import { ColorsComponent } from './homepage/colors/colors.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { QuestionService } from '../service/question.service';
     ResetPasswordComponent,
     SeasonalToneComponent,
     EmailRequestComponent,
-    ProfileComponent
+    ProfileComponent,
+    ColorsComponent
   ],
   imports: [
     BrowserModule,
