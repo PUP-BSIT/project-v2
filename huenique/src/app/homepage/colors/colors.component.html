@@ -1,58 +1,77 @@
 <app-navbar></app-navbar>
 
 <div class="container mx-auto py-16">
-    <h1 class="text-5xl font-bold text-center mb-16">Seasonal Colors</h1>
-    
-    <section class="mb-16">
-      <h2 class="text-4xl font-bold text-center mb-8">Spring</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Add Spring Colors Cards Here -->
-        <div class="color-card p-6 bg-pink-100 rounded-lg shadow-md">
-          <h3 class="text-2xl font-semibold mb-4">Spring Color 1</h3>
-          <img src="assets/spring-color1.png" alt="Spring Color 1" class="mb-4">
-          <p>Description for Spring Color 1.</p>
-        </div>
-        <!-- Repeat for other Spring Colors -->
-      </div>
-    </section>
+  <h1 class="text-5xl font-bold text-center mb-16">Seasonal Colors</h1>
   
-    <section class="mb-16">
-      <h2 class="text-4xl font-bold text-center mb-8">Summer</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Add Summer Colors Cards Here -->
-        <div class="color-card p-6 bg-blue-100 rounded-lg shadow-md">
-          <h3 class="text-2xl font-semibold mb-4">Summer Color 1</h3>
-          <img src="assets/summer-color1.png" alt="Summer Color 1" class="mb-4">
-          <p>Description for Summer Color 1.</p>
-        </div>
-        <!-- Repeat for other Summer Colors -->
+  <section class="mb-16">
+    <h2 class="text-4xl font-bold text-center mb-8">Spring</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="color-card p-6 bg-pink-100 rounded-lg shadow-md cursor-pointer" (click)="navigateTo('spring', 'clear-spring')">
+        <h3 class="text-2xl font-semibold mb-4">Clear Spring</h3>
+        <img src="assets/spring-color1.png" alt="Spring Color 1" class="mb-4">
       </div>
-    </section>
-  
-    <section class="mb-16">
-      <h2 class="text-4xl font-bold text-center mb-8">Autumn</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Add Autumn Colors Cards Here -->
-        <div class="color-card p-6 bg-orange-100 rounded-lg shadow-md">
-          <h3 class="text-2xl font-semibold mb-4">Autumn Color 1</h3>
-          <img src="assets/autumn-color1.png" alt="Autumn Color 1" class="mb-4">
-          <p>Description for Autumn Color 1.</p>
-        </div>
-        <!-- Repeat for other Autumn Colors -->
+      <div class="color-card p-6 bg-pink-100 rounded-lg shadow-md cursor-pointer" (click)="navigateTo('spring', 'warm-spring')">
+        <h3 class="text-2xl font-semibold mb-4">Warm Spring</h3>
+        <img src="assets/spring-color2.png" alt="Spring Color 2" class="mb-4">
       </div>
-    </section>
-  
-    <section class="mb-16">
-      <h2 class="text-4xl font-bold text-center mb-8">Winter</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Add Winter Colors Cards Here -->
-        <div class="color-card p-6 bg-gray-100 rounded-lg shadow-md">
-          <h3 class="text-2xl font-semibold mb-4">Winter Color 1</h3>
-          <img src="assets/winter-color1.png" alt="Winter Color 1" class="mb-4">
-          <p>Description for Winter Color 1.</p>
-        </div>
-        <!-- Repeat for other Winter Colors -->
+      <div class="color-card p-6 bg-pink-100 rounded-lg shadow-md cursor-pointer" (click)="navigateTo('spring', 'light-spring')">
+        <h3 class="text-2xl font-semibold mb-4">Light Spring</h3>
+        <img src="assets/spring-color3.png" alt="Spring Color 3" class="mb-4">
       </div>
-    </section>
-  </div>
-  
+    </div>
+  </section>
+
+  <section class="mb-16">
+    <h2 class="text-4xl font-bold text-center mb-8">Summer</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="color-card p-6 bg-blue-100 rounded-lg shadow-md cursor-pointer" (click)="navigateTo('summer', 'soft-summer')">
+        <h3 class="text-2xl font-semibold mb-4">Soft Summer</h3>
+        <img src="assets/summer-color1.png" alt="Summer Color 1" class="mb-4">
+      </div>
+      <div class="color-card p-6 bg-blue-100 rounded-lg shadow-md cursor-pointer" (click)="navigateTo('summer', 'cool-summer')">
+        <h3 class="text-2xl font-semibold mb-4">Cool Summer</h3>
+        <img src="assets/summer-color2.png" alt="Summer Color 2" class="mb-4">
+      </div>
+      <div class="color-card p-6 bg-blue-100 rounded-lg shadow-md cursor-pointer" (click)="navigateTo('summer', 'light-summer')">
+        <h3 class="text-2xl font-semibold mb-4">Light Summer</h3>
+        <img src="assets/summer-color3.png" alt="Summer Color 3" class="mb-4">
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-16">
+    <h2 class="text-4xl font-bold text-center mb-8">Autumn</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="color-card p-6 bg-orange-100 rounded-lg shadow-md cursor-pointer" (click)="navigateTo('autumn', 'soft-autumn')">
+        <h3 class="text-2xl font-semibold mb-4">Soft Autumn</h3>
+        <img src="assets/autumn-color1.png" alt="Autumn Color 1" class="mb-4">
+      </div>
+      <div class="color-card p-6 bg-orange-100 rounded-lg shadow-md cursor-pointer" (click)="navigateTo('autumn', 'warm-autumn')">
+        <h3 class="text-2xl font-semibold mb-4">Warm Autumn</h3>
+        <img src="assets/autumn-color2.png" alt="Autumn Color 2" class="mb-4">
+      </div>
+      <div class="color-card p-6 bg-orange-100 rounded-lg shadow-md cursor-pointer" (click)="navigateTo('autumn', 'deep-autumn')">
+        <h3 class="text-2xl font-semibold mb-4">Deep Autumn</h3>
+        <img src="assets/autumn-color3.png" alt="Autumn Color 3" class="mb-4">
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-16">
+    <h2 class="text-4xl font-bold text-center mb-8">Winter</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="color-card p-6 bg-gray-100 rounded-lg shadow-md cursor-pointer" (click)="navigateTo('winter', 'clear-winter')">
+        <h3 class="text-2xl font-semibold mb-4">Clear Winter</h3>
+        <img src="assets/winter-color1.png" alt="Winter Color 1" class="mb-4">
+      </div>
+      <div class="color-card p-6 bg-gray-100 rounded-lg shadow-md cursor-pointer" (click)="navigateTo('winter', 'cool-winter')">
+        <h3 class="text-2xl font-semibold mb-4">Cool Winter</h3>
+        <img src="assets/winter-color2.png" alt="Winter Color 2" class="mb-4">
+      </div>
+      <div class="color-card p-6 bg-gray-100 rounded-lg shadow-md cursor-pointer" (click)="navigateTo('winter', 'deep-winter')">
+        <h3 class="text-2xl font-semibold mb-4">Deep Winter</h3>
+        <img src="assets/winter-color3.png" alt="Winter Color 3" class="mb-4">
+      </div>
+    </div>
+  </section>
+</div>
