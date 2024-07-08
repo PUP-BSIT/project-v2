@@ -18,6 +18,10 @@ HUEnique is a color analysis application designed to help users discover their s
 ## Get Started
 Visit [HUEnique Online](http://huenique.online) to begin your color journey!
 
+## Sample Credentials
+Email : Sample.mail.credential@gmail.com
+Password : Password123
+
 ## Feedback & Support
 We'd love to hear your feedback! If you have any questions or suggestions, please reach out to us at [angularprojectV2@gmail.com](mailto:angularprojectV2@gmail.com).
 
