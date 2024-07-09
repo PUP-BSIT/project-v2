@@ -11,7 +11,23 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendEmail = (email, subject, templatePath, replacements) => {
+const sendEmail = (email, subject, templateType, replacements) => {
+  let templatePath;
+
+  switch (templateType) {
+    case 'confirmEmail':
+      templatePath = path.join(__dirname, '../emails/templates/confirmEmail.html');
+      break;
+    case 'resetPassword':
+      templatePath = path.join(__dirname, '../emails/templates/resetPassEmail.html');
+      break;
+    case 'resultEmail':
+      templatePath = path.join(__dirname, '../emails/templates/emailTemplate.html');
+      break;
+    default:
+      throw new Error('Invalid email template type');
+  }
+
   const template = fs.readFileSync(templatePath, { encoding: 'utf-8' });
   let htmlContent = template;
 
@@ -39,16 +55,12 @@ const sendEmail = (email, subject, templatePath, replacements) => {
 
 const sendConfirmationEmail = (email, token) => {
   const url = `http://localhost:3000/api/auth/confirm/${token}`;
-  const templatePath = path.join(__dirname, '../emails/templates/emailTemplate.html');
-  
-  sendEmail(email, 'Confirm your Email', templatePath, { url });
+  sendEmail(email, 'Confirm your Email', 'confirmEmail', { url });
 };
 
 const sendResetPasswordEmail = (email, token) => {
   const url = `http://localhost:4200/reset-password/${token}`;
-  const templatePath = path.join(__dirname, '../emails/templates/emailTemplate.html');
-
-  sendEmail(email, 'Reset Password', templatePath, { url });
+  sendEmail(email, 'Reset Password', 'resetPassword', { url });
 };
 
 const fetchRecommendations = (seasonId, subcategoryId, callback) => {
@@ -155,7 +167,6 @@ const sendEmailResult = (req, res) => {
       }
 
       try {
-        const templatePath = path.join(__dirname, '../emails/templates/emailTemplate.html');
         const formattedRecommendations = formatRecommendations(recommendations);
         const replacements = { 
           season: result.season_name, 
@@ -163,7 +174,7 @@ const sendEmailResult = (req, res) => {
           recommendations: formattedRecommendations 
         };
 
-        sendEmail(email, 'Your Color Analysis Results', templatePath, replacements);
+        sendEmail(email, 'Your Color Analysis Results', 'resultEmail', replacements);
         res.status(200).json({ message: 'Email sent successfully!' });
       } catch (error) {
         console.error('Error:', error.message);
