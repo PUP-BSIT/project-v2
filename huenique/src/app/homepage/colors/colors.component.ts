@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class ColorsComponent {
   constructor(private router: Router) {}
 
-  navigateTo(season: string, color: string) {
-    this.router.navigate([`/homepage/colors/${season}/${color}`]);
+  navigateToDetail(subcategoryId: number) {
+    this.router.navigate(['/homepage/colors', subcategoryId]);
   }
 }

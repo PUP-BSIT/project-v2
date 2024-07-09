@@ -28,11 +28,11 @@ const routes: Routes = [
   { path: 'homepage/seasonal-tone', component: SeasonalToneComponent, canActivate: [AuthGuard] },
   { path: 'homepage/email-request', component: EmailRequestComponent },
   { path: 'homepage/about', component: AboutComponent, canActivate: [AuthGuard] },
-  { path: 'profile', component: ProfileComponent},
+  { path: 'profile', component: ProfileComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password/:token', component: ResetPasswordComponent },
   { path: 'homepage/colors', component: ColorsComponent, canActivate: [AuthGuard] },
-  { path: 'homepage/colors/:season/:color', component: ColorDetailComponent, canActivate: [AuthGuard] },
+  { path: 'homepage/colors/:subcategory_id', component: ColorDetailComponent, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent }
 ];
 
