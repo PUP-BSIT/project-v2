@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<nav class="nav shadow p-12 flex justify-between items-center">
+    <div class="flex items-center space-x-4">
+        <img src="assets/logo.svg" alt="Huenique Logo" class="logo h-14">
+    </div>
+    <div class="flex space-x-16">
+        <a routerLink="/homepage" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="text-gray-700 hover:text-blue-500 font-normal text-2xl nav-link">Home</a>
+        <a routerLink="/homepage/color-analysis" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="text-gray-700 hover:text-blue-500 font-normal text-2xl nav-link">Color Analysis</a>
+        <a routerLink="/homepage/about" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="text-gray-700 hover:text-blue-500 font-normal text-2xl nav-link">About</a>
+    </div>
+    <div class="relative">
+        <button class="flex items-center space-x-2 focus:outline-none" (click)="toggleDropdown()">
+            <i class="fas fa-user text-gray-800"></i>
+            <i class="fas fa-chevron-down text-gray-800"></i>
+        </button>
+        <div [ngClass]="{ 'hidden': !isDropdownOpen, 'block': isDropdownOpen }" class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md">
+            <a routerLink="/profile" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 dropdown-item">Profile</a>
+            <a href="#" (click)="logout()" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 dropdown-item">Logout</a>
+        </div>
+    </div>
+</nav>
