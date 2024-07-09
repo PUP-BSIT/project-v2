@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
 import { QuestionService } from '../../service/question.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +19,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private questionService: QuestionService
+    private questionService: QuestionService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -83,5 +85,9 @@ export class ProfileComponent implements OnInit {
       this.currentPage--;
       this.updatePaginatedTestHistory();
     }
+  }
+
+  navigateToDetail(subcategoryId: number): void {
+    this.router.navigate(['/homepage/colors', subcategoryId]);
   }
 }
