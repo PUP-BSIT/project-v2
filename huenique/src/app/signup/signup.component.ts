@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { SignupService } from '../../service/signup.service';
+import { NotificationService } from '../../service/notification.service';
 
 @Component({
   selector: 'app-signup',
@@ -11,13 +12,15 @@ import { SignupService } from '../../service/signup.service';
 export class SignupComponent implements OnInit {
   signupForm!: FormGroup;
   showSuccessToast: boolean = false;
+  showErrorToast: boolean = false;
   passwordFieldType: string = 'password';
   confirmPasswordFieldType: string = 'password';
 
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private signupService: SignupService
+    private signupService: SignupService,
+    private notificationService: NotificationService
   ) {}
 
   goToSignIn() {
@@ -83,7 +86,15 @@ export class SignupComponent implements OnInit {
           }, 5000);
         },
         error => {
-          console.log('Error creating user', error);
+          if (error.status === 409) { 
+            this.showErrorToast = true;
+            setTimeout(() => {
+              this.showErrorToast = false;
+            }, 5000);
+          } else {
+            this.notificationService.showNotification('Email already in use', 'error');
+          }
+          console.log('Error creating user, Email already in use', error);
         }
       );
     }
