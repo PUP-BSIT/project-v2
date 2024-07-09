@@ -16,14 +16,32 @@
   </div>
 
   <div class="season-image flex justify-center my-4">
-    @if (result.season_name === 'Spring') {
-      <img src="../../../assets/spring_result.svg" alt="Spring" class="max-w-5xl mx-auto">
-    } @else if (result.season_name === 'Summer') {
-      <img src="../../../assets/summer_result.svg" alt="Summer" class="max-w-5xl mx-auto">
-    } @else if (result.season_name === 'Autumn') {
-      <img src="../../../assets/autumn_result.svg" alt="Autumn" class="max-w-5xl mx-auto">
-    } @else if (result.season_name === 'Winter') {
-      <img src="../../../assets/winter_result.svg" alt="Winter" class="max-w-5xl mx-auto">
+    @if (result.subcategory_name === 'Soft Summer') {
+      <img src="../../../assets/softSummer1.svg" alt="Soft Summer" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Light Summer') {
+      <img src="../../../assets/lightSummer1.svg" alt="Light Summer" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Cool Summer') {
+      <img src="../../../assets/coolSummer1.svg" alt="Cool Summer" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Deep Autumn') {
+      <img src="../../../assets/deepAutumn1.svg" alt="Deep Autumn" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Soft Autumn') {
+      <img src="../../../assets/softAutumn1.svg" alt="Soft Autumn" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Warm Autumn') {
+      <img src="../../../assets/warmAutumn1.svg" alt="Warm Autumn" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Light Spring') {
+      <img src="../../../assets/lightSpring1.svg" alt="Light Spring" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Warm Spring') {
+      <img src="../../../assets/warmSpring1.svg" alt="Warm Spring" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Clear Spring') {
+      <img src="../../../assets/clearSpring1.svg" alt="Clear Spring" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Cool Winter') {
+      <img src="../../../assets/coolWinter1.svg" alt="Cool Winter" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Clear Winter') {
+      <img src="../../../assets/clearWinter1.svg" alt="Clear Winter" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Deep Winter') {
+      <img src="../../../assets/deepWinter1.svg" alt="Deep Winter" class="max-w-5xl mx-auto">
+    } @else {
+      <p>Season not recognized.</p>
     }
   </div>
 

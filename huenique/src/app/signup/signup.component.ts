@@ -11,6 +11,8 @@ import { SignupService } from '../../service/signup.service';
 export class SignupComponent implements OnInit {
   signupForm!: FormGroup;
   showSuccessToast: boolean = false;
+  passwordFieldType: string = 'password';
+  confirmPasswordFieldType: string = 'password';
 
   constructor(
     private router: Router,
@@ -59,6 +61,14 @@ export class SignupComponent implements OnInit {
 
   passwordMatchValidator(form: FormGroup): ValidationErrors | null {
     return form.get('password')?.value === form.get('confirmPassword')?.value ? null : { mismatch: true };
+  }
+
+  togglePasswordVisibility(): void {
+    this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+  }
+
+  toggleConfirmPasswordVisibility(): void {
+    this.confirmPasswordFieldType = this.confirmPasswordFieldType === 'password' ? 'text' : 'password';
   }
 
   onSubmit(): void {

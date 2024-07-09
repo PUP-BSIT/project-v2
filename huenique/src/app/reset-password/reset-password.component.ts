@@ -12,6 +12,8 @@ import { NotificationService } from '../../service/notification.service';
 export class ResetPasswordComponent implements OnInit {
   resetPasswordForm!: FormGroup;
   token!: string;
+  newPasswordFieldType: string = 'password';
+  confirmNewPasswordFieldType: string = 'password';
 
   constructor(
     private router: Router,
@@ -64,6 +66,14 @@ export class ResetPasswordComponent implements OnInit {
         matchingControl.setErrors(null);
       }
     };
+  }
+
+  toggleNewPasswordVisibility(): void {
+    this.newPasswordFieldType = this.newPasswordFieldType === 'password' ? 'text' : 'password';
+  }
+
+  toggleConfirmNewPasswordVisibility(): void {
+    this.confirmNewPasswordFieldType = this.confirmNewPasswordFieldType === 'password' ? 'text' : 'password';
   }
 
   onSubmit(): void {
