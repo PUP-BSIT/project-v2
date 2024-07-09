@@ -90,3 +90,21 @@
     background: url('../../assets/card.svg') no-repeat center center;
     background-size: cover;
 }
+
+.relative {
+    position: relative;
+  }
+  
+  .relative .fa {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #9d9b9b;
+  }
+  
+  .relative .fa:hover {
+    color: #007BFF;
+  }
+  

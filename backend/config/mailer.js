@@ -153,7 +153,7 @@ const sendEmailResult = (req, res) => {
   const { email, userId } = req.body;
 
   const sql = `
-    SELECT tr.*, s.season_name, tr.subcategory_id, (SELECT season_name FROM season WHERE season_id = tr.subcategory_id) AS subcategory_name 
+    SELECT tr.result_id, tr.*, s.season_name, tr.subcategory_id, (SELECT season_name FROM season WHERE season_id = tr.subcategory_id) AS subcategory_name 
     FROM test_result tr
     JOIN season s ON tr.season_id = s.season_id
     WHERE tr.user_id = ? 
@@ -220,7 +220,20 @@ const sendEmailResult = (req, res) => {
         };
 
         sendEmail(email, 'Your Color Analysis Results', 'resultEmail', replacements);
-        res.status(200).json({ message: 'Email sent successfully!' });
+
+        // Insert the email log into the database
+        const insertSql = `
+          INSERT INTO email_log (result_id, user_id) 
+          VALUES (?, ?)`;
+
+        connection.query(insertSql, [result.result_id, userId], (err, insertResult) => {
+          if (err) {
+            console.error('Error saving email log:', err);
+            return res.status(500).json({ error: 'Failed to save email log.' });
+          }
+
+          res.status(200).json({ message: 'Email sent and log saved successfully!' });
+        });
       } catch (error) {
         console.error('Error:', error.message);
         res.status(500).json({ error: error.message });

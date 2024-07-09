@@ -14,6 +14,6 @@ export class EmailService {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const body = { email, results, userId };
-    return this.http.post(`${this.apiUrl}/send-email`, body, { headers });
+    return this.http.post(`${this.apiUrl}/send-email-result`, body, { headers });
   }
 }

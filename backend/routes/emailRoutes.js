@@ -15,6 +15,6 @@ router.post('/send-reset-password-email', (req, res) => {
   res.status(200).json({ message: 'Reset password email sent successfully!' });
 });
 
-router.post('/send-email', verifyToken, mailer.sendEmailResult);
+router.post('/send-email-result', verifyToken, mailer.sendEmailResult);
 
 module.exports = router;
