@@ -10,6 +10,7 @@
     </div>
     <div *ngIf="testResult" class="mb-6">
         <p class="text-2xl text-darkGray"><strong>Previous Seasonal Color:</strong> {{ testResult.season_name }}<span *ngIf="testResult.subcategory_name"> - {{ testResult.subcategory_name }}</span></p>
+        <button (click)="navigateToDetail(testResult.subcategory_id)" class="px-4 py-2 mt-4 bg-lightYellow text-darkBrown rounded">View Details</button>
     </div>
     <div *ngIf="testHistory.length > 0" class="mt-6">
         <h2 class="text-3xl font-semibold mb-4 text-darkBrown">Test History</h2>
