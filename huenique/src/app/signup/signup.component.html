@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <div class="content-divider min-h-screen flex flex-col items-center justify-center bg-peach p-4 font-poppins">
   <div class="white-divider rounded-lg shadow-lg flex flex-col lg:flex-row relative w-10/12">
@@ -48,7 +49,8 @@
         </div>
 
         <div class="relative">
-          <input formControlName="password" type="password" placeholder="Password" class="input input-bordered w-full">
+          <input [type]="passwordFieldType" formControlName="password" placeholder="Password" class="input input-bordered w-full">
+          <i class="fa" [ngClass]="{'fa-eye': passwordFieldType === 'password', 'fa-eye-slash': passwordFieldType === 'text'}" (click)="togglePasswordVisibility()"></i>
           @if (passwordControl?.invalid && passwordControl?.touched) {
             <div class="text-red-500 text-sm mt-1">
               @if (passwordControl?.errors?.['required']) {
@@ -62,15 +64,11 @@
               }
             </div>
           }
-          <span class="absolute inset-y-0 right-0 pr-3 flex items-center">
-            <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9m0 0H5m4 0h6m0 0h4"></path>
-            </svg>
-          </span>
         </div>
 
         <div class="relative">
-          <input formControlName="confirmPassword" type="password" placeholder="Confirm Password" class="input input-bordered w-full">
+          <input [type]="confirmPasswordFieldType" formControlName="confirmPassword" placeholder="Confirm Password" class="input input-bordered w-full">
+          <i class="fa" [ngClass]="{'fa-eye': confirmPasswordFieldType === 'password', 'fa-eye-slash': confirmPasswordFieldType === 'text'}" (click)="toggleConfirmPasswordVisibility()"></i>
           @if (confirmPasswordControl?.invalid && confirmPasswordControl?.touched) {
             <div class="text-red-500 text-sm mt-1">
               @if (confirmPasswordControl?.errors?.['required']) {
@@ -81,11 +79,6 @@
               }
             </div>
           }
-          <span class="absolute inset-y-0 right-0 pr-3 flex items-center">
-            <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9m0 0H5m4 0h6m0 0h4"></path>
-            </svg>
-          </span>
         </div>
         
         <button type="submit" class="btn btn-primary w-full">Create Account</button>
