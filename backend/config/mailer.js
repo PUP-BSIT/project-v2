@@ -197,19 +197,19 @@ const sendEmailResult = (req, res) => {
         };
 
         const seasonDescriptions = {
-          'Clear Spring': 'Bright and warm, Clear Spring shines with vivid and clear colors.',
-          'Warm Spring': 'Warm Spring exudes a golden glow with sunny and warm shades.',
-          'Light Spring': 'Light Spring sparkles with delicate, pastel, and fresh colors.',
-          'Soft Summer': 'Soft Summer is cool and muted with gentle and subtle shades.',
-          'Cool Summer': 'Cool Summer is calm and collected with icy and serene colors.',
-          'Light Summer': 'Light Summer glows with airy, light, and cool tones.',
-          'Soft Autumn': 'Soft Autumn features muted and earthy colors that are gentle and warm.',
-          'Warm Autumn': 'Warm Autumn boasts rich, warm, and golden hues.',
-          'Deep Autumn': 'Deep Autumn is characterized by dark, warm, and intense colors.',
-          'Clear Winter': 'Clear Winter is bold and bright with high-contrast and clear shades.',
-          'Cool Winter': 'Cool Winter is sharp and frosty with cool and dark colors.',
-          'Deep Winter': 'Deep Winter features deep, dramatic, and rich tones.'
-        };
+          'Clear Spring': 'Bright and warm, Clear Spring shines with vivid and clear colors. This season is characterized by high contrast, brightness, and warm undertones, evoking the freshness of a bright, sunny spring day. Ideal colors include clear reds, blues, and yellows, which complement the vibrant energy of this season.',
+          'Warm Spring': 'Warm Spring exudes a golden glow with sunny and warm shades. It embodies the warmth and liveliness of late spring and early summer, with hues that are golden and soft. Colors such as warm corals, peachy pinks, and golden yellows are perfect for highlighting the gentle warmth of this season.',
+          'Light Spring': 'Light Spring sparkles with delicate, pastel, and fresh colors. This season is light and airy, reminiscent of the early days of spring. Soft pinks, light greens, and sky blues work beautifully to enhance the gentle and fresh feel of Light Spring.',
+          'Soft Summer': 'Soft Summer is cool and muted with gentle and subtle shades. It reflects the soft, hazy days of summer, with colors that are understated and elegant. Muted blues, soft mauves, and gentle greens capture the tranquil and calming essence of Soft Summer.',
+          'Cool Summer': 'Cool Summer is calm and collected with icy and serene colors. This season is marked by cool undertones and a sophisticated palette. Icy blues, soft pinks, and cool grays are ideal, reflecting the serene and soothing nature of Cool Summer.',
+          'Light Summer': 'Light Summer glows with airy, light, and cool tones. It represents the light and breezy feel of summer, with colors that are soft and cool. Light pastels such as soft lavender, light aqua, and pale yellow enhance the gentle luminosity of Light Summer.',
+          'Soft Autumn': 'Soft Autumn features muted and earthy colors that are gentle and warm. This season brings to mind the soft, fading light of autumn days, with colors that are warm and slightly subdued. Earthy browns, soft oranges, and gentle olives highlight the warm and harmonious feel of Soft Autumn.',
+          'Warm Autumn': 'Warm Autumn boasts rich, warm, and golden hues. It reflects the vibrant and rich colors of the autumn harvest. Deep oranges, warm reds, and golden browns are perfect for this season, emphasizing the richness and warmth of Warm Autumn.',
+          'Deep Autumn': 'Deep Autumn is characterized by dark, warm, and intense colors. This season is bold and dramatic, with a palette that is rich and earthy. Colors like deep burgundy, forest green, and dark chocolate brown enhance the depth and intensity of Deep Autumn.',
+          'Clear Winter': 'Clear Winter is bold and bright with high-contrast and clear shades. It embodies the crisp and clear nature of winter, with vibrant and stark colors. Bright reds, clear blues, and bold blacks create a striking and dynamic look for Clear Winter.',
+          'Cool Winter': 'Cool Winter is sharp and frosty with cool and dark colors. This season is characterized by icy and intense hues. Cool blues, deep purples, and frosty grays reflect the sharp and dramatic feel of Cool Winter.',
+          'Deep Winter': 'Deep Winter features deep, dramatic, and rich tones. This season is all about depth and intensity, with colors that are dark and vivid. Deep emeralds, rich plums, and intense blacks are ideal for capturing the powerful essence of Deep Winter.'
+        };        
         
         const replacements = { 
           season: result.season_name, 
