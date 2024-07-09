@@ -49,4 +49,8 @@ export class ForgotPasswordComponent implements OnInit {
       console.error('Form is invalid');
     }
   }
+
+  goToSignIn() {
+    this.router.navigate(['/sign-in']);
+  }
 }
