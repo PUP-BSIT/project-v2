@@ -4,13 +4,20 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ResultsService {
-  private results: any;
+  private resultsKey = 'testResults';
 
-  setResults(results: any) {
-    this.results = results;
+  constructor() { }
+
+  setResults(results: any): void {
+    localStorage.setItem(this.resultsKey, JSON.stringify(results));
   }
 
-  getResults() {
-    return this.results;
+  getResults(): any {
+    const results = localStorage.getItem(this.resultsKey);
+    return results ? JSON.parse(results) : null;
+  }
+
+  clearResults(): void {
+    localStorage.removeItem(this.resultsKey);
   }
 }
