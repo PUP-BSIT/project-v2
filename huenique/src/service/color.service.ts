@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ColorService {
-  private apiUrl = 'http://localhost:3000/api'; // Update this URL
+  private apiUrl = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) {}
 
