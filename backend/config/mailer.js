@@ -35,15 +35,27 @@ const sendEmail = (email, subject, templateType, replacements) => {
     htmlContent = htmlContent.replace(new RegExp(`{{${key}}}`, 'g'), replacements[key]);
   }
 
+  const attachments = [
+    {
+      filename: 'logo.png',
+      path: path.join(__dirname, '../emails/assets/logo.png'),
+      cid: 'logo@huenique'
+    }
+  ];
+
+  if (replacements.seasonImage) {
+    attachments.push({
+      filename: replacements.seasonImage,
+      path: path.join(__dirname, `../emails/assets/${replacements.seasonImage}`),
+      cid: 'seasonImage@huenique'
+    });
+  }
+
   transporter.sendMail({
     to: email,
     subject: subject,
     html: htmlContent,
-    attachments: [{
-      filename: 'logo.png',
-      path: path.join(__dirname, '../emails/assets/logo.png'),
-      cid: 'logo@huenique'
-    }]
+    attachments: attachments
   }, (error, info) => {
     if (error) {
       console.log('Error sending email:', error);
@@ -168,9 +180,42 @@ const sendEmailResult = (req, res) => {
 
       try {
         const formattedRecommendations = formatRecommendations(recommendations);
+        
+        const seasonImages = {
+          'Clear Spring': 'clearSpring.png',
+          'Warm Spring': 'warmSpring.png',
+          'Light Spring': 'lightSpring.png',
+          'Soft Summer': 'softSummer.png',
+          'Cool Summer': 'coolSummer.png',
+          'Light Summer': 'lightSummer.png',
+          'Soft Autumn': 'softAutumn.png',
+          'Warm Autumn': 'warmAutumn.png',
+          'Deep Autumn': 'deepAutumn.png',
+          'Clear Winter': 'clearWinter.png',
+          'Cool Winter': 'coolWinter.png',
+          'Deep Winter': 'deepWinter.png'
+        };
+
+        const seasonDescriptions = {
+          'Clear Spring': 'Bright and warm, Clear Spring shines with vivid and clear colors.',
+          'Warm Spring': 'Warm Spring exudes a golden glow with sunny and warm shades.',
+          'Light Spring': 'Light Spring sparkles with delicate, pastel, and fresh colors.',
+          'Soft Summer': 'Soft Summer is cool and muted with gentle and subtle shades.',
+          'Cool Summer': 'Cool Summer is calm and collected with icy and serene colors.',
+          'Light Summer': 'Light Summer glows with airy, light, and cool tones.',
+          'Soft Autumn': 'Soft Autumn features muted and earthy colors that are gentle and warm.',
+          'Warm Autumn': 'Warm Autumn boasts rich, warm, and golden hues.',
+          'Deep Autumn': 'Deep Autumn is characterized by dark, warm, and intense colors.',
+          'Clear Winter': 'Clear Winter is bold and bright with high-contrast and clear shades.',
+          'Cool Winter': 'Cool Winter is sharp and frosty with cool and dark colors.',
+          'Deep Winter': 'Deep Winter features deep, dramatic, and rich tones.'
+        };
+        
         const replacements = { 
           season: result.season_name, 
           subcategory: result.subcategory_name,
+          seasonImage: seasonImages[result.subcategory_name],
+          seasonDescription: seasonDescriptions[result.subcategory_name],
           recommendations: formattedRecommendations 
         };
 
