@@ -81,7 +81,9 @@ const getTestResult = (req, res) => {
   const sql = `
     SELECT 
       tr.season_id,
-      s.season_name
+      s.season_name,
+      tr.subcategory_id,
+      (SELECT season_name FROM season WHERE season_id = tr.subcategory_id) AS subcategory_name
     FROM 
       test_result tr
     JOIN
@@ -202,7 +204,9 @@ const getTestHistory = (req, res) => {
     SELECT 
       tr.season_id,
       s.season_name,
-      tr.result_date
+      tr.result_date,
+      tr.subcategory_id,
+      (SELECT season_name FROM season WHERE season_id = tr.subcategory_id) AS subcategory_name
     FROM 
       test_result tr
     JOIN
@@ -210,7 +214,7 @@ const getTestHistory = (req, res) => {
     WHERE 
       tr.user_id = ?
     ORDER BY 
-      tr.result_date DESC
+      tr.result_date DESC, tr.result_id DESC
   `;
 
   connection.query(sql, [user_id], (err, results) => {

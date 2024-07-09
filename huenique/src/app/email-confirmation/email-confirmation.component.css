@@ -1,37 +1,36 @@
-.confirmation-message-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+:host {
+  display: block;
   height: 100vh;
-  background-color: #ffe5e5; 
+  overflow: hidden;
 }
-  
-.message-box {
+
+.custom-logo-size {
+  width: 350px;
+  height: auto;
+  padding-top: 40px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.image-asset {
+  width: 600px;
+  height: auto;
+  margin-bottom: 10px;
+  margin-left: 25px;
+  padding-top: 15px;
+  padding-bottom: 20px;
+}
+
+.bg-peach {
+  background-color: #ffeed9;
+}
+
+.h2-class {
   text-align: center;
-  padding: 2rem;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 130px;
 }
-  
-.message-box h2 {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.5rem;
-  color: #ff6b6b; 
+
+.white-divider {
+  background: url('../../assets/card.svg') no-repeat center center;
+  background-size: cover;
 }
-  
-.message-box p {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
-  color: #333;
-}
-  
-.message-box a {
-  color: #ff6b6b;
-  text-decoration: none;
-}
-  
-.message-box a:hover {
-  text-decoration: underline;
-}
-  
