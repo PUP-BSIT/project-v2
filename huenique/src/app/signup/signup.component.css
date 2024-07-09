@@ -44,14 +44,13 @@
     }
 }
 
-
 .h2-class {
     text-align: center;
 }
 
 .vertical-line {
     width: 5px;
-    margin-top: 75px;  
+    margin-top: 42px;  
     height: 650px; 
     background-color: #9d9b9b;
     border-radius: 20px;  
