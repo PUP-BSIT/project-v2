@@ -1,32 +1,75 @@
 .profile-container {
-  @apply bg-lightOrange text-center p-8 rounded-lg shadow-lg max-w-lg mx-auto my-8;
+  background-color: #fff8f1;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  max-width: 90%;
+  margin: auto;
+  padding: 2rem;
 }
 
-h1 {
-  @apply text-darkBrown text-4xl mb-6;
+.text-darkBrown {
+  color: #5c4033;
 }
 
-p {
-  @apply text-darkGray text-3xl mb-2;
+.text-darkGray {
+  color: #333;
+}
+
+.bg-lightOrange {
+  background-color: #ffecd0;
+}
+
+.bg-lightYellow {
+  background-color: #fff9c4;
+}
+
+.bg-white {
+  background-color: #fff;
+}
+
+.rounded {
+  border-radius: 0.375rem;
+}
+
+.shadow {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .table-auto {
-  @apply w-full text-left mx-auto;
+  width: 100%;
+  border-collapse: collapse;
 }
 
-th, td {
-  @apply border px-4 py-2;
+.table-auto th, .table-auto td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
 }
 
-th {
-  @apply bg-lightYellow text-brown;
+.table-auto th {
+  background-color: #ffecd0;
+  color: #5c4033;
+  text-align: left;
 }
 
-tbody tr:nth-child(even) {
-  @apply bg-lightOrange;
+.table-auto td {
+  text-align: left;
 }
 
-.profile-container {
-  max-width: 70%; 
-  margin: 0 auto; 
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.season-image {
+  max-width: 400px; 
+  height: auto;
+}
+
+.clickable-link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.clickable-link:hover {
+  color: #669FFF; 
 }

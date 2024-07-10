@@ -1,7 +1,6 @@
 <app-navbar></app-navbar>
 
 <div>
-  
 </div>
 
 <div class="flex">
@@ -19,8 +18,8 @@
     <h1 class="text-4xl font-bold mb-4">Color Details</h1>
     <div *ngIf="filteredColorDetails && filteredColorDetails.length > 0">
       <div *ngFor="let color of filteredColorDetails" class="mb-8">
-        <p>{{ color.color_name }}</p>
-        <p>{{ color.details }}</p>
+        <p class="text-xl font-semibold">{{ color.color_name }}</p>
+        <p class="text-lg">{{ color.details }}</p>
         <p> 
           <span [style.backgroundColor]="color.hex_code" class="p-1 text-white">{{ color.hex_code }}</span>
         </p>

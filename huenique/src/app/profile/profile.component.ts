@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
 import { QuestionService } from '../../service/question.service';
+import { SeasonalDescriptionsService } from '../../service/seasonal-descriptions-service.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,10 +17,13 @@ export class ProfileComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 5;
   totalPages: number = 1;
+  seasonalDescription: string = '';
+  seasonImage: string = '';
 
   constructor(
     private authService: AuthService,
     private questionService: QuestionService,
+    private seasonalDescriptionsService: SeasonalDescriptionsService,
     private router: Router
   ) { }
 
@@ -44,11 +48,37 @@ export class ProfileComponent implements OnInit {
     this.questionService.getTestResult().subscribe(
       data => {
         this.testResult = data;
+        const key = this.testResult.subcategory_name ? this.testResult.subcategory_name : this.testResult.season_name;
+        this.seasonalDescription = this.seasonalDescriptionsService.getDescription(key);
+        this.seasonImage = this.getSeasonImage(key);
       },
       error => {
         console.error('Error fetching test result:', error);
       }
     );
+  }
+
+  getSeasonImage(seasonOrSubcategory: string): string {
+    const imageMap: { [key: string]: string } = {
+      'Clear Winter': 'assets/clearWinter1.svg',
+      'Cool Winter': 'assets/coolWinter1.svg',
+      'Deep Winter': 'assets/deepWinter1.svg',
+      'Light Summer': 'assets/lightSummer1.svg',
+      'Cool Summer': 'assets/coolSummer1.svg',
+      'Soft Summer': 'assets/softSummer1.svg',
+      'Light Spring': 'assets/lightSpring1.svg',
+      'Warm Spring': 'assets/warmSpring1.svg',
+      'Clear Spring': 'assets/clearSpring1.svg',
+      'Soft Autumn': 'assets/softAutumn1.svg',
+      'Warm Autumn': 'assets/warmAutumn1.svg',
+      'Deep Autumn': 'assets/deepAutumn1.svg',
+      'Winter': 'assets/deepWinter1.svg',
+      'Summer': 'assets/lightSummer1.svg',
+      'Spring': 'assets/lightSpring1.svg',
+      'Autumn': 'assets/deepAutumn1.svg'
+    };
+
+    return imageMap[seasonOrSubcategory] || 'assets/defaultImage.svg';
   }
 
   loadTestHistory(): void {
