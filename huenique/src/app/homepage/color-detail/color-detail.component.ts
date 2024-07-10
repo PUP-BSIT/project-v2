@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ColorService } from '../../../service/color.service';
+
 @Component({
   selector: 'app-color-detail',
   templateUrl: './color-detail.component.html',
