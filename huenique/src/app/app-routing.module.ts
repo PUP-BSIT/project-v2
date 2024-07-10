@@ -15,6 +15,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { EmailRequestComponent } from './homepage/email-request/email-request.component';
 import { ColorsComponent } from './homepage/colors/colors.component';
 import { ColorDetailComponent } from './homepage/color-detail/color-detail.component';
+import { ClinicComponent } from './homepage/clinic/clinic.component';
 import { AuthGuard } from '../service/auth.guard';
 
 const routes: Routes = [
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'reset-password/:token', component: ResetPasswordComponent },
   { path: 'homepage/colors', component: ColorsComponent, canActivate: [AuthGuard] },
   { path: 'homepage/colors/:subcategory_id', component: ColorDetailComponent, canActivate: [AuthGuard] },
+  { path: 'homepage/clinic', component: ClinicComponent, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent }
 ];
 
