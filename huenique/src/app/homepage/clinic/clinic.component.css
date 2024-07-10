@@ -1,0 +1,24 @@
+.font-poppins {
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .text-brown-600 {
+    color: #8B4513;
+  }
+  
+  .card-title {
+    color: #1f2937; 
+  }
+  
+  .card-body p {
+    color: #4b5563; 
+  }
+  
+  .bg-yellow-200 {
+    background-color: #fefcbf;
+  }
+  
+  .alert-error {
+    background-color: #fee2e2;
+  }
+  

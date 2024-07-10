@@ -21,10 +21,12 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { SeasonalToneComponent } from './homepage/seasonal-tone/seasonal-tone.component';
 import { EmailRequestComponent } from './homepage/email-request/email-request.component';
 import { ProfileComponent } from './profile/profile.component';
-import { EmailService } from '../service/email.service';
-import { QuestionService } from '../service/question.service';
 import { ColorsComponent } from './homepage/colors/colors.component';
 import { ColorDetailComponent } from './homepage/color-detail/color-detail.component';
+import { ClinicComponent } from './homepage/clinic/clinic.component';
+import { QuestionService } from '../service/question.service';
+import { EmailService } from '../service/email.service';
+import { ClinicService } from '../service/clinic.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { ColorDetailComponent } from './homepage/color-detail/color-detail.compo
     EmailRequestComponent,
     ProfileComponent,
     ColorsComponent,
-    ColorDetailComponent
+    ColorDetailComponent,
+    ClinicComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +58,7 @@ import { ColorDetailComponent } from './homepage/color-detail/color-detail.compo
     HttpClientModule,
     FormsModule
   ],
-  providers: [QuestionService, EmailService],
+  providers: [QuestionService, EmailService, ClinicService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
