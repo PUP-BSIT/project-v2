@@ -1,0 +1,31 @@
+.font-poppins {
+    font-family: 'Poppins', sans-serif;
+  }
+  
+.main {
+    overflow: hidden;
+    height: 80vh;
+}
+  
+.girl {
+    margin-left: -800px;
+    margin-top: -25px;
+    width: 30%; 
+    max-width: 400px;
+}
+
+.two {
+    margin-right: -800px;
+    margin-top: -500px;
+    width: 100%; 
+    max-width: 600px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0;
+}
+  

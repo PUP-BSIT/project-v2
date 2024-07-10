@@ -1,0 +1,37 @@
+<app-navbar></app-navbar>
+<div class="main">
+  <div class="flex justify-center mb-8">
+    <ul class="steps steps-horizontal w-full max-w-4xl">
+      <li class="step" data-content="" [ngClass]="{'step-primary': currentStep >= 1}">Take the Test</li>
+      <li class="step" data-content="" [ngClass]="{'step-primary': currentStep >= 2}">Seasonal Tone Result</li>
+      <li class="step" data-content="" [ngClass]="{'step-primary': currentStep >= 3}">Email Copy Request</li>
+    </ul>
+  </div>
+  
+  <div class="max-w-full mx-auto">
+    <form (ngSubmit)="onSubmit()">
+      <div *ngFor="let question of questions; let i = index" [ngClass]="{'faded': i !== currentQuestionIndex, 'highlighted': i === currentQuestionIndex}" class="border-b my-3 py-3">
+        <div class="mb-8 text-center" [id]="'question-' + i">
+          <p class="text-2xl font-semibold mb-5">{{ question.question_text }}</p>
+          <div *ngFor="let option of question.options" class="flex items-center justify-center mb-2">
+            <input
+              type="radio"
+              [id]="'question' + question.question_id + 'option' + option.option_id"
+              [name]="'question' + question.question_id"
+              [value]="option.season_id"
+              [(ngModel)]="selectedAnswers[i]"
+              class="radio radio-primary mr-2"
+              (change)="onAnswerChange(i)"
+              required
+            />
+            <label [for]="'question' + question.question_id + 'option' + option.option_id">
+              {{ option.option_text }}
+            </label>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary my-6 mb-8" *ngIf="allQuestionsAnswered">Submit</button>
+    </form>
+  </div>
+  
+</div>

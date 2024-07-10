@@ -1,0 +1,5 @@
+<div *ngIf="notification$ | async as notification" class="toast" [ngClass]="notification.type">
+  <div class="alert">
+    <span>{{ notification.message }}</span>
+  </div>
+</div>

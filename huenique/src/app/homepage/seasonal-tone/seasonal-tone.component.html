@@ -1,0 +1,89 @@
+<app-navbar></app-navbar>
+<div class="flex justify-center my-8">
+  <ul class="steps steps-horizontal w-full max-w-4xl">
+    <li class="step" data-content="" [ngClass]="{'step-primary': currentStep >= 1}">Take the Test</li>
+    <li class="step" data-content="" [ngClass]="{'step-primary': currentStep >= 2}">Seasonal Tone Result</li>
+    <li class="step" data-content="" [ngClass]="{'step-primary': currentStep >= 3}">Email Copy Request</li>
+  </ul>
+</div>
+
+@if (result) {
+  <div class="bg-lightOrange rounded-badge p-4 text-center max-w-sm mx-auto">
+    <h2 class="text-lg font-normal">Your Seasonal Color is</h2>
+    @if (result.subcategory_name) {
+      <p class="text-5xl font-bold mt-2 uppercase mb-2"> {{ result.subcategory_name}}</p>
+    }
+  </div>
+
+  <div class="season-image flex justify-center my-4">
+    @if (result.subcategory_name === 'Soft Summer') {
+      <img src="../../../assets/softSummer1.svg" alt="Soft Summer" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Light Summer') {
+      <img src="../../../assets/lightSummer1.svg" alt="Light Summer" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Cool Summer') {
+      <img src="../../../assets/coolSummer1.svg" alt="Cool Summer" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Deep Autumn') {
+      <img src="../../../assets/deepAutumn1.svg" alt="Deep Autumn" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Soft Autumn') {
+      <img src="../../../assets/softAutumn1.svg" alt="Soft Autumn" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Warm Autumn') {
+      <img src="../../../assets/warmAutumn1.svg" alt="Warm Autumn" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Light Spring') {
+      <img src="../../../assets/lightSpring1.svg" alt="Light Spring" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Warm Spring') {
+      <img src="../../../assets/warmSpring1.svg" alt="Warm Spring" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Clear Spring') {
+      <img src="../../../assets/clearSpring1.svg" alt="Clear Spring" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Cool Winter') {
+      <img src="../../../assets/coolWinter1.svg" alt="Cool Winter" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Clear Winter') {
+      <img src="../../../assets/clearWinter1.svg" alt="Clear Winter" class="max-w-5xl mx-auto">
+    } @else if (result.subcategory_name === 'Deep Winter') {
+      <img src="../../../assets/deepWinter1.svg" alt="Deep Winter" class="max-w-5xl mx-auto">
+    } @else {
+      <p>Season not recognized.</p>
+    }
+  </div>
+
+  <div class="season-description px-40 py-4 my-4">
+    <h3 class="text-4xl font-extrabold mb-2 mt-12 font-poppins text-brown">Introduction</h3>
+    <p class="text-3xl pt-5 font-poppins text-lightBrown">
+      <span class="font-extrabold">{{result.subcategory_name}}</span> {{ seasonDescription }}
+    </p>
+  </div>
+  
+  <div class="flex justify-center my-4 py-5">
+    <button (click)="learnMore()" class="btn-lg flex items-center bg-lightYellow text-white rounded-badge py-8 px-12 text-2xl font-bold hover:bg-darkYellow">Learn More</button>
+  </div>
+  
+  @if (recommendations) {
+    <div class="recommendations-section">
+      @for (category of recommendationCategories; track category) {
+        <h3 class="font-bold text-5xl text-center my-12">{{ category | titlecase }}</h3>
+        
+        <div class="recommendation-colors grid gap-1 custom-grid">
+          @for (item of recommendations[category]; track item.hex_code) {
+            <div [style.background-color]="item.hex_code" 
+                 class="color-sample text-center"
+                 [ngStyle]="{'color': getTextColor(item.hex_code)}">
+              <p class="color-name font-bold text-base">{{ item.color_name }}</p>
+            </div>
+          }
+        </div>
+
+        <div class="recommendation-descriptions pt-5">
+          @for (item of recommendations[category]; track item.hex_code) {
+            <div class="description-item mb-3 mt-3 text-start text-3xl px-80">
+              <p class="font-bold text-brown">{{ item.color_name }}</p>
+              <p class="color-description text-2xl text-lightBrown mb-10">{{ item.details }}</p>
+            </div>
+          }
+        </div>
+      }
+    </div>
+    <div class="mt-8 flex justify-center">
+      <button class="btn-lg flex items-center bg-lightYellow text-white rounded-badge py-10 px-12 text-2xl font-bold hover:bg-darkYellow mb-12" 
+      (click)="goToEmailRequest()">Proceed to Email Request</button>
+    </div>
+  }
+}

@@ -1,0 +1,32 @@
+.profile-container {
+  @apply bg-lightOrange text-center p-8 rounded-lg shadow-lg max-w-lg mx-auto my-8;
+}
+
+h1 {
+  @apply text-darkBrown text-4xl mb-6;
+}
+
+p {
+  @apply text-darkGray text-3xl mb-2;
+}
+
+.table-auto {
+  @apply w-full text-left mx-auto;
+}
+
+th, td {
+  @apply border px-4 py-2;
+}
+
+th {
+  @apply bg-lightYellow text-brown;
+}
+
+tbody tr:nth-child(even) {
+  @apply bg-lightOrange;
+}
+
+.profile-container {
+  max-width: 70%; 
+  margin: 0 auto; 
+}
