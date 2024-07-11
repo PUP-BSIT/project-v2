@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuestionService } from '../../../service/question.service';
 import { QuizResult } from '../../model/result';
@@ -10,7 +10,7 @@ import { Question } from '../../model/question';
   templateUrl: './color-test.component.html',
   styleUrls: ['./color-test.component.css']
 })
-export class ColorTestComponent implements OnInit {
+export class ColorTestComponent implements OnInit, AfterViewChecked {
   questions: Question[] = [];
   selectedAnswers: number[] = [];
   result: string | null = null;
@@ -18,6 +18,8 @@ export class ColorTestComponent implements OnInit {
   currentStep: number = 1;
   currentQuestionIndex: number = 0;
   allQuestionsAnswered: boolean = false;
+
+  @ViewChild('submitButton') submitButton!: ElementRef;
 
   constructor(
     private questionService: QuestionService,
@@ -33,10 +35,17 @@ export class ColorTestComponent implements OnInit {
     this.userId = this.authService.getUserId();
   }
 
+  ngAfterViewChecked(): void {
+    if (this.allQuestionsAnswered && this.submitButton) {
+      this.scrollToSubmitButton();
+    }
+  }
+
   onAnswerChange(index: number): void {
     if (index === this.currentQuestionIndex) {
       this.moveToNextUnansweredQuestion();
     }
+    this.scrollToNextUnansweredQuestion();
   }
 
   moveToNextUnansweredQuestion(): void {
@@ -46,6 +55,26 @@ export class ColorTestComponent implements OnInit {
     } else {
       this.allQuestionsAnswered = true;
     }
+  }
+
+  scrollToNextUnansweredQuestion(): void {
+    const nextUnansweredIndex = this.selectedAnswers.findIndex(answer => answer === null);
+    if (nextUnansweredIndex !== -1) {
+      const element = document.getElementById(`question-${nextUnansweredIndex}`);
+      if (element) {
+        const elementRect = element.getBoundingClientRect();
+        const absoluteElementTop = elementRect.top + window.pageYOffset;
+        const middle = absoluteElementTop - (window.innerHeight / 2.8);
+        window.scrollTo({ top: middle, behavior: 'smooth' });
+      }
+    }
+  }
+
+  scrollToSubmitButton(): void {
+    const elementRect = this.submitButton.nativeElement.getBoundingClientRect();
+    const absoluteElementTop = elementRect.top + window.pageYOffset;
+    const middle = absoluteElementTop - (window.innerHeight / 2.8);
+    window.scrollTo({ top: middle, behavior: 'smooth' });
   }
 
   onSubmit(): void {
@@ -69,12 +98,14 @@ export class ColorTestComponent implements OnInit {
       percentage: (seasonScores[Number(seasonId)] / totalQuestions) * 100
     }));
 
+    console.log('Season Percentages:', seasonPercentages);
+
     seasonPercentages.sort((a, b) => b.percentage - a.percentage);
     const primarySeasonId = seasonPercentages[0].seasonId;
 
-    const subcategory = this.determineSubcategory(seasonPercentages, primarySeasonId);
+    const subcategoryId = this.determineSubcategory(seasonPercentages, primarySeasonId);
 
-    this.result = this.getSeasonName(primarySeasonId, subcategory);
+    this.result = this.getSeasonName(primarySeasonId, subcategoryId);
     console.log('Quiz result:', this.result);
 
     const resultData: QuizResult = {
@@ -86,8 +117,12 @@ export class ColorTestComponent implements OnInit {
       contact_lens_id: primarySeasonId,
       avoid_color_id: primarySeasonId,
       result_date: new Date().toISOString().split('T')[0],
-      subcategory_id: subcategory ? subcategory.seasonId : null
+      subcategory_id: subcategoryId
     };
+
+    // Store result data and percentages in local storage
+    localStorage.setItem('testResults', JSON.stringify(resultData));
+    localStorage.setItem('seasonPercentages', JSON.stringify(seasonPercentages));
 
     this.questionService.saveResult(resultData).subscribe(response => {
       console.log('Result saved:', response);
@@ -95,81 +130,62 @@ export class ColorTestComponent implements OnInit {
     });
   }
 
-  determineSubcategory(seasonPercentages: { seasonId: number, percentage: number }[], primarySeasonId: number): { seasonId: number, percentage: number } | null {
-    const primaryPercentage = seasonPercentages.find(sp => sp.seasonId === primarySeasonId)?.percentage || 0;
-    const otherSeasonPercentages = seasonPercentages.filter(sp => sp.seasonId !== primarySeasonId);
+  getPrimarySeason(seasonPercentages: { seasonId: number, percentage: number }[]): number {
+    seasonPercentages.sort((a, b) => b.percentage - a.percentage);
+    return seasonPercentages[0].seasonId;
+  }
 
-    const subcategoryMap: { [key: number]: number[] } = {
-        1: [7, 6, 5],
-        2: [10, 9, 8],
-        3: [16, 15, 14],
-        4: [11, 12, 13]
+  determineSubcategory(seasonPercentages: { seasonId: number, percentage: number }[], primarySeasonId: number): number | null {
+    let maxInfluence = -1;
+    let selectedSubcategoryId = null;
+
+    seasonPercentages.forEach(season => {
+      if (season.seasonId !== primarySeasonId && season.percentage > 0) {
+        if (season.percentage > maxInfluence) {
+          maxInfluence = season.percentage;
+          selectedSubcategoryId = this.getSubcategoryId(primarySeasonId, season.seasonId);
+        }
+      }
+    });
+
+    if (selectedSubcategoryId === null) {
+      selectedSubcategoryId = this.getSubcategoryId(primarySeasonId, null);
+    }
+
+    return selectedSubcategoryId;
+  }
+
+  getSubcategoryId(primarySeasonId: number, secondarySeasonId: number | null): number {
+    const subcategoryMatrix: { [key: number]: { [key: number]: number } } = {
+      1: { 2: 6, 3: 7, 4: 5 },
+      2: { 1: 9, 3: 8, 4: 10 },
+      3: { 1: 16, 2: 14, 4: 15 },
+      4: { 1: 11, 2: 13, 3: 12 }
     };
 
-    const potentialSubcategories = subcategoryMap[primarySeasonId];
+    const defaultSubcategories: { [key: number]: number } = {
+      1: 7,
+      2: 10,
+      3: 16,
+      4: 11
+    };
 
-    if (!potentialSubcategories) {
-        return null;
+    if (secondarySeasonId === null) {
+      return defaultSubcategories[primarySeasonId];
     }
 
-    let closestSubcategories: { seasonId: number, percentage: number, difference: number }[] = [];
-    let smallestDifference = Number.MAX_VALUE;
-
-    for (const subcategoryId of potentialSubcategories) {
-        const subcategoryPercentage = this.getSubcategoryPercentage(subcategoryId, otherSeasonPercentages);
-        const difference = Math.abs(primaryPercentage - subcategoryPercentage);
-
-        if (difference < smallestDifference) {
-            closestSubcategories = [{ seasonId: subcategoryId, percentage: subcategoryPercentage, difference }];
-            smallestDifference = difference;
-        } else if (difference === smallestDifference) {
-            closestSubcategories.push({ seasonId: subcategoryId, percentage: subcategoryPercentage, difference });
-        }
-    }
-
-    if (closestSubcategories.length > 1) {
-        closestSubcategories.sort((a, b) => b.percentage - a.percentage);
-    }
-
-    return closestSubcategories[0];
+    return subcategoryMatrix[primarySeasonId][secondarySeasonId] || defaultSubcategories[primarySeasonId];
   }
 
-  getSubcategoryPercentage(subcategoryId: number, otherSeasonPercentages: { seasonId: number, percentage: number }[]): number {
-    switch (subcategoryId) {
-        case 5:  
-        case 6:  
-            return otherSeasonPercentages.find(sp => sp.seasonId === 1)?.percentage || 0;
-        case 7:  
-            return otherSeasonPercentages.find(sp => sp.seasonId === 1)?.percentage || 0;
-        case 8:  
-        case 9:  
-        case 10: 
-            return otherSeasonPercentages.find(sp => sp.seasonId === 2)?.percentage || 0;
-        case 10: 
-            return otherSeasonPercentages.find(sp => sp.seasonId === 3)?.percentage || 0;
-        case 14: 
-        case 15: 
-        case 16: 
-            return otherSeasonPercentages.find(sp => sp.seasonId === 3)?.percentage || 0;
-        case 16: 
-            return otherSeasonPercentages.find(sp => sp.seasonId === 2)?.percentage || 0;
-        case 11: 
-        case 12: 
-        case 13: 
-            return otherSeasonPercentages.find(sp => sp.seasonId === 4)?.percentage || 0;
-        case 13: 
-            return otherSeasonPercentages.find(sp => sp.seasonId === 1)?.percentage || 0;
-        default:
-            return 0;
+  getSeasonName(seasonId: number, subcategoryId: number | null): string {
+    if (subcategoryId) {
+      return this.getSubcategoryName(subcategoryId);
     }
-  }
-
-  getSeasonName(seasonId: number, subcategory: { seasonId: number, percentage: number } | null): string {
     switch (seasonId) {
-      case 1: return subcategory ? this.getSubcategoryName(subcategory.seasonId) : 'Winter';
-      case 2: return subcategory ? this.getSubcategoryName(subcategory.seasonId) : 'Summer';
-      case 3: return subcategory ? this.getSubcategoryName(subcategory.seasonId) : 'Autumn';
-      case 4: return subcategory ? this.getSubcategoryName(subcategory.seasonId) : 'Spring';
+      case 1: return 'Winter';
+      case 2: return 'Summer';
+      case 3: return 'Autumn';
+      case 4: return 'Spring';
       default: return 'Unknown';
     }
   }

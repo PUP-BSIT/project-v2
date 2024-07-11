@@ -1,0 +1,29 @@
+<app-navbar></app-navbar>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
+
+<div class="container mx-auto p-6 font-poppins">
+  <h1 class="text-5xl font-bold mb-6 text-brown-600">Clinic List</h1>
+  @if (error) {
+    <div class="alert alert-error shadow-lg mb-6">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+        <span>Error fetching clinic data. Please try again later.</span>
+      </div>
+    </div>
+  } @else {
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (clinic of clinics; track clinic) {
+        <div class="card w-full bg-yellow-200 shadow-xl">
+          <div class="card-body">
+            <h2 class="card-title">{{ clinic.name }}</h2>
+            <p>{{ clinic.address }}</p>
+            <p>{{ clinic.phone }}</p>
+            <p>{{ clinic.contact_info }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

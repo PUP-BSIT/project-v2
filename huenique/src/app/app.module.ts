@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,10 +23,14 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { SeasonalToneComponent } from './homepage/seasonal-tone/seasonal-tone.component';
 import { EmailRequestComponent } from './homepage/email-request/email-request.component';
 import { ProfileComponent } from './profile/profile.component';
-import { EmailService } from '../service/email.service';
-import { QuestionService } from '../service/question.service';
 import { ColorsComponent } from './homepage/colors/colors.component';
 import { ColorDetailComponent } from './homepage/color-detail/color-detail.component';
+import { ClinicComponent } from './homepage/clinic/clinic.component';
+import { QuestionService } from '../service/question.service';
+import { EmailService } from '../service/email.service';
+import { ClinicService } from '../service/clinic.service';
+import { LoaderService } from '../service/loader.service';
+import { LoaderInterceptor } from '../service/loader.interceptor';
 
 @NgModule({
   declarations: [
@@ -46,16 +52,25 @@ import { ColorDetailComponent } from './homepage/color-detail/color-detail.compo
     EmailRequestComponent,
     ProfileComponent,
     ColorsComponent,
-    ColorDetailComponent
+    ColorDetailComponent,
+    ClinicComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MatProgressSpinnerModule,
+    BrowserAnimationsModule
   ],
-  providers: [QuestionService, EmailService],
+  providers: [
+    QuestionService,
+    EmailService,
+    ClinicService,
+    LoaderService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
