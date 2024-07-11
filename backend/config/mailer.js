@@ -221,7 +221,6 @@ const sendEmailResult = (req, res) => {
 
         sendEmail(email, 'Your Color Analysis Results', 'resultEmail', replacements);
 
-        // Insert the email log into the database
         const insertSql = `
           INSERT INTO email_log (result_id, user_id) 
           VALUES (?, ?)`;

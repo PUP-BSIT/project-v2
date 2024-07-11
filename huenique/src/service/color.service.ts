@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ColorService {
-  private apiUrl = 'http://localhost:3000/api';
+  private apiUrl = 'http://huenique.online/api';
 
   constructor(private http: HttpClient) {}
 
