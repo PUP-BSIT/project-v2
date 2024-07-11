@@ -1,2 +1,7 @@
 <router-outlet></router-outlet>
 <app-notification></app-notification>
+@if (isLoading) {
+  <div class="loading-overlay">
+    <mat-spinner aria-label="Loading"></mat-spinner>
+  </div>
+}
