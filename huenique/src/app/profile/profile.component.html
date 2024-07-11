@@ -14,7 +14,9 @@
                     <div class="text-center">
                         <img [src]="seasonImage" [alt]="testResult.season_name" class="season-image mx-auto mb-4">
                     </div>
-                    <p class="text-3xl text-darkGray font-semibold mb-4"><span *ngIf="testResult.subcategory_name">{{ testResult.subcategory_name }}</span></p>
+                    <p class="text-3xl text-darkGray font-semibold mb-4">
+                        <span *ngIf="testResult.subcategory_name">{{ testResult.subcategory_name }}</span>
+                    </p>
                     <p class="text-xl text-darkGray mt-2">{{ seasonalDescription }}</p>
                     <button (click)="navigateToDetail(testResult.subcategory_id)" class="px-4 py-2 mt-4 bg-blue-300 text-darkBrown rounded">View Details</button>
                 </div>
@@ -49,6 +51,25 @@
                 </div>
                 <div *ngIf="testHistory.length === 0">
                     <p class="text-2xl text-darkGray">No test history available.</p>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6 text-left mt-4">
+                <h3 class="text-3xl font-semibold mb-4">Answer Percentages</h3>
+                <div *ngIf="seasonPercentages.length > 0">
+                    <div *ngFor="let percentage of seasonPercentages">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-2xl text-darkGray"><strong>{{ percentage.seasonName }}:</strong></span>
+                            <span class="text-2xl text-darkGray"><strong>{{ percentage.percentage.toFixed(2) }}%</strong></span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-bar-inner {{ percentage.seasonName.toLowerCase() }}" [style.width.%]="percentage.percentage">
+                                {{ percentage.percentage.toFixed(2) }}%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="seasonPercentages.length === 0">
+                    <p class="text-2xl text-darkGray">No percentages available.</p>
                 </div>
             </div>
         </div>

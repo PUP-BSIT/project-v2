@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,6 +29,8 @@ import { ClinicComponent } from './homepage/clinic/clinic.component';
 import { QuestionService } from '../service/question.service';
 import { EmailService } from '../service/email.service';
 import { ClinicService } from '../service/clinic.service';
+import { LoaderService } from '../service/loader.service';
+import { LoaderInterceptor } from '../service/loader.interceptor';
 
 @NgModule({
   declarations: [
@@ -56,9 +60,17 @@ import { ClinicService } from '../service/clinic.service';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MatProgressSpinnerModule,
+    BrowserAnimationsModule
   ],
-  providers: [QuestionService, EmailService, ClinicService],
+  providers: [
+    QuestionService,
+    EmailService,
+    ClinicService,
+    LoaderService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
