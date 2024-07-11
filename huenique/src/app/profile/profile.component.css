@@ -109,6 +109,12 @@ button:disabled {
   font-weight: bold;
 }
 
+.view:hover, 
+.next-button, 
+.prev-button {
+  background-color: #2658e2;
+}
+
 .progress-bar-inner.winter { background-color: #1e3a8a; } 
 .progress-bar-inner.summer { background-color: #eab308; }
 .progress-bar-inner.autumn { background-color: #d97706; } 

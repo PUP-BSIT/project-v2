@@ -24,7 +24,7 @@
                         <span *ngIf="testResult.subcategory_name">{{ testResult.subcategory_name }}</span>
                     </p>
                     <p class="text-xl text-darkGray mt-2">{{ seasonalDescription }}</p>
-                    <button (click)="navigateToDetail(testResult.subcategory_id)" class="px-4 py-2 mt-4 bg-blue-300 text-darkBrown rounded">View Details</button>
+                    <button (click)="navigateToDetail(testResult.subcategory_id)" class="view px-4 py-2 mt-4 bg-blue-500 text-white rounded">View Details</button>
                 </div>
             </div>
         </div>
@@ -51,8 +51,8 @@
                         </tbody>
                     </table>
                     <div class="flex justify-center mt-4">
-                        <button (click)="prevPage()" [disabled]="currentPage === 1" class="px-4 py-2 mx-2 bg-blue-300 text-darkBrown rounded">Previous</button>
-                        <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="px-4 py-2 mx-2 bg-blue-300 text-darkBrown rounded">Next</button>
+                        <button (click)="prevPage()" [disabled]="currentPage === 1" class="prev-button px-4 py-2 mx-2 bg-blue-500 text-white rounded">Previous</button>
+                        <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="next-button px-4 py-2 mx-2 bg-blue-500 text-white rounded">Next</button>
                     </div>
                 </div>
                 <div *ngIf="testHistory.length === 0">

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuestionService } from '../../../service/question.service';
 import { QuizResult } from '../../model/result';
@@ -10,7 +10,7 @@ import { Question } from '../../model/question';
   templateUrl: './color-test.component.html',
   styleUrls: ['./color-test.component.css']
 })
-export class ColorTestComponent implements OnInit {
+export class ColorTestComponent implements OnInit, AfterViewChecked {
   questions: Question[] = [];
   selectedAnswers: number[] = [];
   result: string | null = null;
@@ -18,6 +18,8 @@ export class ColorTestComponent implements OnInit {
   currentStep: number = 1;
   currentQuestionIndex: number = 0;
   allQuestionsAnswered: boolean = false;
+
+  @ViewChild('submitButton') submitButton!: ElementRef;
 
   constructor(
     private questionService: QuestionService,
@@ -33,10 +35,17 @@ export class ColorTestComponent implements OnInit {
     this.userId = this.authService.getUserId();
   }
 
+  ngAfterViewChecked(): void {
+    if (this.allQuestionsAnswered && this.submitButton) {
+      this.scrollToSubmitButton();
+    }
+  }
+
   onAnswerChange(index: number): void {
     if (index === this.currentQuestionIndex) {
       this.moveToNextUnansweredQuestion();
     }
+    this.scrollToNextUnansweredQuestion();
   }
 
   moveToNextUnansweredQuestion(): void {
@@ -46,6 +55,26 @@ export class ColorTestComponent implements OnInit {
     } else {
       this.allQuestionsAnswered = true;
     }
+  }
+
+  scrollToNextUnansweredQuestion(): void {
+    const nextUnansweredIndex = this.selectedAnswers.findIndex(answer => answer === null);
+    if (nextUnansweredIndex !== -1) {
+      const element = document.getElementById(`question-${nextUnansweredIndex}`);
+      if (element) {
+        const elementRect = element.getBoundingClientRect();
+        const absoluteElementTop = elementRect.top + window.pageYOffset;
+        const middle = absoluteElementTop - (window.innerHeight / 2.8);
+        window.scrollTo({ top: middle, behavior: 'smooth' });
+      }
+    }
+  }
+
+  scrollToSubmitButton(): void {
+    const elementRect = this.submitButton.nativeElement.getBoundingClientRect();
+    const absoluteElementTop = elementRect.top + window.pageYOffset;
+    const middle = absoluteElementTop - (window.innerHeight / 2.8);
+    window.scrollTo({ top: middle, behavior: 'smooth' });
   }
 
   onSubmit(): void {
