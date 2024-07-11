@@ -1,32 +1,50 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap">
 <app-navbar></app-navbar>
 
-<div>
+<div class="season-banner" [style.background-color]="bgColor">
+  <h1 class="season-title">{{ seasonName }}</h1>
 </div>
 
-<div class="flex">
-  <nav class="w-1/4 bg-gray-100 p-4">
-    <ul>
-      <li class="py-2 cursor-pointer" (click)="setCategory('accessories')"><a class="text-blue-500">Accessories</a></li>
-      <li class="py-2 cursor-pointer" (click)="setCategory('clothing')"><a class="text-blue-500">Clothing</a></li>
-      <li class="py-2 cursor-pointer" (click)="setCategory('lens')"><a class="text-blue-500">Lens</a></li>
-      <li class="py-2 cursor-pointer" (click)="setCategory('hair')"><a class="text-blue-500">Hair</a></li>
-      <li class="py-2 cursor-pointer" (click)="setCategory('avoid')"><a class="text-blue-500">Avoid</a></li>
-    </ul>
-  </nav>
-
-  <main class="w-3/4 p-8">
-    <h1 class="text-4xl font-bold mb-4">Color Details</h1>
-    <div *ngIf="filteredColorDetails && filteredColorDetails.length > 0">
-      <div *ngFor="let color of filteredColorDetails" class="mb-8">
-        <p class="text-xl font-semibold">{{ color.color_name }}</p>
-        <p class="text-lg">{{ color.details }}</p>
-        <p> 
-          <span [style.backgroundColor]="color.hex_code" class="p-1 text-white">{{ color.hex_code }}</span>
-        </p>
+<div class="drawer lg:drawer-open">
+  <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content flex flex-col items-center justify-center">
+    <main class="p-10">
+      <h1 class="text-5xl font-bold mb-10">Seasonal Color Details</h1>
+      <div *ngIf="filteredColorDetails && filteredColorDetails.length > 0">
+        <div *ngFor="let color of filteredColorDetails" class="mb-8">
+          <p class="text-xl font-semibold">{{ color.color_name }}</p>
+          <p class="text-lg">{{ color.details }}</p>
+          <p> 
+            <span [style.backgroundColor]="color.hex_code" class="p-1 text-white">{{ color.hex_code }}</span>
+          </p>
+        </div>
       </div>
-    </div>
-    <div *ngIf="!filteredColorDetails || filteredColorDetails.length === 0">
-      <p>No details available for this category.</p>
-    </div>
-  </main>
+      <div *ngIf="!filteredColorDetails || filteredColorDetails.length === 0">
+        <p>No details available for this category.</p>
+      </div>
+    </main>
+    <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">
+      Open drawer
+    </label>
+  </div>
+  <div class="drawer-side">
+    <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
+    <ul class="menu text-base-content min-h-full w-80 p-4">
+      <li (click)="setCategory('accessories')">
+        <a [class.active]="selectedCategory === 'accessories'" class="text-2xl my-3">Accessories</a>
+      </li>
+      <li (click)="setCategory('clothing')">
+        <a [class.active]="selectedCategory === 'clothing'" class="text-2xl my-3">Clothing</a>
+      </li>
+      <li (click)="setCategory('lens')">
+        <a [class.active]="selectedCategory === 'lens'" class="text-2xl my-3">Contact Lens</a>
+      </li>
+      <li (click)="setCategory('hair')">
+        <a [class.active]="selectedCategory === 'hair'" class="text-2xl my-3">Hair</a>
+      </li>
+      <li (click)="setCategory('avoid')">
+        <a [class.active]="selectedCategory === 'avoid'" class="text-2xl my-3">Avoid</a>
+      </li>
+    </ul>
+  </div>
 </div>
