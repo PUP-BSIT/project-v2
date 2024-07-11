@@ -1,5 +1,20 @@
+.bg-winter {
+  background-color: #1e3a8a; /* Blue */
+}
+
+.bg-summer {
+  background-color: #eab308; /* Yellow */
+}
+
+.bg-autumn {
+  background-color: #d97706; /* Orange */
+}
+
+.bg-spring {
+  background-color: #10b981; /* Green */
+}
+
 .profile-container {
-  background-color: #fff8f1;
   border-radius: 0.5rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   max-width: 90%;
@@ -67,6 +82,7 @@ button:disabled {
 
 .clickable-link {
   text-decoration: none;
+  text-decoration: underline; 
   cursor: pointer;
 }
 

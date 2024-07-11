@@ -1,5 +1,11 @@
 <app-navbar></app-navbar>
-<div class="profile-container bg-lightOrange rounded-lg shadow-lg w-full max-w-6xl mx-auto text-center my-8 px-8">
+<div [ngClass]="{
+      'bg-winter': testResult?.season_name === 'Winter',
+      'bg-summer': testResult?.season_name === 'Summer',
+      'bg-autumn': testResult?.season_name === 'Autumn',
+      'bg-spring': testResult?.season_name === 'Spring'
+    }"
+    class="profile-container rounded-lg shadow-lg w-full max-w-6xl mx-auto text-center my-8 px-8">
     <h1 class="text-6xl font-bold mb-6 text-darkBrown">Your Profile</h1>
     <div class="flex flex-wrap justify-center">
         <div class="w-full md:w-1/2 p-4">
