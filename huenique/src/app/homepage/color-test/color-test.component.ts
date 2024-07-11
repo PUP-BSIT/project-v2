@@ -91,6 +91,7 @@ export class ColorTestComponent implements OnInit {
       subcategory_id: subcategoryId
     };
 
+    // Store result data and percentages in local storage
     localStorage.setItem('testResults', JSON.stringify(resultData));
     localStorage.setItem('seasonPercentages', JSON.stringify(seasonPercentages));
 
@@ -110,7 +111,7 @@ export class ColorTestComponent implements OnInit {
     let selectedSubcategoryId = null;
 
     seasonPercentages.forEach(season => {
-      if (season.seasonId !== primarySeasonId) {
+      if (season.seasonId !== primarySeasonId && season.percentage > 0) {
         if (season.percentage > maxInfluence) {
           maxInfluence = season.percentage;
           selectedSubcategoryId = this.getSubcategoryId(primarySeasonId, season.seasonId);
@@ -118,10 +119,14 @@ export class ColorTestComponent implements OnInit {
       }
     });
 
+    if (selectedSubcategoryId === null) {
+      selectedSubcategoryId = this.getSubcategoryId(primarySeasonId, null);
+    }
+
     return selectedSubcategoryId;
   }
 
-  getSubcategoryId(primarySeasonId: number, secondarySeasonId: number): number {
+  getSubcategoryId(primarySeasonId: number, secondarySeasonId: number | null): number {
     const subcategoryMatrix: { [key: number]: { [key: number]: number } } = {
       1: { 2: 6, 3: 7, 4: 5 },
       2: { 1: 9, 3: 8, 4: 10 },
@@ -129,7 +134,18 @@ export class ColorTestComponent implements OnInit {
       4: { 1: 11, 2: 13, 3: 12 }
     };
 
-    return subcategoryMatrix[primarySeasonId][secondarySeasonId];
+    const defaultSubcategories: { [key: number]: number } = {
+      1: 7,
+      2: 10,
+      3: 16,
+      4: 11
+    };
+
+    if (secondarySeasonId === null) {
+      return defaultSubcategories[primarySeasonId];
+    }
+
+    return subcategoryMatrix[primarySeasonId][secondarySeasonId] || defaultSubcategories[primarySeasonId];
   }
 
   getSeasonName(seasonId: number, subcategoryId: number | null): string {
