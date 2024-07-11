@@ -1,17 +1,17 @@
 .bg-winter {
-  background-color: #1e3a8a; /* Blue */
+  background: linear-gradient(to right, #d1d5db, #e5e7eb, #d1d5db); /* Gray gradient */
 }
 
 .bg-summer {
-  background-color: #eab308; /* Yellow */
+  background: linear-gradient(to right, #93c5fd, #bfdbfe, #93c5fd); /* Blue gradient */
 }
 
 .bg-autumn {
-  background-color: #d97706; /* Orange */
+  background: linear-gradient(to right, #fdba74, #fed7aa, #fdba74); /* Orange gradient */
 }
 
 .bg-spring {
-  background-color: #10b981; /* Green */
+  background: linear-gradient(to right, #fbcfe8, #f9a8d4, #fbcfe8); /* Pink gradient */
 }
 
 .profile-container {
@@ -61,7 +61,7 @@
 }
 
 .table-auto th {
-  background-color: #ffecd0;
+  background-color: rgb(170, 219, 238);
   color: #5c4033;
   text-align: left;
 }
@@ -82,7 +82,6 @@ button:disabled {
 
 .clickable-link {
   text-decoration: none;
-  text-decoration: underline; 
   cursor: pointer;
 }
 

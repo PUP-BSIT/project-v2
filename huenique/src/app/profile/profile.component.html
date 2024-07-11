@@ -16,11 +16,11 @@
                     <p class="text-2xl text-darkGray"><strong>Email:</strong> {{ user.email }}</p>
                 </div>
                 <div *ngIf="testResult" class="mb-6">
-                    <h2 class="text-4xl font-bold mb-4">Current Seasonal Color</h2>
+                    <h2 class="text-3xl font-bold mb-4">Current Seasonal Color</h2>
                     <div class="text-center">
                         <img [src]="seasonImage" [alt]="testResult.season_name" class="season-image mx-auto mb-4">
                     </div>
-                    <p class="text-3xl text-darkGray font-semibold mb-4">
+                    <p class="text-2xl text-darkGray font-semibold mb-4">
                         <span *ngIf="testResult.subcategory_name">{{ testResult.subcategory_name }}</span>
                     </p>
                     <p class="text-xl text-darkGray mt-2">{{ seasonalDescription }}</p>
@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="bg-white rounded-lg shadow p-6 text-left mt-4">
-                <h3 class="text-3xl font-semibold mb-4">Answer Percentages</h3>
+                <h3 class="text-3xl font-semibold mb-4">Current Season Percentages</h3>
                 <div *ngIf="seasonPercentages.length > 0">
                     <div *ngFor="let percentage of seasonPercentages">
                         <div class="flex justify-between mb-2">
