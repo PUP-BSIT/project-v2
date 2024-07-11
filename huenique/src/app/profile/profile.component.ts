@@ -19,6 +19,8 @@ export class ProfileComponent implements OnInit {
   totalPages: number = 1;
   seasonalDescription: string = '';
   seasonImage: string = '';
+  seasonPercentages: { seasonId: number, percentage: number, seasonName: string }[] = [];
+  subcategoryPercentages: { subcategoryId: number, percentage: number, subcategoryName: string }[] = [];
 
   constructor(
     private authService: AuthService,
@@ -31,6 +33,7 @@ export class ProfileComponent implements OnInit {
     this.loadUserProfile();
     this.loadTestResult();
     this.loadTestHistory();
+    this.loadSeasonPercentages();
   }
 
   loadUserProfile(): void {
@@ -119,5 +122,50 @@ export class ProfileComponent implements OnInit {
 
   navigateToDetail(subcategoryId: number): void {
     this.router.navigate(['/homepage/colors', subcategoryId]);
+  }
+
+  loadSeasonPercentages(): void {
+    const seasonPercentages = localStorage.getItem('seasonPercentages');
+    const subcategoryPercentages = localStorage.getItem('subcategoryPercentages');
+    if (seasonPercentages) {
+      this.seasonPercentages = JSON.parse(seasonPercentages).map((percentage: any) => ({
+        ...percentage,
+        seasonName: this.getSeasonName(percentage.seasonId)
+      }));
+    }
+    if (subcategoryPercentages) {
+      this.subcategoryPercentages = JSON.parse(subcategoryPercentages).map((percentage: any) => ({
+        ...percentage,
+        subcategoryName: this.getSubcategoryName(percentage.subcategoryId)
+      }));
+    }
+  }
+
+  getSeasonName(seasonId: number): string {
+    switch (seasonId) {
+      case 1: return 'Winter';
+      case 2: return 'Summer';
+      case 3: return 'Autumn';
+      case 4: return 'Spring';
+      default: return 'Unknown';
+    }
+  }
+
+  getSubcategoryName(subcategoryId: number): string {
+    switch (subcategoryId) {
+      case 5: return 'Clear Winter';
+      case 6: return 'Cool Winter';
+      case 7: return 'Deep Winter';
+      case 8: return 'Soft Summer';
+      case 9: return 'Cool Summer';
+      case 10: return 'Light Summer';
+      case 11: return 'Clear Spring';
+      case 12: return 'Warm Spring';
+      case 13: return 'Light Spring';
+      case 14: return 'Soft Autumn';
+      case 15: return 'Warm Autumn';
+      case 16: return 'Deep Autumn';
+      default: return 'Unknown';
+    }
   }
 }

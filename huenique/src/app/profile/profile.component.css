@@ -73,3 +73,28 @@ button:disabled {
 .clickable-link:hover {
   color: #669FFF; 
 }
+
+.progress-bar {
+  width: 100%;
+  background-color: #f3f4f6;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.progress-bar-inner {
+  height: 1.5rem;
+  border-radius: 8px;
+  text-align: right;
+  padding-right: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: white;
+  font-weight: bold;
+}
+
+.progress-bar-inner.winter { background-color: #1e3a8a; } 
+.progress-bar-inner.summer { background-color: #eab308; }
+.progress-bar-inner.autumn { background-color: #d97706; } 
+.progress-bar-inner.spring { background-color: #10b981; } 
