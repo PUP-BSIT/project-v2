@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ColorService } from '../../../service/color.service';
 
@@ -13,6 +13,8 @@ export class ColorDetailComponent implements OnInit {
   selectedCategory: string = 'accessories';
   seasonName: string = '';
   bgColor: string = '';
+  seasonImage: string = '';
+  showScrollToTop: boolean = false;
 
   private seasonNames: { [key: string]: string } = {
     '1': 'Winter',
@@ -52,9 +54,25 @@ export class ColorDetailComponent implements OnInit {
     '16': '#B68553'
   };
 
-  constructor(private route: ActivatedRoute, private colorService: ColorService, private cdr: ChangeDetectorRef) {}
+  private seasonImages: { [key: string]: string } = {
+    '5': 'assets/clearWinter1.svg',
+    '6': 'assets/coolWinter1.svg',
+    '7': 'assets/deepWinter1.svg',
+    '8': 'assets/softSummer1.svg',
+    '9': 'assets/coolSummer1.svg',
+    '10': 'assets/lightSummer1.svg',
+    '11': 'assets/clearSpring1.svg',
+    '12': 'assets/warmSpring1.svg',
+    '13': 'assets/lightSpring1.svg',
+    '14': 'assets/softAutumn1.svg',
+    '15': 'assets/warmAutumn1.svg',
+    '16': 'assets/deepAutumn1.svg'
+  };
+
+  constructor(private route: ActivatedRoute, private colorService: ColorService) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0); 
     const subcategoryId = this.route.snapshot.paramMap.get('subcategory_id');
     console.log('subcategoryId:', subcategoryId);
     this.colorService.getColorDetails(Number(subcategoryId)).subscribe((data: any) => {
@@ -63,10 +81,20 @@ export class ColorDetailComponent implements OnInit {
       this.filterColorDetails();
       this.seasonName = this.getSeasonName(Number(subcategoryId));
       this.bgColor = this.getBgColor(Number(subcategoryId));
+      this.seasonImage = this.getSeasonImage(Number(subcategoryId));
       console.log('seasonName:', this.seasonName);
       console.log('bgColor:', this.bgColor);
-      this.cdr.detectChanges();
+      console.log('seasonImage:', this.seasonImage);
     });
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.showScrollToTop = window.pageYOffset > 300;
+  }
+
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   getSeasonName(id: number): string {
@@ -77,9 +105,14 @@ export class ColorDetailComponent implements OnInit {
     return this.seasonColors[id.toString()] || '#6094E9';
   }
 
+  getSeasonImage(id: number): string {
+    return this.seasonImages[id.toString()] || 'assets/forgot_asset.svg'; 
+  }
+
   setCategory(category: string): void {
     this.selectedCategory = category;
     this.filterColorDetails();
+    window.scrollTo(400, 400); 
   }
 
   filterColorDetails(): void {
