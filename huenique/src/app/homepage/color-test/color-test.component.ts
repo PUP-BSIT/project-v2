@@ -69,12 +69,14 @@ export class ColorTestComponent implements OnInit {
       percentage: (seasonScores[Number(seasonId)] / totalQuestions) * 100
     }));
 
+    console.log('Season Percentages:', seasonPercentages);
+
     seasonPercentages.sort((a, b) => b.percentage - a.percentage);
     const primarySeasonId = seasonPercentages[0].seasonId;
 
-    const subcategory = this.determineSubcategory(seasonPercentages, primarySeasonId);
+    const subcategoryId = this.determineSubcategory(seasonPercentages, primarySeasonId);
 
-    this.result = this.getSeasonName(primarySeasonId, subcategory);
+    this.result = this.getSeasonName(primarySeasonId, subcategoryId);
     console.log('Quiz result:', this.result);
 
     const resultData: QuizResult = {
@@ -86,10 +88,9 @@ export class ColorTestComponent implements OnInit {
       contact_lens_id: primarySeasonId,
       avoid_color_id: primarySeasonId,
       result_date: new Date().toISOString().split('T')[0],
-      subcategory_id: subcategory ? subcategory.seasonId : null
+      subcategory_id: subcategoryId
     };
 
-    // Store result data in local storage
     localStorage.setItem('testResults', JSON.stringify(resultData));
     localStorage.setItem('seasonPercentages', JSON.stringify(seasonPercentages));
 
@@ -99,81 +100,47 @@ export class ColorTestComponent implements OnInit {
     });
   }
 
-  determineSubcategory(seasonPercentages: { seasonId: number, percentage: number }[], primarySeasonId: number): { seasonId: number, percentage: number } | null {
-    const primaryPercentage = seasonPercentages.find(sp => sp.seasonId === primarySeasonId)?.percentage || 0;
-    const otherSeasonPercentages = seasonPercentages.filter(sp => sp.seasonId !== primarySeasonId);
+  getPrimarySeason(seasonPercentages: { seasonId: number, percentage: number }[]): number {
+    seasonPercentages.sort((a, b) => b.percentage - a.percentage);
+    return seasonPercentages[0].seasonId;
+  }
 
-    const subcategoryMap: { [key: number]: number[] } = {
-        1: [7, 6, 5],
-        2: [10, 9, 8],
-        3: [16, 15, 14],
-        4: [11, 12, 13]
+  determineSubcategory(seasonPercentages: { seasonId: number, percentage: number }[], primarySeasonId: number): number | null {
+    let maxInfluence = -1;
+    let selectedSubcategoryId = null;
+
+    seasonPercentages.forEach(season => {
+      if (season.seasonId !== primarySeasonId) {
+        if (season.percentage > maxInfluence) {
+          maxInfluence = season.percentage;
+          selectedSubcategoryId = this.getSubcategoryId(primarySeasonId, season.seasonId);
+        }
+      }
+    });
+
+    return selectedSubcategoryId;
+  }
+
+  getSubcategoryId(primarySeasonId: number, secondarySeasonId: number): number {
+    const subcategoryMatrix: { [key: number]: { [key: number]: number } } = {
+      1: { 2: 6, 3: 7, 4: 5 },
+      2: { 1: 9, 3: 8, 4: 10 },
+      3: { 1: 16, 2: 14, 4: 15 },
+      4: { 1: 11, 2: 13, 3: 12 }
     };
 
-    const potentialSubcategories = subcategoryMap[primarySeasonId];
-
-    if (!potentialSubcategories) {
-        return null;
-    }
-
-    let closestSubcategories: { seasonId: number, percentage: number, difference: number }[] = [];
-    let smallestDifference = Number.MAX_VALUE;
-
-    for (const subcategoryId of potentialSubcategories) {
-        const subcategoryPercentage = this.getSubcategoryPercentage(subcategoryId, otherSeasonPercentages);
-        const difference = Math.abs(primaryPercentage - subcategoryPercentage);
-
-        if (difference < smallestDifference) {
-            closestSubcategories = [{ seasonId: subcategoryId, percentage: subcategoryPercentage, difference }];
-            smallestDifference = difference;
-        } else if (difference === smallestDifference) {
-            closestSubcategories.push({ seasonId: subcategoryId, percentage: subcategoryPercentage, difference });
-        }
-    }
-
-    if (closestSubcategories.length > 1) {
-        closestSubcategories.sort((a, b) => b.percentage - a.percentage);
-    }
-
-    return closestSubcategories[0];
+    return subcategoryMatrix[primarySeasonId][secondarySeasonId];
   }
 
-  getSubcategoryPercentage(subcategoryId: number, otherSeasonPercentages: { seasonId: number, percentage: number }[]): number {
-    switch (subcategoryId) {
-        case 5:  
-        case 6:  
-            return otherSeasonPercentages.find(sp => sp.seasonId === 1)?.percentage || 0;
-        case 7:  
-            return otherSeasonPercentages.find(sp => sp.seasonId === 1)?.percentage || 0;
-        case 8:  
-        case 9:  
-        case 10: 
-            return otherSeasonPercentages.find(sp => sp.seasonId === 2)?.percentage || 0;
-        case 10: 
-            return otherSeasonPercentages.find(sp => sp.seasonId === 3)?.percentage || 0;
-        case 14: 
-        case 15: 
-        case 16: 
-            return otherSeasonPercentages.find(sp => sp.seasonId === 3)?.percentage || 0;
-        case 16: 
-            return otherSeasonPercentages.find(sp => sp.seasonId === 2)?.percentage || 0;
-        case 11: 
-        case 12: 
-        case 13: 
-            return otherSeasonPercentages.find(sp => sp.seasonId === 4)?.percentage || 0;
-        case 13: 
-            return otherSeasonPercentages.find(sp => sp.seasonId === 1)?.percentage || 0;
-        default:
-            return 0;
+  getSeasonName(seasonId: number, subcategoryId: number | null): string {
+    if (subcategoryId) {
+      return this.getSubcategoryName(subcategoryId);
     }
-  }
-
-  getSeasonName(seasonId: number, subcategory: { seasonId: number, percentage: number } | null): string {
     switch (seasonId) {
-      case 1: return subcategory ? this.getSubcategoryName(subcategory.seasonId) : 'Winter';
-      case 2: return subcategory ? this.getSubcategoryName(subcategory.seasonId) : 'Summer';
-      case 3: return subcategory ? this.getSubcategoryName(subcategory.seasonId) : 'Autumn';
-      case 4: return subcategory ? this.getSubcategoryName(subcategory.seasonId) : 'Spring';
+      case 1: return 'Winter';
+      case 2: return 'Summer';
+      case 3: return 'Autumn';
+      case 4: return 'Spring';
       default: return 'Unknown';
     }
   }
