@@ -89,6 +89,10 @@ export class ColorTestComponent implements OnInit {
       subcategory_id: subcategory ? subcategory.seasonId : null
     };
 
+    // Store result data in local storage
+    localStorage.setItem('testResults', JSON.stringify(resultData));
+    localStorage.setItem('seasonPercentages', JSON.stringify(seasonPercentages));
+
     this.questionService.saveResult(resultData).subscribe(response => {
       console.log('Result saved:', response);
       this.router.navigate(['/homepage/seasonal-tone', { resultId: response.resultId }]);
