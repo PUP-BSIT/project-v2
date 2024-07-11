@@ -37,6 +37,7 @@ export class ColorTestComponent implements OnInit {
     if (index === this.currentQuestionIndex) {
       this.moveToNextUnansweredQuestion();
     }
+    this.scrollToNextUnansweredQuestion();
   }
 
   moveToNextUnansweredQuestion(): void {
@@ -45,6 +46,19 @@ export class ColorTestComponent implements OnInit {
       this.currentQuestionIndex = nextUnansweredIndex;
     } else {
       this.allQuestionsAnswered = true;
+    }
+  }
+
+  scrollToNextUnansweredQuestion(): void {
+    const nextUnansweredIndex = this.selectedAnswers.findIndex(answer => answer === null);
+    if (nextUnansweredIndex !== -1) {
+      const element = document.getElementById(`question-${nextUnansweredIndex}`);
+      if (element) {
+        const elementRect = element.getBoundingClientRect();
+        const absoluteElementTop = elementRect.top + window.pageYOffset;
+        const middle = absoluteElementTop - (window.innerHeight / 2.8);
+        window.scrollTo({ top: middle, behavior: 'smooth' });
+      }
     }
   }
 
