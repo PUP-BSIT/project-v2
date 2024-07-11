@@ -1,5 +1,20 @@
+.bg-winter {
+  background: linear-gradient(to right, #d1d5db, #e5e7eb, #d1d5db); 
+}
+
+.bg-summer {
+  background: linear-gradient(to right, #93c5fd, #bfdbfe, #93c5fd);
+}
+
+.bg-autumn {
+  background: linear-gradient(to right, #fdba74, #fed7aa, #fdba74); 
+}
+
+.bg-spring {
+  background: linear-gradient(to right, #fbcfe8, #f9a8d4, #fbcfe8);
+}
+
 .profile-container {
-  background-color: #fff8f1;
   border-radius: 0.5rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   max-width: 90%;
@@ -46,7 +61,7 @@
 }
 
 .table-auto th {
-  background-color: #ffecd0;
+  background-color: rgb(170, 219, 238);
   color: #5c4033;
   text-align: left;
 }
