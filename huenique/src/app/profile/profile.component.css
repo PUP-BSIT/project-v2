@@ -1,17 +1,17 @@
 .bg-winter {
-  background: linear-gradient(to right, #d1d5db, #e5e7eb, #d1d5db); /* Gray gradient */
+  background: linear-gradient(to right, #d1d5db, #e5e7eb, #d1d5db); 
 }
 
 .bg-summer {
-  background: linear-gradient(to right, #93c5fd, #bfdbfe, #93c5fd); /* Blue gradient */
+  background: linear-gradient(to right, #93c5fd, #bfdbfe, #93c5fd);
 }
 
 .bg-autumn {
-  background: linear-gradient(to right, #fdba74, #fed7aa, #fdba74); /* Orange gradient */
+  background: linear-gradient(to right, #fdba74, #fed7aa, #fdba74); 
 }
 
 .bg-spring {
-  background: linear-gradient(to right, #fbcfe8, #f9a8d4, #fbcfe8); /* Pink gradient */
+  background: linear-gradient(to right, #fbcfe8, #f9a8d4, #fbcfe8);
 }
 
 .profile-container {
