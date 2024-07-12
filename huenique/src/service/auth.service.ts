@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,21 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  signup(user: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/signup`, user).pipe(
+      tap(() => {
+        localStorage.removeItem('testResults');
+        localStorage.removeItem('seasonPercentages');
+        localStorage.removeItem('subcategoryPercentages');
+      })
+    );
+  }
+
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('testResults');
+    localStorage.removeItem('seasonPercentages');
+    localStorage.removeItem('subcategoryPercentages');
     this.router.navigate(['/landing']);
   }
 

@@ -55,7 +55,7 @@ export class SignupComponent implements OnInit {
   sqlInjectionValidator(control: AbstractControl): ValidationErrors | null {
     const forbiddenCharacters = /['";=<>]/;
     const sqlKeywords = /\b(SELECT|INSERT|DELETE|UPDATE|DROP|ALTER|CREATE|TRUNCATE|EXEC|UNION|--|OR|AND|WHERE|LIKE|IN|NOT|NULL|IS|VALUES)\b/i;
-    
+
     if (forbiddenCharacters.test(control.value) || sqlKeywords.test(control.value)) {
       return { sqlInjection: true };
     }
@@ -80,13 +80,16 @@ export class SignupComponent implements OnInit {
         response => {
           console.log('User created successfully', response);
           this.signupForm.reset();
+          localStorage.removeItem('testResults');
+          localStorage.removeItem('seasonPercentages');
+          localStorage.removeItem('subcategoryPercentages');
           this.showSuccessToast = true;
           setTimeout(() => {
             this.showSuccessToast = false;
           }, 5000);
         },
         error => {
-          if (error.status === 409) { 
+          if (error.status === 409) {
             this.showErrorToast = true;
             setTimeout(() => {
               this.showErrorToast = false;
