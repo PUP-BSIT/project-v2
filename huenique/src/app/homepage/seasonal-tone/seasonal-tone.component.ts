@@ -43,7 +43,7 @@ export class SeasonalToneComponent implements OnInit {
   @HostListener('window:scroll', [])
   onWindowScroll(): void {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-    this.showScrollToTop = scrollTop > 200; // Show button after scrolling down 200px
+    this.showScrollToTop = scrollTop > 200; 
   }
 
   scrollToTop(): void {
@@ -88,8 +88,8 @@ export class SeasonalToneComponent implements OnInit {
       data => {
         this.recommendations = data;
         console.log('Recommendations:', this.recommendations);
-        this.cdr.detectChanges(); // Trigger change detection
-        this.scrollToDetails(); // Scroll after view updates
+        this.cdr.detectChanges(); 
+        this.scrollToDetails(); 
       },
       error => {
         console.error('Error fetching recommendations:', error);
