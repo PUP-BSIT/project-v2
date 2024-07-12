@@ -8,11 +8,24 @@ import { AuthService } from '../../../service/auth.service';
 })
 export class NavbarComponent {
   isDropdownOpen = false;
+  isDropdownMenuOpen = false;
+  dropdownTimeout: any;
 
   constructor(private authService: AuthService) {}
 
-  toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
+  toggleDropdown(state: boolean, delay = false) {
+    if (delay) {
+      this.dropdownTimeout = setTimeout(() => {
+        this.isDropdownOpen = state;
+      }, 300);
+    } else {
+      clearTimeout(this.dropdownTimeout);
+      this.isDropdownOpen = state;
+    }
+  }
+
+  toggleDropdownMenu() {
+    this.isDropdownMenuOpen = !this.isDropdownMenuOpen;
   }
 
   logout() {
