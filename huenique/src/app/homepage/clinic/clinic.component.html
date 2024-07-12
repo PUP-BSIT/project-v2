@@ -1,6 +1,10 @@
 <app-navbar></app-navbar>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
 
+<div class="season-banner">
+  <h1 class="season-title">"Need personalized advice? Visit one of these expert clinics we know for tailored guidance and care."</h1>
+</div>
+
 <div class="container mx-auto p-6 font-poppins">
   <h1 class="text-5xl font-bold mb-6 text-brown-600">Clinic List</h1>
   @if (error) {
@@ -13,7 +17,7 @@
       </div>
     </div>
   } @else {
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-9">
       @for (clinic of clinics; track clinic) {
         <div class="card w-full bg-yellow-200 shadow-xl">
           <div class="card-body">
@@ -26,4 +30,8 @@
       }
     </div>
   }
+</div>
+
+<div class="season-banner">
+  <h1 class="season-title">"We hope you find the perfect clinic for your needs. "</h1>
 </div>
