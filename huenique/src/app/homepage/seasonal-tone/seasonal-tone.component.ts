@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionService } from '../../../service/question.service';
 import { ResultsService } from '../../../service/result.service';
 import { SeasonalDescriptionsService } from '../../../service/seasonal-descriptions-service.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-seasonal-tone',
@@ -10,6 +11,9 @@ import { SeasonalDescriptionsService } from '../../../service/seasonal-descripti
   styleUrls: ['./seasonal-tone.component.css']
 })
 export class SeasonalToneComponent implements OnInit {
+  @ViewChild('detailsSection', { static: false }) detailsSection!: ElementRef;
+  showScrollToTop: boolean = false;
+
   result: any;
   recommendations: any;
   recommendationCategories = ['clothing', 'accessories', 'lens', 'hair', 'makeup', 'avoid'];
@@ -21,7 +25,8 @@ export class SeasonalToneComponent implements OnInit {
     private resultsService: ResultsService,
     private route: ActivatedRoute,
     private router: Router,
-    private seasonalDescriptionsService: SeasonalDescriptionsService
+    private seasonalDescriptionsService: SeasonalDescriptionsService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -33,6 +38,16 @@ export class SeasonalToneComponent implements OnInit {
         this.getLatestResult();
       }
     });
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    this.showScrollToTop = scrollTop > 200; // Show button after scrolling down 200px
+  }
+
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   getResultById(resultId: number): void {
@@ -73,11 +88,19 @@ export class SeasonalToneComponent implements OnInit {
       data => {
         this.recommendations = data;
         console.log('Recommendations:', this.recommendations);
+        this.cdr.detectChanges(); // Trigger change detection
+        this.scrollToDetails(); // Scroll after view updates
       },
       error => {
         console.error('Error fetching recommendations:', error);
       }
     );
+  }
+
+  scrollToDetails(): void {
+    if (this.detailsSection) {
+      this.detailsSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
   getTextColor(hex: string): string {
