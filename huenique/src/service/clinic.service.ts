@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ClinicService {
   private apiUrl = 'http://localhost:3000/api';
+  //test
 
   constructor(private http: HttpClient) { }
 
