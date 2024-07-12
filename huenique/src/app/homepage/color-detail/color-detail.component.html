@@ -9,11 +9,11 @@
   <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
   <div class="drawer-content flex flex-col items-center justify-center">
     <main class="p-10">
-      <h1 class="text-5xl font-bold mb-10">Seasonal Color Details</h1>
+      <h1 class="text-5xl font-bold mb-10 text-darkBrown">Seasonal Color Details</h1>
       <div class="character flex justify-center items-center">
         <img [src]="seasonImage" alt="{{ seasonName }}" class="h-96">
       </div>   
-      <div class="indicator">
+      <div class="indicator text-darkBrown">
         <h1>{{ seasonName }}</h1>   
       </div>
       
@@ -36,7 +36,7 @@
   </div>
   <div class="drawer-side">
     <label for="my-drawer-2" class="drawer-overlay"></label>
-    <ul class="menu text-base-content min-h-full w-80 p-4">
+    <ul class="menu text-base-content min-h-full w-80 p-4 bg-base-200">
       <li (click)="setCategory('accessories')">
         <a [class.active]="selectedCategory === 'accessories'" class="text-2xl my-3">Accessories</a>
       </li>
