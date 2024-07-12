@@ -30,7 +30,7 @@
             </div>
           }
         </div>
-
+        
         <div class="relative">
           <input formControlName="email" type="email" placeholder="Email" class="input input-bordered w-full">
           @if (emailControl?.invalid && emailControl?.touched) {
@@ -47,7 +47,7 @@
             </div>
           }
         </div>
-
+        
         <div class="relative">
           <input [type]="passwordFieldType" formControlName="password" placeholder="Password" class="input input-bordered w-full">
           <i class="fa" [ngClass]="{'fa-eye': passwordFieldType === 'password', 'fa-eye-slash': passwordFieldType === 'text'}" (click)="togglePasswordVisibility()"></i>
@@ -65,7 +65,7 @@
             </div>
           }
         </div>
-
+        
         <div class="relative">
           <input [type]="confirmPasswordFieldType" formControlName="confirmPassword" placeholder="Confirm Password" class="input input-bordered w-full">
           <i class="fa" [ngClass]="{'fa-eye': confirmPasswordFieldType === 'password', 'fa-eye-slash': confirmPasswordFieldType === 'text'}" (click)="toggleConfirmPasswordVisibility()"></i>
@@ -79,8 +79,7 @@
               }
             </div>
           }
-        </div>
-        
+        </div>        
         <button type="submit" class="btn btn-primary w-full">Create Account</button>
         <p class="account-signup-text">Already have an account? <a (click)="goToSignIn()" class="signup-link">Sign In</a></p>
       </form>

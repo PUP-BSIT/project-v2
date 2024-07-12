@@ -32,7 +32,7 @@
         </div>
         <div class="relative">
           <input [type]="passwordFieldType" formControlName="password" placeholder="Password" class="input input-bordered w-full">
-          <i class="fa" [ngClass]="{'fa-eye': passwordFieldType === 'password', 'fa-eye-slash': passwordFieldType === 'text'}" (click)="togglePasswordVisibility()"></i>
+          <i class="fa toggle-password-icon" [ngClass]="{'fa-eye': passwordFieldType === 'password', 'fa-eye-slash': passwordFieldType === 'text'}" (click)="togglePasswordVisibility()"></i>
           @if (passwordControl?.invalid && passwordControl?.touched) {
             <div class="text-red-500 text-sm mt-1">
               @if (passwordControl?.errors?.['required']) {
@@ -43,7 +43,7 @@
               }
             </div>
           }
-        </div>
+        </div>                
         <button type="submit" class="btn btn-primary w-full">Sign In</button>
         <p class="account-signin-text">Don't have an account? <a (click)="goToSignUp()" class="signin-link">Sign Up</a></p>
         <p class="forgot-password-text"><a (click)="goToForgotPassword()" class="forgot-password-link flex justify-center">Forgot Password?</a></p>
