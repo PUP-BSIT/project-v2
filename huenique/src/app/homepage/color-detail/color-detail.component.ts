@@ -74,17 +74,12 @@ export class ColorDetailComponent implements OnInit {
   ngOnInit(): void {
     window.scrollTo(0, 0); 
     const subcategoryId = this.route.snapshot.paramMap.get('subcategory_id');
-    console.log('subcategoryId:', subcategoryId);
     this.colorService.getColorDetails(Number(subcategoryId)).subscribe((data: any) => {
       this.colorDetails = data.data;
-      console.log('colorDetails:', this.colorDetails);
       this.filterColorDetails();
       this.seasonName = this.getSeasonName(Number(subcategoryId));
       this.bgColor = this.getBgColor(Number(subcategoryId));
       this.seasonImage = this.getSeasonImage(Number(subcategoryId));
-      console.log('seasonName:', this.seasonName);
-      console.log('bgColor:', this.bgColor);
-      console.log('seasonImage:', this.seasonImage);
     });
   }
 

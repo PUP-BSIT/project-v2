@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ClinicService {
-  private apiUrl = 'http://localhost:3000/api';
+  private apiUrl = 'https://huenique.online/api';
 
   constructor(private http: HttpClient) { }
 
