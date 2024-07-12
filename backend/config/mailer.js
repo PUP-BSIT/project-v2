@@ -66,12 +66,12 @@ const sendEmail = (email, subject, templateType, replacements) => {
 };
 
 const sendConfirmationEmail = (email, token) => {
-  const url = `http://localhost:3000/api/auth/confirm/${token}`;
+  const url = `https://huenique.online/api/auth/confirm/${token}`;
   sendEmail(email, 'Confirm your Email', 'confirmEmail', { url });
 };
 
 const sendResetPasswordEmail = (email, token) => {
-  const url = `http://localhost:4200/reset-password/${token}`;
+  const url = `https://huenique.online/reset-password/${token}`;
   sendEmail(email, 'Reset Password', 'resetPassword', { url });
 };
 
@@ -221,7 +221,6 @@ const sendEmailResult = (req, res) => {
 
         sendEmail(email, 'Your Color Analysis Results', 'resultEmail', replacements);
 
-        // Insert the email log into the database
         const insertSql = `
           INSERT INTO email_log (result_id, user_id) 
           VALUES (?, ?)`;
