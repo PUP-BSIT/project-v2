@@ -5,12 +5,12 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ClinicService {
+export class ColorService {
   private apiUrl = 'https://huenique.online/api';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getClinics(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/clinics`);
+  getColorDetails(subcategoryId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/data-with-subcategory/${subcategoryId}`);
   }
 }

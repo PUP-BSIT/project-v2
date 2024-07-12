@@ -23,7 +23,7 @@ export class SeasonalDescriptionsService {
     light_spring: 'are known for their light and warm tones. Their skin is usually fair to light with warm undertones, often with a golden or peachy hue. Their eyes are light and warm, such as light blue, green, or light hazel. Hair colors for Light Springs are typically light and warm, including golden blonde or light brown. The overall look is delicate and fresh, with a harmonious blend of light and warm colors.'
   };
 
-  getDescription(season: string): string {
-    return this.descriptions[season.toLowerCase().replace(' ', '_')] || '';
+  getDescription(seasonOrSubcategory: string): string {
+    return this.descriptions[seasonOrSubcategory.toLowerCase().replace(' ', '_')] || '';
   }
 }

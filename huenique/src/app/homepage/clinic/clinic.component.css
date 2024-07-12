@@ -1,0 +1,38 @@
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+  
+.text-brown-600 {
+  color: #8B4513;
+}
+  
+.card-title {
+  color: #ffffff; 
+}
+  
+.card-body p {
+  color: #ffffff; 
+}
+  
+.bg-yellow-200 {
+  background-color: #176a9e;
+}
+  
+.alert-error {
+  background-color: #fee2e2;
+}
+
+.season-banner {
+  background-color: #176a9e; 
+  text-align: center;
+  padding: 60px 0;
+}
+
+.season-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 4rem;
+  font-weight: bold;
+  color: white;
+  margin: 5px;
+}
+  

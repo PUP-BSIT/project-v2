@@ -13,3 +13,78 @@
 .logo {
     height: 3.5rem;
 }
+
+.relative:hover .absolute {
+    display: block;
+}
+
+.absolute {
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.block {
+    display: block;
+}
+
+.dropdown-content {
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    width: 21rem;
+    padding: 1rem;
+}
+
+.season-category1 {
+    margin-bottom: 1.5rem; 
+}
+
+.season-category1 h4 {
+    margin-bottom: 0.5rem;
+}
+
+.season-category2 {
+    margin-bottom: 1rem; 
+}
+
+.season-category2 h4 {
+    margin-bottom: 0.5rem;
+}
+
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.half-width {
+    width: 50%;
+}
+
+.season-items {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.season-items a {
+    flex: 1 1 50%; 
+    padding: 0.5rem;
+}
+
+.spring-text {
+    color: #db425b;
+}
+
+.summer-text {
+    color: #2379c4; 
+}
+
+.autumn-text {
+    color: #7a4615;
+}
+
+.winter-text {
+    color: #21219e;
+}

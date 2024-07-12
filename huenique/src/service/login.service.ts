@@ -12,7 +12,7 @@ import { ResetPasswordResponse } from '../app/model/resetPasswordResponse';
   providedIn: 'root'
 })
 export class LoginService {
-  private apiUrl = 'http://api.huenique.online:3000/api/auth';
+  private apiUrl = 'https://huenique.online/api/auth';
 
   constructor(private http: HttpClient) {}
 
