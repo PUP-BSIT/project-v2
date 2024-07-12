@@ -72,14 +72,18 @@ export class ColorDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private colorService: ColorService) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0); 
-    const subcategoryId = this.route.snapshot.paramMap.get('subcategory_id');
-    this.colorService.getColorDetails(Number(subcategoryId)).subscribe((data: any) => {
-      this.colorDetails = data.data;
-      this.filterColorDetails();
-      this.seasonName = this.getSeasonName(Number(subcategoryId));
-      this.bgColor = this.getBgColor(Number(subcategoryId));
-      this.seasonImage = this.getSeasonImage(Number(subcategoryId));
+    window.scrollTo(0, 0);
+    this.route.paramMap.subscribe(params => {
+      const subcategoryId = params.get('subcategory_id');
+      if (subcategoryId) {
+        this.colorService.getColorDetails(Number(subcategoryId)).subscribe((data: any) => {
+          this.colorDetails = data.data;
+          this.filterColorDetails();
+          this.seasonName = this.getSeasonName(Number(subcategoryId));
+          this.bgColor = this.getBgColor(Number(subcategoryId));
+          this.seasonImage = this.getSeasonImage(Number(subcategoryId));
+        });
+      }
     });
   }
 
@@ -101,13 +105,13 @@ export class ColorDetailComponent implements OnInit {
   }
 
   getSeasonImage(id: number): string {
-    return this.seasonImages[id.toString()] || 'assets/forgot_asset.svg'; 
+    return this.seasonImages[id.toString()] || 'assets/forgot_asset.svg';
   }
 
   setCategory(category: string): void {
     this.selectedCategory = category;
     this.filterColorDetails();
-    window.scrollTo(400, 400); 
+    window.scrollTo(400, 400);
   }
 
   filterColorDetails(): void {
