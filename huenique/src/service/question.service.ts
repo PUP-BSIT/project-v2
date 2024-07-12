@@ -8,7 +8,7 @@ import { tap } from 'rxjs/operators';
 })
 export class QuestionService {
 
-  private apiUrl = 'https://huenique.online/api';
+  private apiUrl = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) { }
 
