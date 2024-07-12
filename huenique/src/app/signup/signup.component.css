@@ -2,30 +2,33 @@
     display: block;
     height: 100vh;
     overflow: hidden;
-  }
+}
 
 .custom-logo-size {
-    width: 350px; 
+    width: 350px;
     height: auto;
-    margin-right: 70px;
+    padding-top: 40px;
+    margin-right: 10px;
     margin-bottom: 40px;
 }
 
 .image-asset {
-    width: 600px; 
+    width: 600px;
     height: auto;
-    margin-right: 40px;
     margin-bottom: 10px;
+    margin-left: 25px;
+    padding-top: 15px;
+    padding-bottom: 20px;
 }
 
 .bg-peach {
-    background-color: #ffeed9; 
+    background-color: #ffeed9;
 }
-  
+
 .header-container {
     margin-top: -20px;
 }
-  
+
 .footer {
     position: fixed;
     bottom: 0;
@@ -33,14 +36,15 @@
     width: 100%;
     padding: 0;
 }
-  
+
 @media (min-width: 768px) {
     .landing-content {
-      flex-wrap: nowrap;
+        flex-wrap: nowrap;
     }
+
     .text-container,
     .image-container {
-      width: 50%;
+        width: 50%;
     }
 }
 
@@ -50,39 +54,39 @@
 
 .vertical-line {
     width: 5px;
-    margin-top: 42px;  
-    height: 650px; 
+    margin-top: 42px;
+    height: 650px;
     background-color: #9d9b9b;
-    border-radius: 20px;  
+    border-radius: 20px;
 }
 
 .account-signup-text {
-    text-align: center; 
-    font-size: 16px; 
+    text-align: center;
+    font-size: 16px;
     color: #666;
 }
 
 .signup-link {
-    color: #007BFF; 
-    text-decoration: none; 
+    color: #007BFF;
+    text-decoration: none;
     cursor: pointer;
 }
 
 .signup-link:hover {
-    text-decoration: underline; 
+    text-decoration: underline;
 }
 
 .input {
-    border: 2px solid #ccc; 
+    border: 2px solid #ccc;
     padding: 8px 15px;
-    border-radius: 5px; 
-    width: 100%; 
+    border-radius: 5px;
+    width: 100%;
     box-sizing: border-box;
 }
 
 .input:focus {
-    outline: none; 
-    border-color: #4A90E2; 
+    outline: none;
+    border-color: #4A90E2;
     box-shadow: 0 0 20px rgba(74, 144, 226, 0.5);
 }
 
@@ -93,18 +97,44 @@
 
 .relative {
     position: relative;
-  }
-  
-  .relative .fa {
+}
+
+.relative .fa {
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
     color: #9d9b9b;
-  }
-  
-  .relative .fa:hover {
+}
+
+.relative .fa:hover {
     color: #007BFF;
-  }
-  
+}
+
+.text-red-500 {
+    color: #f56565;
+}
+
+.text-sm {
+    font-size: 0.875rem;
+}
+
+.mt-1 {
+    margin-top: 0.25rem;
+}
+
+.form .relative {
+    margin-bottom: 20px;
+}
+
+.form .relative .input {
+    padding-right: 40px;
+    flex: 1;
+}
+
+.form .relative .text-red-500 {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+}
