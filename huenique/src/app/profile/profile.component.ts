@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
     private questionService: QuestionService,
     private seasonalDescriptionsService: SeasonalDescriptionsService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.loadUserProfile();
@@ -132,12 +132,16 @@ export class ProfileComponent implements OnInit {
         ...percentage,
         seasonName: this.getSeasonName(percentage.seasonId)
       }));
+    } else {
+      this.seasonPercentages = [];
     }
     if (subcategoryPercentages) {
       this.subcategoryPercentages = JSON.parse(subcategoryPercentages).map((percentage: any) => ({
         ...percentage,
         subcategoryName: this.getSubcategoryName(percentage.subcategoryId)
       }));
+    } else {
+      this.subcategoryPercentages = [];
     }
   }
 
