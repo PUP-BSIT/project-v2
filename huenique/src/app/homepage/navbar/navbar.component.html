@@ -2,21 +2,54 @@
 
 <nav class="nav shadow p-12 flex justify-between items-center">
     <div class="flex items-center space-x-4">
-        <img src="assets/logo.svg" alt="Huenique Logo" class="logo h-14">
+        <a routerLink="/homepage">
+            <img src="assets/logo.svg" alt="Huenique Logo" class="logo h-14">
+        </a>
     </div>
     <div class="flex space-x-16">
         <a routerLink="/homepage" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="text-gray-700 hover:text-blue-500 font-normal text-2xl nav-link">Home</a>
         <a routerLink="/homepage/color-analysis" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="text-gray-700 hover:text-blue-500 font-normal text-2xl nav-link">Color Analysis</a>
-        <a routerLink="/homepage/colors" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="text-gray-700 hover:text-blue-500 font-normal text-2xl nav-link">Seasonal Colors</a>
+        <div class="relative" (mouseover)="toggleDropdown(true)" (mouseleave)="toggleDropdown(false, true)">
+            <a routerLink="/homepage/colors" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="text-gray-700 hover:text-blue-500 font-normal text-2xl nav-link">Seasonal Colors</a>
+            <i class="fas fa-chevron-down pl-3 text-gray-800"></i>
+            <div [ngClass]="{ 'hidden': !isDropdownOpen, 'block': isDropdownOpen }" class="dropdown-content absolute bg-white shadow-lg rounded-md mt-2 p-4 w-96">
+                <div class="flex flex-wrap justify-between">
+                    <div class="season-category1">
+                        <h4 class="font-semibold spring-text">Spring</h4>
+                        <a routerLink="/homepage/colors/11" class="block px-4 py-2 spring-text hover:bg-gray-100">Clear Spring</a>
+                        <a routerLink="/homepage/colors/12" class="block px-4 py-2 spring-text hover:bg-gray-100">Light Spring</a>
+                        <a routerLink="/homepage/colors/13" class="block px-4 py-2 spring-text hover:bg-gray-100">Warm Spring</a>
+                    </div>
+                    <div class="season-category2">
+                        <h4 class="font-semibold summer-text">Summer</h4>
+                        <a routerLink="/homepage/colors/8" class="block px-4 py-2 summer-text hover:bg-gray-100">Soft Summer</a>
+                        <a routerLink="/homepage/colors/9" class="block px-4 py-2 summer-text hover:bg-gray-100">Cool Summer</a>
+                        <a routerLink="/homepage/colors/10" class="block px-4 py-2 summer-text hover:bg-gray-100">Light Summer</a>
+                    </div>
+                    <div class="season-category3">
+                        <h4 class="font-semibold autumn-text">Autumn</h4>
+                        <a routerLink="/homepage/colors/14" class="block px-4 py-2 autumn-text hover:bg-gray-100">Soft Autumn</a>
+                        <a routerLink="/homepage/colors/15" class="block px-4 py-2 autumn-text hover:bg-gray-100">Warm Autumn</a>
+                        <a routerLink="/homepage/colors/16" class="block px-4 py-2 autumn-text hover:bg-gray-100">Deep Autumn</a>
+                    </div>
+                    <div class="season-category4">
+                        <h4 class="font-semibold winter-text">Winter</h4>
+                        <a routerLink="/homepage/colors/5" class="block px-4 py-2 winter-text hover:bg-gray-100">Clear Winter</a>
+                        <a routerLink="/homepage/colors/6" class="block px-4 py-2 winter-text hover:bg-gray-100">Cool Winter</a>
+                        <a routerLink="/homepage/colors/7" class="block px-4 py-2 winter-text hover:bg-gray-100">Deep Winter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <a routerLink="/homepage/clinic" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="text-gray-700 hover:text-blue-500 font-normal text-2xl nav-link">Clinic</a>
         <a routerLink="/homepage/about" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="text-gray-700 hover:text-blue-500 font-normal text-2xl nav-link">About</a>
     </div>
     <div class="relative">
-        <button class="flex items-center space-x-2 focus:outline-none" (click)="toggleDropdown()">
+        <button class="flex items-center space-x-2 focus:outline-none" (click)="toggleDropdownMenu()">
             <i class="fas fa-user text-gray-800"></i>
             <i class="fas fa-chevron-down text-gray-800"></i>
         </button>
-        <div [ngClass]="{ 'hidden': !isDropdownOpen, 'block': isDropdownOpen }" class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md">
+        <div [ngClass]="{ 'hidden': !isDropdownMenuOpen, 'block': isDropdownMenuOpen }" class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md">
             <a routerLink="/profile" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 dropdown-item">Profile</a>
             <a href="#" (click)="logout()" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 dropdown-item">Logout</a>
         </div>
