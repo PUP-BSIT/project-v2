@@ -35,7 +35,6 @@ export class ForgotPasswordComponent implements OnInit {
       const request: ForgotPasswordRequest = { email: this.forgotPasswordForm.value.email };
       this.loginService.forgotPassword(request).subscribe(
         response => {
-          console.log('Password reset email sent', response);
           this.notificationService.showNotification('Password Reset has been sent! Check your Email to proceed.');
           setTimeout(() => {
             this.router.navigate(['/sign-in']);

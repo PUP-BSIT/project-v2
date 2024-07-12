@@ -98,15 +98,12 @@ export class ColorTestComponent implements OnInit, AfterViewChecked {
       percentage: (seasonScores[Number(seasonId)] / totalQuestions) * 100
     }));
 
-    console.log('Season Percentages:', seasonPercentages);
-
     seasonPercentages.sort((a, b) => b.percentage - a.percentage);
     const primarySeasonId = seasonPercentages[0].seasonId;
 
     const subcategoryId = this.determineSubcategory(seasonPercentages, primarySeasonId);
 
     this.result = this.getSeasonName(primarySeasonId, subcategoryId);
-    console.log('Quiz result:', this.result);
 
     const resultData: QuizResult = {
       user_id: this.userId!,
@@ -120,12 +117,10 @@ export class ColorTestComponent implements OnInit, AfterViewChecked {
       subcategory_id: subcategoryId
     };
 
-    // Store result data and percentages in local storage
     localStorage.setItem('testResults', JSON.stringify(resultData));
     localStorage.setItem('seasonPercentages', JSON.stringify(seasonPercentages));
 
     this.questionService.saveResult(resultData).subscribe(response => {
-      console.log('Result saved:', response);
       this.router.navigate(['/homepage/seasonal-tone', { resultId: response.resultId }]);
     });
   }
