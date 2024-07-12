@@ -10,73 +10,85 @@
     <div class="flex flex-wrap justify-center">
         <div class="w-full md:w-1/2 p-4">
             <div class="bg-white rounded-lg shadow p-6 text-left">
-                <div *ngIf="user" class="mb-4">
-                    <h2 class="text-3xl font-semibold mb-2">Your Information</h2>
-                    <p class="text-2xl text-darkGray"><strong>Username:</strong> {{ user.username }}</p>
-                    <p class="text-2xl text-darkGray"><strong>Email:</strong> {{ user.email }}</p>
-                </div>
-                <div *ngIf="testResult" class="mb-6">
-                    <h2 class="text-3xl font-bold mb-4">Current Seasonal Color</h2>
-                    <div class="text-center">
-                        <img [src]="seasonImage" [alt]="testResult.season_name" class="season-image mx-auto mb-4">
+                @if(user){
+                    <div class="mb-4">
+                        <h2 class="text-3xl font-semibold mb-2">Your Information</h2>
+                        <p class="text-2xl text-darkGray"><strong>Username:</strong> {{ user.username }}</p>
+                        <p class="text-2xl text-darkGray"><strong>Email:</strong> {{ user.email }}</p>
                     </div>
-                    <p class="text-2xl text-darkGray font-semibold mb-4">
-                        <span *ngIf="testResult.subcategory_name">{{ testResult.subcategory_name }}</span>
-                    </p>
-                    <p class="text-xl text-darkGray mt-2">{{ seasonalDescription }}</p>
-                    <button (click)="navigateToDetail(testResult.subcategory_id)" class="view px-4 py-2 mt-4 bg-blue-500 text-white rounded">View Details</button>
-                </div>
+                }
+                @if(testResult){
+                    <div class="mb-6">
+                        <h2 class="text-3xl font-bold mb-4">Current Seasonal Color</h2>
+                        <div class="text-center">
+                            <img [src]="seasonImage" [alt]="testResult.season_name" class="season-image mx-auto mb-4">
+                        </div>
+                        <p class="text-2xl text-darkGray font-semibold mb-4">
+                            <span *ngIf="testResult.subcategory_name">{{ testResult.subcategory_name }}</span>
+                        </p>
+                        <p class="text-xl text-darkGray mt-2">{{ seasonalDescription }}</p>
+                        <button (click)="navigateToDetail(testResult.subcategory_id)" class="view px-4 py-2 mt-4 bg-blue-500 text-white rounded">View Details</button>
+                    </div>
+                }
             </div>
         </div>
         <div class="w-full md:w-1/2 p-4">
             <div class="bg-white rounded-lg shadow p-6 text-left">
                 <h3 class="text-3xl font-semibold mb-4">Test History</h3>
-                <div *ngIf="testHistory.length > 0">
-                    <table class="table-auto w-full text-left mx-auto">
-                        <thead>
-                            <tr>
-                                <th class="px-4 py-2 bg-lightYellow text-brown text-2xl">Date</th>
-                                <th class="px-4 py-2 bg-lightYellow text-brown text-2xl">Season</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let history of paginatedTestHistory">
-                                <td class="border px-4 py-2 text-darkGray text-2xl">{{ history.result_date }}</td>
-                                <td class="border px-4 py-2 text-darkGray text-2xl">
-                                    <a [routerLink]="['/homepage/colors', history.subcategory_id]" class="clickable-link">
-                                        <span *ngIf="history.subcategory_name">{{ history.subcategory_name }}</span>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="flex justify-center mt-4">
-                        <button (click)="prevPage()" [disabled]="currentPage === 1" class="prev-button px-4 py-2 mx-2 bg-blue-500 text-white rounded">Previous</button>
-                        <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="next-button px-4 py-2 mx-2 bg-blue-500 text-white rounded">Next</button>
+                @if(testHistory.length > 0) {
+                    <div>
+                        <table class="table-auto w-full text-left mx-auto">
+                            <thead>
+                                <tr>
+                                    <th class="px-4 py-2 bg-lightYellow text-brown text-2xl">Date</th>
+                                    <th class="px-4 py-2 bg-lightYellow text-brown text-2xl">Season</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let history of paginatedTestHistory">
+                                    <td class="border px-4 py-2 text-darkGray text-2xl">{{ history.result_date }}</td>
+                                    <td class="border px-4 py-2 text-darkGray text-2xl">
+                                        <a [routerLink]="['/homepage/colors', history.subcategory_id]" class="clickable-link">
+                                            <span *ngIf="history.subcategory_name">{{ history.subcategory_name }}</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="flex justify-center mt-4">
+                            <button (click)="prevPage()" [disabled]="currentPage === 1" class="prev-button px-4 py-2 mx-2 bg-blue-500 text-white rounded">Previous</button>
+                            <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="next-button px-4 py-2 mx-2 bg-blue-500 text-white rounded">Next</button>
+                        </div>
                     </div>
-                </div>
-                <div *ngIf="testHistory.length === 0">
-                    <p class="text-2xl text-darkGray">No test history available.</p>
-                </div>
+                }
+                @if (testHistory.length === 0) {
+                    <div>
+                        <p class="text-2xl text-darkGray">No test history available.</p>
+                    </div>
+                }
             </div>
             <div class="bg-white rounded-lg shadow p-6 text-left mt-4">
                 <h3 class="text-3xl font-semibold mb-4">Current Season Percentages</h3>
-                <div *ngIf="seasonPercentages.length > 0">
-                    <div *ngFor="let percentage of seasonPercentages">
-                        <div class="flex justify-between mb-2">
-                            <span class="text-2xl text-darkGray"><strong>{{ percentage.seasonName }}:</strong></span>
-                            <span class="text-2xl text-darkGray"><strong>{{ percentage.percentage.toFixed(2) }}%</strong></span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-bar-inner {{ percentage.seasonName.toLowerCase() }}" [style.width.%]="percentage.percentage">
-                                {{ percentage.percentage.toFixed(2) }}%
+                @if(seasonPercentages.length > 0) {
+                    <div>
+                        <div *ngFor="let percentage of seasonPercentages">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-2xl text-darkGray"><strong>{{ percentage.seasonName }}:</strong></span>
+                                <span class="text-2xl text-darkGray"><strong>{{ percentage.percentage.toFixed(2) }}%</strong></span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-bar-inner {{ percentage.seasonName.toLowerCase() }}" [style.width.%]="percentage.percentage">
+                                    {{ percentage.percentage.toFixed(2) }}%
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div *ngIf="seasonPercentages.length === 0">
-                    <p class="text-2xl text-darkGray">No percentages available.</p>
-                </div>
+                }
+                @if (seasonPercentages.length === 0) {
+                    <div>
+                        <p class="text-2xl text-darkGray">No percentages available.</p>
+                    </div>
+                }
             </div>
         </div>
     </div>

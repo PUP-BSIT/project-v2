@@ -80,8 +80,9 @@
 .forgot-password-link:hover {
     text-decoration: underline;
     cursor: pointer;
+}
 
-}.forgot-password-link {
+.forgot-password-link {
     color: #007BFF;
     cursor: pointer;
 }
@@ -115,18 +116,44 @@
 
 .relative {
     position: relative;
-  }
-  
-  .relative .fa {
+}
+
+.relative .toggle-password-icon {
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
     color: #9d9b9b;
-  }
-  
-  .relative .fa:hover {
+}
+
+.relative .toggle-password-icon:hover {
     color: #007BFF;
-  }
-  
+}
+
+.text-red-500 {
+    color: #f56565;
+}
+
+.text-sm {
+    font-size: 0.875rem;
+}
+
+.mt-1 {
+    margin-top: 0.25rem;
+}
+
+.form .relative {
+    margin-bottom: 20px;
+}
+
+.form .relative .input {
+    padding-right: 40px;
+    flex: 1;
+}
+
+.form .relative .text-red-500 {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+}
